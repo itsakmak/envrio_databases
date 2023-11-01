@@ -3,10 +3,11 @@ name = "mysql_app"
 version = "1.0.0"
 authors = [
   { name="Nikolaos Kokkos", email="nikolaoskokkos@gmail.com" },
+  {name="Ioannis Tsakmakis", email="iotsakmak@gmail.com"}
 ]
-description = "A small example package"
+description = "A library that allows connection to ECO1 mysql database"
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
