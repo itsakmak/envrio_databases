@@ -23,5 +23,5 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project.urls]
-"Homepage" = "https://github.com/itsakmak/mysql_app"
-"Bug Tracker" = "https://github.com/itsakmak/mysql_app/issues"
+"Homepage" = "https://github.com/itsakmak/envrio_mysql_app"
+"Bug Tracker" = "https://github.com/itsakmak/envrio_mysql_app/issues"
