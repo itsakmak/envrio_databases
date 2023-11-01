@@ -1,3 +1,7 @@
+__version__=1.0
+__author__='Ioannis Tsakmakis'
+__date_created__='2023-10-31'
+
 import mysql_app.schemas as schemas, mysql_app.models as models
 from mysql_app.engine import engine
 from sqlalchemy.orm import sessionmaker, Session
