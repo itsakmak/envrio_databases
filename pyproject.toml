@@ -14,8 +14,6 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-    "sqlalchemy",
-    "pydantic"
 ]
 
 [build-system]
