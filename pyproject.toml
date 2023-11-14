@@ -21,8 +21,12 @@ classifiers=[
 ]
 
 dependencies = [
+  "setuptools>=67"
+]
+
+[project.optional-dependencies]
+dev = [
   "sqlalchemy>=2.0.22",
-  "setuptools>=67",
   "pydantic",
 ]
 
