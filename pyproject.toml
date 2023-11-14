@@ -1,5 +1,5 @@
 [project]
-name = "mysql_app""
+name = "mysql_app"
 description = "A library that allows connection to ECO1 mysql database"
 readme = "README.md"
 version = "1.0.0"
