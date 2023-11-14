@@ -14,6 +14,11 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
+"sqlalchemy==2.0.22"
+"flask==3.0.0",
+"pydantic",
+"requests",
+"pandas==2.1.2"
 ]
 
 [build-system]
