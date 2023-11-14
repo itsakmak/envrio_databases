@@ -20,13 +20,6 @@ classifiers=[
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
 
-dependencies = [
-  "setuptools",
-  "sqlalchemy",
-  "pydantic"
-]
-
-
 [build-system]
 build-backend = "setuptools.build_meta"
 requires = [
