@@ -21,14 +21,11 @@ classifiers=[
 ]
 
 dependencies = [
-  "setuptools>=67"
+  "setuptools>=67",
+  "sqlalchemy>=2.0.22",
+  "pydantic"
 ]
 
-[project.optional-dependencies]
-dev = [
-  "sqlalchemy>=2.0.22",
-  "pydantic",
-]
 
 [build-system]
 build-backend = "setuptools.build_meta"
