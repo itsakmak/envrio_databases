@@ -2,7 +2,6 @@
 name = "mysql_app"
 description = "A library that allows connection to ECO1 mysql database"
 readme = "README.md"
-version = "1.0.0"
 authors = [
   { name="Nikolaos Kokkos", email="nikolaoskokkos@gmail.com" },
   {name="Ioannis Tsakmakis", email="iotsakmak@gmail.com"}
@@ -21,7 +20,7 @@ classifiers=[
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
 dynamic = [
-  "version",
+  version = "1.0.0"
 ]
 dependencies = [
   "sqlalchemy>=2.0.22",
