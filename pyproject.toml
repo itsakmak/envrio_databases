@@ -1,4 +1,4 @@
-[project]
+[tool.poetry]
 name = "mysql_app"
 version = "1.0.0"
 authors = [
@@ -7,24 +7,12 @@ authors = [
 ]
 description = "A library that allows connection to ECO1 mysql database"
 readme = "README.md"
-requires-python = ">=3.10"
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-]
-dependencies = [
-"sqlalchemy==2.0.22",
-"flask==3.0.0",
-"pydantic",
-"requests",
-"pandas==2.1.2"
-]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+sqlalchemy = "^2.0.0"
+pydantic
 
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
-[project.urls]
-"Homepage" = "https://github.com/itsakmak/envrio_mysql_app"
-"Bug Tracker" = "https://github.com/itsakmak/envrio_mysql_app/issues"
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
