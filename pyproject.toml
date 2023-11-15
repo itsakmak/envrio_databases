@@ -20,6 +20,16 @@ classifiers=[
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
 
+dynamic = [
+  "version",
+]
+dependencies = [
+  "SQLAlchemy>=2.0.22",
+  "setuptools>=67",
+  "pydantic==2.5.0",
+  "mysql-connector-python>=8.2.0"
+]
+
 [build-system]
 build-backend = "setuptools.build_meta"
 requires = [
