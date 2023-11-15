@@ -3,7 +3,7 @@ name = "mysql_app"
 description = "A library that allows connection to ECO1 mysql database"
 readme = "README.md"
 authors = [
-  { name="Nikolaos Kokkos", email="nikolaoskokkos@gmail.com" },
+  {name="Nikolaos Kokkos", email="nikolaoskokkos@gmail.com"},
   {name="Ioannis Tsakmakis", email="iotsakmak@gmail.com"}
 ]
 requires-python = ">=3.8"
