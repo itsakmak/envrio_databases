@@ -17,43 +17,43 @@ Creates the engine that connects to the MySql database.
 Creates a MySql database with the tables-columns:
 <br>
 <br>
-**Name:** user_tables
+Name: user_tables
 <br>
-**Columns:** *id*, *name*, *email*, *subscription_expires_in*
+Columns: *id*, *name*, *email*, *subscription_expires_in*
 <br>
 <br>
-**Name:** stations
+Name: stations
 <br>
-**Columns:** *id*, *brand*, *model*, *code*, *date_created*,
+Columns: *id*, *brand*, *model*, *code*, *date_created*,
 *longitude*, *latitude*, *elevation*, *access*,
 *name*, *icon_type*
 <br>
 <br>
-**Name:** gateways
+Name: gateways
 <br>
-**Columns:** *id*, *brand*, *model*, *code*, *name*, *station_id*
+Columns: *id*, *brand*, *model*, *code*, *name*, *station_id*
 <br>
 <br>
-**Name:** remote_terminal_units
+Name: remote_terminal_units
 <br>
-**Columns:** *id*, *brand*, *model*, *code*, *longitude*, *latitude*,
+Columns: *id*, *brand*, *model*, *code*, *longitude*, *latitude*,
 *elevation*, *name*, *icon_type*
 <br>
 <br>
-**Name:** sensors_meters
+Name: sensors_meters
 <br>
-**Columns:** *id*, *type*, *measurement*, *unit*, *gauge_height*,
+Columns: *id*, *type*, *measurement*, *unit*, *gauge_height*,
 *name*, *code*, *station_id*, *rtu_id*
 <br>
 <br>
-**Name:** farms_registry
+Name: farms_registry
 <br>
-**Columns:** *id*, *user_id*, *longitude*, *latitude*
+Columns: *id*, *user_id*, *longitude*, *latitude*
 <br>
 <br>
-**Name:** fields_registry
+Name: fields_registry
 <br>
-**Columns:** *id*, *farm_id*, *boundaries*, *soil_properties*
+Columns: *id*, *farm_id*, *boundaries*, *soil_properties*
 <br>
 <br>
 **Name:** applications_registry
