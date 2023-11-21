@@ -15,36 +15,48 @@ Creates the engine that connects to the MySql database.
 Creates a MySql database with the tables-columns:
 <br>
 <br>
-**user_tables**
+**user_tables:**
 *id*, *name*, *email*, *subscription_expires_in*
 <br>
 <br>
-**stations**
+**stations:**
 *id*, *brand*, *model*, *code*, *date_created*,
 *longitude*, *latitude*, *elevation*, *access*,
 *name*, *icon_type*
 <br>
 <br>
-**gateways**
+**gateways:**
 *id*, *brand*, *model*, *code*, *name*, *station_id*
 <br>
 <br>
-**remote_terminal_units**
+**remote_terminal_units:**
 *id*, *brand*, *model*, *code*, *longitude*, *latitude*,
 *elevation*, *name*, *icon_type*
-**sensors_meters**
+<br>
+<br>
+**sensors_meters:**
 *id*, *type*, *measurement*, *unit*, *gauge_height*,
 *name*, *code*, *station_id*, *rtu_id*
-**farms_registry**
+<br>
+<br>
+**farms_registry:**
 *id*, *user_id*, *longitude*, *latitude*
-**fields_registry**
+<br>
+<br>
+**fields_registry:**
 *id*, *farm_id*, *boundaries*, *soil_properties*
-**applications_registry**
+<br>
+<br>
+**applications_registry:**
 *id*, *field_id*, *type*, *status*, *suggested_amount*,
 *applied_amount*, *applied_in*
-**advices_registry**
+<br>
+<br>
+**advices_registry:**
 *id*, *field_id*, *type*, *status*, *date_registered*, *date_created*
-**measurement_translations**
+<br>
+<br>
+**measurement_translations:**
 *measurement*
 *el*
 *en*
@@ -60,17 +72,29 @@ Validates the data type before they are used by crud methods.
 Defines all the methods that Create, Read, Update and Delete
 tables, rows, etc. from MySql database. It includes the
 folloing classes-methods:
-**User**
+<br>
+<br>
+**User:**
 *add*, *get_by_name*, *get_by_id*, *get_by_email*
-**Stations**
+<br>
+<br>
+**Stations:**
 *add*, *get_by_code*, *get_by_brand*, *get_by_access*, *update_date_created*, *delete_by_code*
-**Gateways**
+<br>
+<br>
+**Gateways:**
 *add*, *get_by_code*
-**RemoteTerminalUnits**
+<br>
+<br>
+**RemoteTerminalUnits:**
 *add*, *get_by_code*, *get_by_station_id*
-**SensorsMeters**
+<br>
+<br>
+**SensorsMeters:**
 *add*, *get_by_station_id*, *get_by_rtu_id*, *get_by_station_id_and_rtu_id*, *get_by_id*
-**MeasurementsTranslations**
+<br>
+<br>
+**MeasurementsTranslations:**
 *add*, *get_translation_by_measurement*
 
 **Module Name: influx**
@@ -79,5 +103,7 @@ folloing classes-methods:
 Connects to the InfluxDB database and defines all the required 
 methods to insert data rows, delete rows, retrive bucket info
 and update bucket info. Defines the following methods:
+<br>
+<br>
 *write_point*, *delete_rows*, *query_data*, *list_buckets*, *update_bucket*
 
