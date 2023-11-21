@@ -56,20 +56,20 @@ Name: fields_registry
 Columns: *id*, *farm_id*, *boundaries*, *soil_properties*
 <br>
 <br>
-**Name:** applications_registry
+Name: applications_registry
 <br>
-**Columns:** *id*, *field_id*, *type*, *status*, *suggested_amount*,
+Columns: *id*, *field_id*, *type*, *status*, *suggested_amount*,
 *applied_amount*, *applied_in*
 <br>
 <br>
-**Name:** advices_registry
+Name: advices_registry
 <br>
-**Columns:** *id*, *field_id*, *type*, *status*, *date_registered*, *date_created*
+Columns: *id*, *field_id*, *type*, *status*, *date_registered*, *date_created*
 <br>
 <br>
-**Name:** measurement_translations
+Name: measurement_translations
 <br>
-**Columns:** *measurement*, *el*, *en*
+Columns: *measurement*, *el*, *en*
 
 **Module Name: schemas**
 <br>
@@ -86,34 +86,34 @@ tables, rows, etc. from MySql database. It includes the
 folloing classes-methods:
 <br>
 <br>
-**Class:** User
+Class: User
 <br>
-**Methods:** *add*, *get_by_name*, *get_by_id*, *get_by_email*
-<br>
-<br>
-**Class:** Stations
-<br>
-**Methods:** *add*, *get_by_code*, *get_by_brand*, *get_by_access*, *update_date_created*, *delete_by_code*
+Methods: *add*, *get_by_name*, *get_by_id*, *get_by_email*
 <br>
 <br>
-**Class:** Gateways
+Class: Stations
 <br>
-**Methods:** *add*, *get_by_code*
-<br>
-<br>
-**Class:** RemoteTerminalUnits
-<br>
-**Methods:** *add*, *get_by_code*, *get_by_station_id*
+Methods: *add*, *get_by_code*, *get_by_brand*, *get_by_access*, *update_date_created*, *delete_by_code*
 <br>
 <br>
-**Class:** SensorsMeters
+Class: Gateways
 <br>
-**Methods:** *add*, *get_by_station_id*, *get_by_rtu_id*, *get_by_station_id_and_rtu_id*, *get_by_id*
+Methods: *add*, *get_by_code*
+<br>
+<br>
+Class: RemoteTerminalUnits
+<br>
+Methods: *add*, *get_by_code*, *get_by_station_id*
+<br>
+<br>
+Class: SensorsMeters
+<br>
+Methods: *add*, *get_by_station_id*, *get_by_rtu_id*, *get_by_station_id_and_rtu_id*, *get_by_id*
 <br>
 <br>
 **Class:** MeasurementsTranslations
 <br>
-**Methods:** *add*, *get_translation_by_measurement*
+Methods: *add*, *get_translation_by_measurement*
 
 **Module Name: influx**
 <br>
@@ -124,5 +124,5 @@ methods to insert data rows, delete rows, retrive bucket info
 and update bucket info. Defines the following methods:
 <br>
 <br>
-**Methods:** *write_point*, *delete_rows*, *query_data*, *list_buckets*, *update_bucket*
+Methods: *write_point*, *delete_rows*, *query_data*, *list_buckets*, *update_bucket*
 
