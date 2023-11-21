@@ -2,7 +2,8 @@ __version__='1.0.0'
 __author__='Ioannis Tsakmakis'
 __date_created__='2023-10-31'
 
-import mysql_app.schemas as schemas, mysql_app.models as models
+import schemas
+import models
 from engine import engine
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy import text, or_
