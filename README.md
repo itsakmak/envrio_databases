@@ -5,12 +5,14 @@ A library to manage the Envrio MySql and Influx databases.
 ## Modules:
 
 **Module Name: engine**
-**version: 1.0.0**
+<br>
+**Version: 1.0.0**
 
 Creates the engine that connects to the MySql database.
 
 **Module Name: models**
-**version: 1.0.0**
+<br>
+**Version: 1.0.0**
 
 Creates a MySql database with the tables-columns:
 <br>
@@ -61,13 +63,14 @@ Creates a MySql database with the tables-columns:
 *el*
 *en*
 
-**Module Name: schemas**
-**version: 1.0.0**
+**Module Name: schemas**,
+**Version: 1.0.0**
 
 Validates the data type before they are used by crud methods.
 
 **Module Name: crud**
-**version: 1.0.0**
+<br>
+**Version: 1.0.0**
 
 Defines all the methods that Create, Read, Update and Delete
 tables, rows, etc. from MySql database. It includes the
