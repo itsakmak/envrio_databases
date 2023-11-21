@@ -14,15 +14,21 @@ Creates the engine that connects to the MySql database.
 
 Creates a MySql database with the tables-columns:
 <br>
+<br>
 **user_tables**
 *id*, *name*, *email*, *subscription_expires_in*
+<br>
 <br>
 **stations**
 *id*, *brand*, *model*, *code*, *date_created*,
 *longitude*, *latitude*, *elevation*, *access*,
 *name*, *icon_type*
+<br>
+<br>
 **gateways**
 *id*, *brand*, *model*, *code*, *name*, *station_id*
+<br>
+<br>
 **remote_terminal_units**
 *id*, *brand*, *model*, *code*, *longitude*, *latitude*,
 *elevation*, *name*, *icon_type*
