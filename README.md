@@ -17,8 +17,8 @@ Creates the engine that connects to the MySql database.
 Creates a MySql database with the tables-columns:
 <br>
 <br>
-**user_tables:**
-*id*, *name*, *email*, *subscription_expires_in*
+**Table Name: user_tables:**
+Columns: *id*, *name*, *email*, *subscription_expires_in*
 <br>
 <br>
 **stations:**
