@@ -63,7 +63,8 @@ Creates a MySql database with the tables-columns:
 *el*
 *en*
 
-**Module Name: schemas**,
+**Module Name: schemas**
+<br>
 **Version: 1.0.0**
 
 Validates the data type before they are used by crud methods.
@@ -101,6 +102,7 @@ folloing classes-methods:
 *add*, *get_translation_by_measurement*
 
 **Module Name: influx**
+<br>
 **version: 1.0.1**
 
 Connects to the InfluxDB database and defines all the required 
