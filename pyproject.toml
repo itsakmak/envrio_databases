@@ -1,5 +1,5 @@
 [project]
-name = "envrio_databases"
+name = "databases_library"
 description = "A library that allows Envrio databases management"
 readme = "README.md"
 authors = [
