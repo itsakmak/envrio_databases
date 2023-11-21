@@ -1,6 +1,6 @@
 [project]
-name = "mysql_app"
-description = "A library that allows connection to ECO1 mysql database"
+name = "envrio_databases"
+description = "A library that allows Envrio databases management"
 readme = "README.md"
 authors = [
   {name="Nikolaos Kokkos", email="nikolaoskokkos@gmail.com"},
