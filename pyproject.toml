@@ -2,7 +2,6 @@
 name = "databases_library"
 description = "A library that allows Envrio databases management"
 readme = "README.md"
-version = "1.0.1"
 authors = [
   {name="Nikolaos Kokkos", email="nikolaoskokkos@gmail.com"},
   {name="Ioannis Tsakmakis", email="iotsakmak@gmail.com"}
