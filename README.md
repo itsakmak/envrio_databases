@@ -13,9 +13,11 @@ Creates the engine that connects to the MySql database.
 **version: 1.0.0**
 
 Creates a MySql database with the tables-columns:
-/**user_tables**
+<br>
+**user_tables**
 *id*, *name*, *email*, *subscription_expires_in*
-/**stations**
+<br>
+**stations**
 *id*, *brand*, *model*, *code*, *date_created*,
 *longitude*, *latitude*, *elevation*, *access*,
 *name*, *icon_type*
