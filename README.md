@@ -17,13 +17,13 @@ Creates the engine that connects to the MySql database.
 Creates a MySql database with the tables-columns:
 <br>
 <br>
-**Table Name:** user_tables
+**Name:** user_tables
 <br>
 **Columns:** *id*, *name*, *email*, *subscription_expires_in*
 <br>
 <br>
-**stations:**
-*id*, *brand*, *model*, *code*, *date_created*,
+**Name:** stations
+**Columns:** *id*, *brand*, *model*, *code*, *date_created*,
 *longitude*, *latitude*, *elevation*, *access*,
 *name*, *icon_type*
 <br>
