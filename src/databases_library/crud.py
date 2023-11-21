@@ -3,8 +3,8 @@ __author__='Ioannis Tsakmakis'
 __date_created__='2023-10-31'
 
 import databases_library.schemas as schemas
-import models
-from engine import engine
+import databases_library.models as models
+from databases_library.engine import engine
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy import text, or_
 

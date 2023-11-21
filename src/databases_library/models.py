@@ -6,7 +6,7 @@ __date_created__='2023-10-31'
 
 from sqlalchemy import ForeignKey, Numeric, String, JSON
 from sqlalchemy.orm import  Mapped, mapped_column
-from engine import Base, engine
+from databases_library.engine import Base, engine
 from typing import Optional
 
 # Users
