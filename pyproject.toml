@@ -20,9 +20,6 @@ classifiers=[
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
 
-[tool.pipenv]
-version = "1.0.0"
-
 dynamic = [
   "version",
 ]
