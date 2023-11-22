@@ -4,7 +4,6 @@ __date_created__='2023-11-16'
 
 from influxdb_client import InfluxDBClient, Bucket, BucketRetentionRules
 from influxdb_client.client.write_api import SYNCHRONOUS
-import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
 
