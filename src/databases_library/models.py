@@ -6,7 +6,7 @@ __date_created__='2023-11-23'
 
 from sqlalchemy import ForeignKey, Numeric, String, JSON
 from sqlalchemy.orm import  Mapped, mapped_column
-from databases_library.engine import Base, engine
+from databases_library.engine import Base, create_db_engine
 from typing import Optional
 
 # Users
@@ -121,4 +121,4 @@ class MeasurementTranslations(Base):
     el: Mapped[Optional[str]] = mapped_column(String(800))
     en: Mapped[Optional[str]] = mapped_column(String(800))
 
-Base.metadata.create_all(engine)
+Base.metadata.create_all(create_db_engine())
