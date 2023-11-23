@@ -1,6 +1,6 @@
-__version__='1.0.0'
+__version__='1.0.1'
 __author__='Ioannis Tsakmakis'
-__date_created__='2023-10-31'
+__date_created__='2023-11-23'
 
 import databases_library.schemas as schemas
 import databases_library.models as models
