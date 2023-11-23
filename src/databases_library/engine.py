@@ -14,7 +14,7 @@ def create_db_engine():
     with open(config_path,'r') as f:
         config = json.load(f)
 
-    return create_engine(url=f'{config["DBAPI"]}://{config["username"]}:{config['password']}@{config["host-ip"]}/{config["database"]}', 
+engine = create_engine(url=f'{config["DBAPI"]}://{config["username"]}:{config['password']}@{config["host-ip"]}/{config["database"]}', 
                        pool_pre_ping=True)
 class Base(DeclarativeBase):
     pass
