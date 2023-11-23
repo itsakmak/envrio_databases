@@ -6,7 +6,7 @@ A library to manage the Envrio MySql and Influx databases.
 
 **Module Name: engine**
 <br>
-**Version: 1.0.2**
+**Version: 1.0.3**
 
 Creates the engine that connects to the MySql database.
 
