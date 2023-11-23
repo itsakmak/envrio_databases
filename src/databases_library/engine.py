@@ -13,7 +13,7 @@ config_path = os.path.join(local_directory, 'mysql_config.json')
 with open(config_path,'r') as f:
     config = json.load(f)
 
-engine = create_engine(url=f'{config["DBAPI"]}://{config["username"]}:{config['password']}@{config["host-ip"]}/{config["database"]}', 
+engine = create_engine(url=f'{config["DBAPI"]}://{config["username"]}:{config["password"]}@{config["host-ip"]}/{config["database"]}', 
                        pool_pre_ping=True)
 class Base(DeclarativeBase):
     pass
