@@ -12,7 +12,7 @@ Creates the engine that connects to the MySql database.
 
 **Module Name: models**
 <br>
-**Version: 1.0.0**
+**Version: 1.0.1**
 
 Creates a MySql database with the tables-columns:
 <br>
@@ -79,7 +79,7 @@ Validates the data type before they are used by crud methods.
 
 **Module Name: crud**
 <br>
-**Version: 1.0.0**
+**Version: 1.0.1**
 
 Defines all the methods that Create, Read, Update and Delete
 tables, rows, etc. from MySql database. It includes the
