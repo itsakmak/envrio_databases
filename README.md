@@ -8,13 +8,13 @@ A library to manage the Envrio MySql and Influx databases.
 <br>
 **Version: 1.0.4**
 
-Creates the engine that connects to the MySql database.
+Creates the engine that connects an app to the MySql database.
 
 **Module Name: models**
 <br>
-**Version: 1.0.2**
+**Version: 1.0.3**
 
-Creates a MySql database with the tables-columns shown in the 
+Creates the envrio_core MySql database with the tables-columns shown in the 
 following table:
 <br>
 <br>
@@ -46,8 +46,8 @@ following table:
     </tr>
     <tr>
       <td>subscription_expires_in</td>
-      <td>varchar(20)</td>
-      <td>User subscritpion status. Takes the values 'inf' or a specific date in 'YYY-mm-dd' format.</td>
+      <td>float</td>
+      <td>The timestampt that the user subscription expires.</td>
     </tr>
     <tr>
       <td rowspan="11">stations</td>
@@ -72,8 +72,8 @@ following table:
     </tr>
     <tr>
        <td>date_created</td>
-       <td>varchar(24)</td>
-       <td>The date that station installed on the field and started to transmit data.</td>
+       <td>float</td>
+       <td>The timestamp that station installed on the field and started to transmit data.</td>
     </tr>
     <tr>
        <td>longitude</td>
@@ -300,7 +300,7 @@ following table:
     </tr>
     <tr>
       <td>applied_in</td>
-      <td>varchar(20)</td>
+      <td>float</td>
       <td>The timestamp that the application occurs</td>
     </tr>
     <tr>
@@ -326,12 +326,12 @@ following table:
     </tr>
     <tr>
       <td>date_registered</td>
-      <td>varchar(10)</td>
+      <td>float</td>
       <td>The timestampt that the user asked for the advice.</td>
     </tr>
     <tr>
       <td>date_created</td>
-      <td>varchar(10)</td>
+      <td>float</td>
       <td>The timestampt that the advice status switched to 'ready'.</td>
     </tr>
     <tr>
@@ -355,9 +355,9 @@ following table:
 
 **Module Name: schemas**
 <br>
-**Version: 1.0.0**
+**Version: 1.0.1**
 
-Validates the data type before they are used by crud methods.
+Validates the data type before they are used by CRUD module methods creating classes inheriting from pydantic basemodel class.
 
 **Module Name: crud**
 <br>

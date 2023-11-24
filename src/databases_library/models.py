@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-__version__='1.0.2'
+__version__='1.0.3'
 __author__='Ioannis Tsakmakis'
 __date_created__='2023-11-24'
 
@@ -16,7 +16,7 @@ class Users(Base):
     id: Mapped[int] = mapped_column(primary_key=True,autoincrement=True)
     name: Mapped[str] = mapped_column(String(500))
     email: Mapped[str] = mapped_column(String(500))
-    subscription_expires_in: Mapped[str] = mapped_column(String(20))
+    subscription_expires_in: Mapped[float]
 
 # Devices
 class Stations(Base):
@@ -26,7 +26,7 @@ class Stations(Base):
     brand: Mapped[str] = mapped_column(String(50))
     model: Mapped[str] = mapped_column(String(200))
     code: Mapped[str] = mapped_column(String(100),unique=True)
-    date_created: Mapped[str] = mapped_column(String(24))
+    date_created: Mapped[float]
     longitude: Mapped[float] = mapped_column(Numeric(10,8))
     latitude: Mapped[float] = mapped_column(Numeric(10,8))
     elevation: Mapped[int]
@@ -98,7 +98,7 @@ class Applications(Base):
     type: Mapped[str] = mapped_column(String(10))
     suggested_amount: Mapped[dict|list] = mapped_column(type_=JSON)
     applied_amount: Mapped[dict|list] = mapped_column(type_=JSON)
-    applied_in: Mapped[str] = mapped_column(String(20))
+    applied_in: Mapped[float]
 
 # Advices
 
@@ -109,8 +109,8 @@ class Advices(Base):
     field_id: Mapped[int] =  mapped_column(ForeignKey('fields_registry.id',ondelete='CASCADE'))
     type: Mapped[str] = mapped_column(String(10))
     status: Mapped[str] = mapped_column(String(10))
-    date_registered: Mapped[str] = mapped_column(String(20))
-    date_created: Mapped[str] = mapped_column(String(20))
+    date_registered: Mapped[float]
+    date_created: Mapped[float]
 
 # Measurements Languages
 

@@ -1,6 +1,6 @@
-__version__='1.0.0'
+__version__='1.0.1'
 __author__='Ioannis Tsakmakis'
-__date_created__='2023-10-31'
+__date_created__='2023-11-24'
 
 from pydantic import BaseModel
 from typing import Optional
@@ -9,13 +9,13 @@ from typing import Optional
 class UsersTableBase(BaseModel):
     name: str
     email: str
-    subscription_expires_in: str
+    subscription_expires_in: float
 
 class StationsBase(BaseModel):
     brand: str
     model: str
     code: str
-    date_created: str
+    date_created: float
     longitude: float
     latitude: float
     elevation: int
@@ -63,16 +63,16 @@ class FieldsRegistyBase(BaseModel):
 class ApplicationsBase(BaseModel):
     field_id: int
     type: str
-    suggested_amount: float
-    applied_amount: float
-    applied_in: str
+    suggested_amount: dict
+    applied_amount: dict
+    applied_in: float
 
 class AdvicesBase(BaseModel):
     field_id: int
     type: str
     status: str
-    date_registered: str
-    date_created: str
+    date_registered: float
+    date_created: float
 
 class MeasurementTranslationsBase(BaseModel):
     measurement: str
