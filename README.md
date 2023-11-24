@@ -38,11 +38,7 @@ following table:
     </tr>
     <tr>
       <td>email</td>
-      <td> varchar(500)</td>
-    </tr>
-    <tr>
-      <td>email</td>
-      <td> varchar(500)</td>
+      <td>varchar(500)</td>
     </tr>
     <tr>
       <td>subscription_expires_in</td>
@@ -95,7 +91,7 @@ following table:
     </tr>
     <tr>
       <td rowspan="6">gateways</td>
-      <td>*id*, *brand*, *model*, *code*, *name*, *station_id*</td>
+      <td>id</td>
       <td>int</td>
     </tr>
     <tr>
@@ -156,7 +152,7 @@ following table:
       <td>int</td>
     </tr>
     <tr>
-      <td rowspawn="9">sensors_meters</td>
+      <td rowspan="9">sensors_meters</td>
       <td>id</td>
       <td>int</td>
     </tr>
@@ -193,7 +189,7 @@ following table:
       <td>int</td>
     </tr>
     <tr>
-      <td rowspawn="4">farms_registry</td>
+      <td rowspan="4">farms_registry</td>
       <td>id</td>
       <td>int</td>
     </tr>
@@ -210,7 +206,7 @@ following table:
       <td>decimal(10,8)</td>
     </tr>
     <tr>
-      <td rowspawn="4">fields_registry</td>
+      <td rowspan="4">fields_registry</td>
       <td>id</td>
       <td>int</td>
     </tr>
@@ -227,7 +223,7 @@ following table:
       <td>json</td>
     </tr>
     <tr>
-      <td rowspawn="6">applications_registry</td>
+      <td rowspan="6">applications_registry</td>
       <td>id</td>
       <td>int</td>
     </tr>
@@ -252,7 +248,7 @@ following table:
       <td>varchar(20)</td>
     </tr>
     <tr>
-      <td rowspawn="6">advices_registry</td>
+      <td rowspan="6">advices_registry</td>
       <td>id</td>
       <td>int</td>
     </tr>
@@ -277,7 +273,7 @@ following table:
       <td>varchar(10)</td>
     </tr>
     <tr>
-      <td rowspawn="3">measurement_translations</td>
+      <td rowspan="3">measurement_translations</td>
       <td>measurement</td>
       <td>varchar(100)</td>
     </tr>
