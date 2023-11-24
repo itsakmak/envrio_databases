@@ -47,7 +47,7 @@ following table:
     <tr>
       <td>subscription_expires_in</td>
       <td>float</td>
-      <td>The timestampt that the user subscription expires</td>
+      <td>The timestamp that the user subscription expires</td>
     </tr>
     <tr>
       <td rowspan="11">stations</td>
@@ -68,7 +68,7 @@ following table:
     <tr>
        <td>code</td>
        <td>varchar(100)</td>
-       <td>Station id as defined in the data providers API</td>
+       <td>Station ID as defined in the data providers API</td>
     </tr>
     <tr>
        <td>date_created</td>
@@ -78,7 +78,7 @@ following table:
     <tr>
        <td>longitude</td>
        <td>decimal(10,8)</td>
-       <td>The lognitude of the station's installation point</td>
+       <td>The longitude of the station's installation point</td>
     </tr>
     <tr>
        <td>latitude</td>
@@ -93,18 +93,18 @@ following table:
     <tr>
        <td>access</td>
        <td>json</td>
-       <td>A json object that contains an array with the user_ids that have an active subscription for the station e.g. {"users": [1,2,3]}</td>
+       <td>A JSON object that contains an array with the user_ids that have an active subscription for the station e.g. {"users": [1,2,3]}</td>
     </tr>
     <tr>
        <td>name</td>
        <td>json</td>
-       <td>A json object with the name that is give to the station is various languages e.g., {"el":"Αθήνα","en":"Athens"}.
-       Usually the name of the station corresponds to the location that it is installed</td>
+       <td>A JSON object with the name that is given to the station in various languages e.g., {"el": "Αθήνα", "en": "Athens"}.
+       Usually, the name of the station corresponds to the location where it is installed</td>
     </tr>
     <tr>
        <td>icon_type</td>
        <td>varchar(10)</td>
-       <td>The type of the station. It can be on of 'meteo', 'coastal' or 'hydro'</td>
+       <td>The type of the station. It can be one of 'meteo', 'coastal', or 'hydro'</td>
     </tr>
     <tr>
       <td rowspan="6">gateways</td>
@@ -125,7 +125,7 @@ following table:
     <tr>
       <td>code</td>
       <td>varchar(100)</td>
-      <td>Gateway id as defined in the data providers API</td>
+      <td>Gateway ID as defined in the data providers API</td>
     </tr>
     <tr>
       <td>name</td>
@@ -135,7 +135,7 @@ following table:
     <tr>
       <td>station_id</td>
       <td>int</td>
-      <td>The id of the station that the gateways is connected to</td>
+      <td>The id of the station that the gateways are connected to</td>
     </tr>
     <tr>
       <td rowspan="9">remote_terminal_units</td>
@@ -176,7 +176,7 @@ following table:
     <tr>
       <td>name</td>
       <td>json</td>
-       <td>A json object with the name that is give to the remote terminal unit is various languages e.g., {"el":"Τερματική Μονάδα 1","en":"Terminal Unit 1"}</td>
+       <td>A JSON object with the name that is given to the remote terminal unit is various languages e.g., {"el": "Τερματική Μονάδα 1", "en": "Terminal Unit 1"}</td>
     </tr>
     <tr>
       <td>station_id</td>
@@ -223,12 +223,12 @@ following table:
     <tr>
       <td>station_id</td>
       <td>int</td>
-      <td>The id of the station that the sensor-meter is connected to</td>
+      <td>The ID of the station that the sensor-meter is connected to</td>
     </tr>
     <tr>
       <td>rtu_id</td>
       <td>int</td>
-      <td>The id of the remote terminal unit that the sensor-meter is connected to</td>
+      <td>The ID of the remote terminal unit that the sensor-meter is connected to</td>
     </tr>
     <tr>
       <td rowspan="4">farms_registry</td>
@@ -239,7 +239,7 @@ following table:
     <tr>
       <td>user_id</td>
       <td>int</td>
-      <td>The user id that the farm belong's to</td>
+      <td>The user ID that the farm belongs to</td>
     </tr>
     <tr>
       <td>longitude</td>
@@ -260,7 +260,7 @@ following table:
     <tr>
       <td>farm_id</td>
       <td>int</td>
-      <td>The farm id that the farm is assigned to</td>
+      <td>The farm ID that the farm is assigned to</td>
     </tr>
     <tr>
       <td>boundaries</td>
@@ -270,7 +270,7 @@ following table:
     <tr>
       <td>soil_properties</td>
       <td>json</td>
-      <td>A json object that includes the key layers that refers to the field distict soil layers and the key data that it's an array with the hydraulic properties (sat=saturation point,fc=field capacit,pwp=permanent wilting poin,ksat=saturated hydraulic conductivity) for each layer e.g., {"layers":2,"data":[{"depth":5,"sat":40,"fc":32,"pwp":14,"ksat":100},{"depth":25,"sat":42,"fc":35,"pwp":15,"ksat":100}]}</td>
+      <td>A JSON object that includes the key layers that refer to the field distinct soil layers and the key data that it's an array with the hydraulic properties (sat=saturation point,fc=field capacity,pwp=permanent wilting point,ksat=saturated hydraulic conductivity) for each layer e.g., {"layers":2, "data":[{"depth":5, "sat":40, "fc":32, "pwp":14, "ksat":100},{"depth":25, "sat":42, "fc":35, "pwp":15, "ksat":100}]}</td>
     </tr>
     <tr>
       <td rowspan="6">applications_registry</td>
@@ -281,7 +281,7 @@ following table:
     <tr>
       <td>field_id</td>
       <td>int</td>
-      <td>The field id that the application was implemented</td>
+      <td>The field ID that the application was implemented</td>
     </tr>
     <tr>
       <td>type</td>
@@ -291,12 +291,12 @@ following table:
     <tr>
       <td>suggested_amount</td>
       <td>json</td>
-      <td>A json object with the keys type and amount. The key type take values 'water' or '19-6-15 (+7) +2MgO +0,5B'(fertilizer composition) in the case of irrigation and fertilization respectively. Similarly, the key amount is an integer and refers to the amount of water in qubic meters or the fertilizer amount in kg that is suggester to be applied to the field by the model. For example in the case of an irrigation advice {"type":"water","amount":300}
+      <td>A JSON object with the type and amount of the key. The key type takes values 'water' or '19-6-15 (+7) +2MgO +0,5B'(fertilizer composition) in the case of irrigation and fertilization respectively. Similarly, the key amount is an integer and refers to the amount of water in cubic meters or the fertilizer amount in kg that is suggested to be applied to the field by the model. For example in the case of an irrigation advice {"type": "water", "amount":300}
     </tr>
     <tr>
       <td>applied_amount</td>
       <td>json</td>
-      <td>The amount of water or fertilizer that is actually applied on the field e.g. {"type":"water","amount":390}
+      <td>The amount of water or fertilizer that is actually applied on the field e.g. {"type": "water", "amount":390}
     </tr>
     <tr>
       <td>applied_in</td>
@@ -312,7 +312,7 @@ following table:
     <tr>
       <td>field_id</td>
       <td>int</td>
-      <td>The field id that the advice was asked for</td>
+      <td>The field ID that the advice was asked for</td>
     </tr>
     <tr>
       <td>type</td>
@@ -327,12 +327,12 @@ following table:
     <tr>
       <td>date_registered</td>
       <td>float</td>
-      <td>The timestampt that the user asked for the advice</td>
+      <td>The timestamp that the user asked for the advice</td>
     </tr>
     <tr>
       <td>date_created</td>
       <td>float</td>
-      <td>The timestampt that the advice status switched to 'ready'</td>
+      <td>The timestamp that the advice status switched to 'ready'</td>
     </tr>
     <tr>
       <td rowspan="3">measurement_translations</td>
@@ -343,12 +343,12 @@ following table:
     <tr>
       <td>el</td>
       <td>varchar(800)</td>
-      <td> A name of a measured parameter expresed in a manner that the end user can understand in Greek language</td>
+      <td> A name of a measured parameter expressed in a manner that the end user can understand in the Greek language</td>
     </tr>
     <tr>
       <td>en</td>
       <td>varchar(800)</td>
-      <td> A name of a measured parameter expresed in a manner that the end user can understand in English language</td>
+      <td> A name of a measured parameter expressed in a manner that the end user can understand in the English language</td>
     </tr>
   </tbody>
 </table>
@@ -357,15 +357,15 @@ following table:
 <br>
 **Version: 1.0.1**
 
-Validates the data type before they are used by CRUD module methods creating classes inheriting from pydantic basemodel class.
+Validates the data type before they are used by CRUD module methods creating classes inheriting from the pydantic basemodel class.
 
 **Module Name: crud**
 <br>
 **Version: 1.0.2**
 
-Defines all the methods that Create, Read, Update and Delete
-tables, rows, etc. from MySql database. It includes the
-folloing classes-methods:
+Defines all the methods that Create, Read, Update, and Delete
+tables, rows, etc. from the MySql database. It includes the
+following classes-methods:
 <br>
 <br>
 <table>
@@ -384,15 +384,15 @@ folloing classes-methods:
     </tr>
     <tr>
       <td>get_by_name</td>
-      <td>By providing the user name it returns an sqlalchemy object with the user id, name, email and subscription_expires_in info</td>
+      <td>By providing the user name it returns an sqlalchemy object with the user id, name, email, and subscription_expires_in info</td>
     </tr>
     <tr>
       <td>get_by_id</td>
-      <td>By providing the user id it returns an sqlalchemy object with the user id, name, email and subscription_expires_in info</td>
+      <td>By providing the user ID it returns an sqlalchemy object with the user id, name, email, and subscription_expires_in info</td>
     </tr>
     <tr>
       <td>get_by_email</td>
-      <td>By providing the user email it returns an sqlalchemy object with the user id, name, email and subscription_expires_in info</td>
+      <td>By providing the user email it returns an sqlalchemy object with the user id, name, email, and subscription_expires_in info</td>
     </tr>
     <tr>
       <td rowspan="6">Stations</td>
@@ -402,19 +402,19 @@ folloing classes-methods:
     <tr>
       <td>get_by_code</td>
       <td>By providing the station code it returns an sqlalchemy object with the station id, brand, model, code, date_created, longitude,
-      latitude, elevation, access, name and icon_type</td>
+      latitude, elevation, access, name, and icon_type</td>
     </tr>
     <tr>
       <td>get_by_brand</td>
-      <td>By providing the station brand it returns an array of sqlalchemy objects equal to the stations of the provided brand. Each sqlalchemy onject provided infor for the station id, brand, model, code, date_created, longitude, latitude, elevation, access, name and icon_type</td>
+      <td>By providing the station brand it returns an array of sqlalchemy objects equal to the stations of the provided brand. Each sqlalchemy object provided infor for the station id, brand, model, code, date_created, longitude, latitude, elevation, access, name, and icon_type</td>
     </tr>
     <tr>
       <td>get_by_access</td>
-      <td>By providing a user id it returns an array of sqlalchemy objects with the stations that the use has an active subscription. Each sqlalchemy onject provided infor for the station id, brand, model, code, date_created, longitude, latitude, elevation, access, name and icon_type</td>
+      <td>By providing a user ID it returns an array of sqlalchemy objects with the stations that the user has an active subscription. Each sqlalchemy object provided infor for the station id, brand, model, code, date_created, longitude, latitude, elevation, access, name, and icon_type</td>
     </tr>
     <tr>
       <td>update_date_created</td>
-      <td>By providing a station id and a timestamp it updates the date_created column value.</td>
+      <td>By providing a station ID and a timestamp it updates the date_created column value.</td>
     </tr>
     <tr>
       <td>delete_by_code</td>
@@ -427,7 +427,7 @@ folloing classes-methods:
     </tr>
     <tr>
       <td>get by code</td>
-      <td>By providing the gateway code it returns an sqlalchemy object with the gateway id, brand, model, code, name and station_id</td>
+      <td>By providing the gateway code it returns an sqlalchemy object with the gateway id, brand, model, code, name, and station_id</td>
     </tr>
     <tr>
       <td rowspan="3">RemoteTerminalUnits</td>
@@ -440,7 +440,7 @@ folloing classes-methods:
     </tr>
     <tr>
       <td>get_by_station_id</td>
-      <td>By providing a station id it returns an sqlalchemy object with the terminal unit id, brand, model, code, longitude, latitude, elevation, name and station_id</td>
+      <td>By providing a station ID it returns an sqlalchemy object with the terminal unit id, brand, model, code, longitude, latitude, elevation, name and station_id</td>
     </tr>
     <tr>
       <td rowspan="3">SensorsMeters</td>
@@ -449,7 +449,7 @@ folloing classes-methods:
     </tr>
     <tr>
       <td>get_by_station_id</td>
-      <td>By providing a station id it returns an sqlalchemy object with the sensor/meter id, type, measurement, unit, gauge_height, name, code,station_id and rtu_id</td>
+      <td>By providing a station ID it returns an sqlalchemy object with the sensor/meter id, type, measurement, unit, gauge_height, name, code,station_id and rtu_id</td>
     </tr>
     <tr>
       <td>get_by_rtu_id</td>
@@ -457,7 +457,7 @@ folloing classes-methods:
     </tr>
     <tr>
       <td>get_by_station_id_and_rtu_id</td>
-      <td>By providing a station id and a remote terminal unit id it returns an sqlalchemy object with the sensor/meter id, type, measurement, unit, gauge_height, name, code,station_id and rtu_id</td>
+      <td>By providing a station ID and a remote terminal unit ID it returns an sqlalchemy object with the sensor/meter id, type, measurement, unit, gauge_height, name, code,station_id and rtu_id</td>
     </tr>
     <tr>
       <td>get_by_id</td>
@@ -480,7 +480,7 @@ folloing classes-methods:
 **version: 1.0.1**
 
 Connects to the InfluxDB database and defines all the required 
-methods to insert data rows, delete rows, retrive bucket info
+methods to insert data rows, delete rows, retrieve bucket info
 and update bucket info. Defines the following methods:
 <br>
 <br>
