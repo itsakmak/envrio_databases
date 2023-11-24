@@ -12,7 +12,7 @@ Creates the engine that connects to the MySql database.
 
 **Module Name: models**
 <br>
-**Version: 1.0.1**
+**Version: 1.0.2**
 
 Creates a MySql database with the tables-columns:
 <br>
