@@ -14,62 +14,65 @@ Creates the engine that connects to the MySql database.
 <br>
 **Version: 1.0.2**
 
-Creates a MySql database with the tables-columns:
+Creates a MySql database with the tables-columns shown in the 
+following table:
 <br>
 <br>
-Name: user_tables
-<br>
-Columns: *id*, *name*, *email*, *subscription_expires_in*
-<br>
-<br>
-Name: stations
-<br>
-Columns: *id*, *brand*, *model*, *code*, *date_created*,
-*longitude*, *latitude*, *elevation*, *access*,
-*name*, *icon_type*
-<br>
-<br>
-Name: gateways
-<br>
-Columns: *id*, *brand*, *model*, *code*, *name*, *station_id*
-<br>
-<br>
-Name: remote_terminal_units
-<br>
-Columns: *id*, *brand*, *model*, *code*, *longitude*, *latitude*,
-*elevation*, *name*, *icon_type*
-<br>
-<br>
-Name: sensors_meters
-<br>
-Columns: *id*, *type*, *measurement*, *unit*, *gauge_height*,
-*name*, *code*, *station_id*, *rtu_id*
-<br>
-<br>
-Name: farms_registry
-<br>
-Columns: *id*, *user_id*, *longitude*, *latitude*
-<br>
-<br>
-Name: fields_registry
-<br>
-Columns: *id*, *farm_id*, *boundaries*, *soil_properties*
-<br>
-<br>
-Name: applications_registry
-<br>
-Columns: *id*, *field_id*, *type*, *status*, *suggested_amount*,
-*applied_amount*, *applied_in*
-<br>
-<br>
-Name: advices_registry
-<br>
-Columns: *id*, *field_id*, *type*, *status*, *date_registered*, *date_created*
-<br>
-<br>
-Name: measurement_translations
-<br>
-Columns: *measurement*, *el*, *en*
+<table>
+  <thead>
+    <tr>
+      <th>Table Names</th>
+      <th>Column Names</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>user_tables</td>
+      <td>*id*, *name*, *email*, *subscription_expires_in*</td>
+    </tr>
+    <tr>
+      <td>stations</td>
+      <td>*id*, *brand*, *model*, *code*, *date_created*,
+         *longitude*, *latitude*, *elevation*, *access*,
+            *name*, *icon_type*</td>
+    </tr>
+    <tr>
+      <td>gateways</td>
+      <td>*id*, *brand*, *model*, *code*, *name*, *station_id*</td>
+    </tr>
+    <tr>
+      <td>remote_terminal_units</td>
+      <td>*id*, *brand*, *model*, *code*, *longitude*, *latitude*,
+            *elevation*, *name*, *icon_type*</td>
+    </tr>
+    <tr>
+      <td>sensors_meters</td>
+      <td>*id*, *type*, *measurement*, *unit*, *gauge_height*,
+            *name*, *code*, *station_id*, *rtu_id*</td>
+    </tr>
+    <tr>
+      <td>farms_registry</td>
+      <td>*id*, *user_id*, *longitude*, *latitude*</td>
+    </tr>
+    <tr>
+      <td>fields_registry</td>
+      <td>*id*, *farm_id*, *boundaries*, *soil_properties*</td>
+    </tr>
+    <tr>
+      <td>applications_registry</td>
+      <td>*id*, *field_id*, *type*, *status*, *suggested_amount*,
+            *applied_amount*, *applied_in*</td>
+    </tr>
+    <tr>
+      <td>advices_registry</td>
+      <td>*id*, *field_id*, *type*, *status*, *date_registered*, *date_created*</td>
+    </tr>
+    <tr>
+      <td>measurement_translations</td>
+      <td>*measurement*, *el*, *en*</td>
+    </tr>
+  </tbody>
+</table>
 
 **Module Name: schemas**
 <br>
