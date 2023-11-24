@@ -96,8 +96,8 @@ class Applications(Base):
     id: Mapped[int] = mapped_column(primary_key=True,autoincrement=True)
     field_id: Mapped[int] =  mapped_column(ForeignKey('fields_registry.id',ondelete='CASCADE'))
     type: Mapped[str] = mapped_column(String(10))
-    suggested_amount: Mapped[float]
-    applied_amount: Mapped[float]
+    suggested_amount: Mapped[dict|list] = mapped_column(type_=JSON)
+    applied_amount: Mapped[dict|list] = mapped_column(type_=JSON)
     applied_in: Mapped[str] = mapped_column(String(20))
 
 # Advices
