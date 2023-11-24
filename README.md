@@ -1,6 +1,6 @@
 # Envrio Databases Library
 
-A library to manage the Envrio MySql and Influx databases.
+This repository contains the library that manages the Envrio MySql and Influx databases.
 
 ## Modules:
 
@@ -32,146 +32,146 @@ following table:
       <td rowspan="4">user_tables</td>
       <td>id</td>
       <td>int</td>
-      <td>User unique indentification number.</td>
+      <td>User unique indentification number</td>
     </tr>
     <tr>
       <td>name</td>
       <td>varchar(500)</td>
-      <td>User cognito name.</td>
+      <td>User cognito name</td>
     </tr>
     <tr>
       <td>email</td>
       <td>varchar(500)</td>
-      <td>User email.</td>
+      <td>User email</td>
     </tr>
     <tr>
       <td>subscription_expires_in</td>
       <td>float</td>
-      <td>The timestampt that the user subscription expires.</td>
+      <td>The timestampt that the user subscription expires</td>
     </tr>
     <tr>
       <td rowspan="11">stations</td>
       <td>id</td>
       <td>int</td>
-      <td>Station unique identification number.</td>
+      <td>Station unique identification number</td>
     </tr>
     <tr>
        <td>brand</td>
        <td>varchar(50)</td>
-       <td>Station brand.</td>
+       <td>Station brand</td>
     </tr>
     <tr>
        <td>model</td>
        <td>varchar(200)</td>
-       <td>Station specific model.</td>
+       <td>Station specific model</td>
     </tr>
     <tr>
        <td>code</td>
        <td>varchar(100)</td>
-       <td>Station id as defined in the data providers API.</td>
+       <td>Station id as defined in the data providers API</td>
     </tr>
     <tr>
        <td>date_created</td>
        <td>float</td>
-       <td>The timestamp that station installed on the field and started to transmit data.</td>
+       <td>The timestamp that station installed on the field and started to transmit data</td>
     </tr>
     <tr>
        <td>longitude</td>
        <td>decimal(10,8)</td>
-       <td>The lognitude of the station's installation point.</td>
+       <td>The lognitude of the station's installation point</td>
     </tr>
     <tr>
        <td>latitude</td>
        <td>decimal(10,8)</td>
-        <td>The latitude of the station's installation point.</td>
+        <td>The latitude of the station's installation point</td>
     </tr>
     <tr>
        <td>elevation</td>
        <td>int</td>
-       <td>The elevation of the station's installation point.</td>
+       <td>The elevation of the station's installation point</td>
     </tr>
     <tr>
        <td>access</td>
        <td>json</td>
-       <td>A json object that contains an array with the user_ids that have an active subscription for the station e.g. {"users": [1,2,3]}.</td>
+       <td>A json object that contains an array with the user_ids that have an active subscription for the station e.g. {"users": [1,2,3]}</td>
     </tr>
     <tr>
        <td>name</td>
        <td>json</td>
        <td>A json object with the name that is give to the station is various languages e.g., {"el":"Αθήνα","en":"Athens"}.
-       Usually the name of the station corresponds to the location that it is installed.</td>
+       Usually the name of the station corresponds to the location that it is installed</td>
     </tr>
     <tr>
        <td>icon_type</td>
        <td>varchar(10)</td>
-       <td>The type of the station. It can be on of 'meteo', 'coastal' or 'hydro'.</td>
+       <td>The type of the station. It can be on of 'meteo', 'coastal' or 'hydro'</td>
     </tr>
     <tr>
       <td rowspan="6">gateways</td>
       <td>id</td>
       <td>int</td>
-      <td>Gatewasy unique identification number.</td>
+      <td>Gatewasy unique identification number</td>
     </tr>
     <tr>
       <td>brand</td>
       <td>varchar(50)</td>
-      <td>Gateway brand.</td>
+      <td>Gateway brand</td>
     </tr>
     <tr>
       <td>model</td>
       <td>varchar(200)</td>
-      <td>Gateway specific model.</td>
+      <td>Gateway specific model</td>
     </tr>
     <tr>
       <td>code</td>
       <td>varchar(100)</td>
-      <td>Gateway id as defined in the data providers API.</td>
+      <td>Gateway id as defined in the data providers API</td>
     </tr>
     <tr>
       <td>name</td>
       <td>varchar(500)</td>
-      <td>Gateway name as defined in the data provider API.</td>
+      <td>Gateway name as defined in the data provider API</td>
     </tr>
     <tr>
       <td>station_id</td>
       <td>int</td>
-      <td>The id of the station that the gateways is connected to.</td>
+      <td>The id of the station that the gateways is connected to</td>
     </tr>
     <tr>
       <td rowspan="9">remote_terminal_units</td>
       <td>id</td>
       <td>int</td>
-      <td>remote terminal unit unique identification number.</td>
+      <td>remote terminal unit unique identification number</td>
     </tr>
     <tr>
       <td>brand</td>
       <td>varchar(50)</td>
-      <td>remote terminal unit brand.</td>
+      <td>remote terminal unit brand</td>
     </tr>
     <tr>
       <td>model</td>
       <td>varchar(200)</td>
-      <td>remote terminal unit specific model.</td>
+      <td>remote terminal unit specific model</td>
     </tr>
     <tr>
       <td>code</td>
       <td>varchar(100)</td>
-      <td>remote terminal unit id as defined in the data providers API.</td>
+      <td>remote terminal unit id as defined in the data providers API</td>
     </tr>
     <tr>
       <td>longitude</td>
       <td>decimal(10,8)</td>
-      <td>The longitude of the remote terminal unit's installation point.</td>
+      <td>The longitude of the remote terminal unit's installation point</td>
     </tr>
     <tr>
       <td>latitude</td>
       <td>decimal(10,8)</td>
-      <td>The latitude of the remote terminal unit's installation point.</td>
+      <td>The latitude of the remote terminal unit's installation point</td>
     </tr>
     <tr>
       <td>elevation</td>
       <td>int</td>
-      <td>The elevation of the remote terminal unit's installation point.</td>
+      <td>The elevation of the remote terminal unit's installation point</td>
     </tr>
     <tr>
       <td>name</td>
@@ -181,13 +181,13 @@ following table:
     <tr>
       <td>station_id</td>
       <td>int</td>
-      <td>The id of the station that the remote terminal unit is paired with.</td>
+      <td>The id of the station that the remote terminal unit is paired with</td>
     </tr>
     <tr>
       <td rowspan="9">sensors_meters</td>
       <td>id</td>
       <td>int</td>
-      <td>Sensor or Meter unique identification number.</td>
+      <td>Sensor or Meter unique identification number</td>
     </tr>
     <tr>
       <td>type</td>
@@ -202,70 +202,70 @@ following table:
     <tr>
       <td>unit</td>
       <td>varchar(20)</td>
-      <td>The unit that the measurements are reported.</td>
+      <td>The unit that the measurements are reported</td>
     </tr>
     <tr>
       <td>gauge_height</td>
       <td>float</td>
       <td>The height (m) that the sensor-meter is placed in reference to the surface. If the sensor-meter is installed within 
-      the soil or into the sea the gauge_height gets negative values.
+      the soil or into the sea the gauge_height gets negative values</td>
     </tr>
     <tr>
       <td>name</td>
       <td>varchar(100)</td>
-      <td>Sensor-meter name as defined in the data provider API.</td>
+      <td>Sensor-meter name as defined in the data provider API</td>
     </tr>
     <tr>
       <td>code</td>
       <td>varchar(100)</td>
-      <td>Sensor-meter id as defined in the data provider API.</td>
+      <td>Sensor-meter id as defined in the data provider API</td>
     </tr>
     <tr>
       <td>station_id</td>
       <td>int</td>
-      <td>The id of the station that the sensor-meter is connected to.</td>
+      <td>The id of the station that the sensor-meter is connected to</td>
     </tr>
     <tr>
       <td>rtu_id</td>
       <td>int</td>
-      <td>The id of the remote terminal unit that the sensor-meter is connected to.</td>
+      <td>The id of the remote terminal unit that the sensor-meter is connected to</td>
     </tr>
     <tr>
       <td rowspan="4">farms_registry</td>
       <td>id</td>
       <td>int</td>
-      <td>A farm unique identification number.</td>
+      <td>A farm unique identification number</td>
     </tr>
     <tr>
       <td>user_id</td>
       <td>int</td>
-      <td>The user id that the farm belong's to.</td>
+      <td>The user id that the farm belong's to</td>
     </tr>
     <tr>
       <td>longitude</td>
       <td>decimal(10,8)</td>
-      <td>The longitude of the farm location.</td>
+      <td>The longitude of the farm location</td>
     </tr>
     <tr>
       <td>latitude</td>
       <td>decimal(10,8)</td>
-      <td>The latitude of the farm location.</td>
+      <td>The latitude of the farm location</td>
     </tr>
     <tr>
       <td rowspan="4">fields_registry</td>
-      <td>A field unique identification number.</td>
+      <td>A field unique identification number</td>
       <td>id</td>
       <td>int</td>
     </tr>
     <tr>
       <td>farm_id</td>
       <td>int</td>
-      <td>The farm id that the farm is assigned to.</td>
+      <td>The farm id that the farm is assigned to</td>
     </tr>
     <tr>
       <td>boundaries</td>
       <td>json</td>
-      <td>A <a href="https://geojson.org/">GeoJSON</a> with the field boundaries.</td>
+      <td>A <a href="https://geojson.org/">GeoJSON</a> with the field boundaries</td>
     </tr>
     <tr>
       <td>soil_properties</td>
@@ -276,17 +276,17 @@ following table:
       <td rowspan="6">applications_registry</td>
       <td>id</td>
       <td>int</td>
-      <td>An application unique identification number.</td>
+      <td>An application unique identification number</td>
     </tr>
     <tr>
       <td>field_id</td>
       <td>int</td>
-      <td>The field id that the application was implemented.</td>
+      <td>The field id that the application was implemented</td>
     </tr>
     <tr>
       <td>type</td>
       <td>varchar(10)</td>
-      <td>Defines the type of application and could be one of 'irrigation' or 'fertilization'.</td>
+      <td>Defines the type of application and could be one of 'irrigation' or 'fertilization'</td>
     </tr>
     <tr>
       <td>suggested_amount</td>
@@ -307,32 +307,32 @@ following table:
       <td rowspan="6">advices_registry</td>
       <td>id</td>
       <td>int</td>
-      <td>An advice unique identification number.</td>
+      <td>An advice unique identification number</td>
     </tr>
     <tr>
       <td>field_id</td>
       <td>int</td>
-      <td>The field id that the advice was asked for.</td>
+      <td>The field id that the advice was asked for</td>
     </tr>
     <tr>
       <td>type</td>
       <td>varchar(10)</td>
-      <td>Defines the type of the advice and could be one of 'irrigation' or 'fertilization'.</td>
+      <td>Defines the type of the advice and could be one of 'irrigation' or 'fertilization'</td>
     </tr>
     <tr>
       <td>status</td>
       <td>varchar(10)</td>
-      <td>Defines the status of an irrigation advice. It can be one of 'ready', 'in_progress', 'cancelled', 'configuration_required'.</td>
+      <td>Defines the status of an irrigation advice. It can be one of 'ready', 'in_progress', 'cancelled', 'configuration_required'</td>
     </tr>
     <tr>
       <td>date_registered</td>
       <td>float</td>
-      <td>The timestampt that the user asked for the advice.</td>
+      <td>The timestampt that the user asked for the advice</td>
     </tr>
     <tr>
       <td>date_created</td>
       <td>float</td>
-      <td>The timestampt that the advice status switched to 'ready'.</td>
+      <td>The timestampt that the advice status switched to 'ready'</td>
     </tr>
     <tr>
       <td rowspan="3">measurement_translations</td>
@@ -343,12 +343,12 @@ following table:
     <tr>
       <td>el</td>
       <td>varchar(800)</td>
-      <td> A name of a measured parameter expresed in a manner that the end user can understand in Greek language.</td>
+      <td> A name of a measured parameter expresed in a manner that the end user can understand in Greek language</td>
     </tr>
     <tr>
       <td>en</td>
       <td>varchar(800)</td>
-      <td> A name of a measured parameter expresed in a manner that the end user can understand in English language.</td>
+      <td> A name of a measured parameter expresed in a manner that the end user can understand in English language</td>
     </tr>
   </tbody>
 </table>
