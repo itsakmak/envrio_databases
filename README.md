@@ -91,7 +91,7 @@ folloing classes-methods:
 <br>
 Class: User
 <br>
-Methods: *add*, *get_by_name*, *get_by_id*, *get_by_email*
+Methods: <cite>add, get_by_name, get_by_id, get_by_email</cite>
 <br>
 <br>
 Class: Stations
@@ -129,3 +129,8 @@ and update bucket info. Defines the following methods:
 <br>
 Methods: *write_point*, *delete_rows*, *query_data*, *list_buckets*, *update_bucket*
 
+<style>
+  cite {
+    font-style: italic;
+  }
+</style>
