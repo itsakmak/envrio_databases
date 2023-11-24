@@ -21,8 +21,8 @@ following table:
 <table>
   <thead>
     <tr>
-      <th>Table Names</th>
-      <th>Column Names</th>
+      <th>Table Name</th>
+      <th>Column Name</th>
       <th>Data Type</th>
     </tr>
   </thead>
@@ -30,23 +30,23 @@ following table:
     <tr>
       <td rowspan="4">user_tables</td>
       <td>id</td>
-      <td int>
+      <td >int</td>
     </tr>
     <tr>
       <td>name</td>
-      <td varchar(500)>
+      <td>varchar(500)</td>
     </tr>
     <tr>
       <td>email</td>
-      <td varchar(500)>
+      <td> varchar(500)</td>
     </tr>
     <tr>
       <td>email</td>
-      <td varchar(500)>
+      <td> varchar(500)</td>
     </tr>
     <tr>
       <td>subscription_expires_in</td>
-      <td varchar(20)>
+      <td>varchar(20)</td>
     </tr>
     <tr>
       <td rowspan="11">stations</td>
@@ -193,25 +193,101 @@ following table:
       <td>int</td>
     </tr>
     <tr>
-      <td>farms_registry</td>
-      <td>*id*, *user_id*, *longitude*, *latitude*</td>
+      <td rowspawn="4">farms_registry</td>
+      <td>id</td>
+      <td>int</td>
     </tr>
     <tr>
-      <td>fields_registry</td>
-      <td>*id*, *farm_id*, *boundaries*, *soil_properties*</td>
+      <td>user_id</td>
+      <td>int</td>
     </tr>
     <tr>
-      <td>applications_registry</td>
-      <td>*id*, *field_id*, *type*, *status*, *suggested_amount*,
-            *applied_amount*, *applied_in*</td>
+      <td>longitude</td>
+      <td>decimal(10,8)</td>
     </tr>
     <tr>
-      <td>advices_registry</td>
-      <td>*id*, *field_id*, *type*, *status*, *date_registered*, *date_created*</td>
+      <td>latitude</td>
+      <td>decimal(10,8)</td>
     </tr>
     <tr>
-      <td>measurement_translations</td>
-      <td>*measurement*, *el*, *en*</td>
+      <td rowspawn="4">fields_registry</td>
+      <td>id</td>
+      <td>int</td>
+    </tr>
+    <tr>
+      <td>farm_id</td>
+      <td>int</td>
+    </tr>
+    <tr>
+      <td>boundaries</td>
+      <td>json</td>
+    </tr>
+    <tr>
+      <td>soil_properties</td>
+      <td>json</td>
+    </tr>
+    <tr>
+      <td rowspawn="6">applications_registry</td>
+      <td>id</td>
+      <td>int</td>
+    </tr>
+    <tr>
+      <td>field_id</td>
+      <td>int</td>
+    </tr>
+    <tr>
+      <td>type</td>
+      <td>varchar(10)</td>
+    </tr>
+    <tr>
+      <td>suggested_amount</td>
+      <td>float</td>
+    </tr>
+    <tr>
+      <td>applied_amount</td>
+      <td>float</td>
+    </tr>
+    <tr>
+      <td>applied_in</td>
+      <td>varchar(20)</td>
+    </tr>
+    <tr>
+      <td rowspawn="6">advices_registry</td>
+      <td>id</td>
+      <td>int</td>
+    </tr>
+    <tr>
+      <td>field_id</td>
+      <td>int</td>
+    </tr>
+    <tr>
+      <td>type</td>
+      <td>varchar(10)</td>
+    </tr>
+    <tr>
+      <td>status</td>
+      <td>varchar(10)</td>
+    </tr>
+    <tr>
+      <td>date_registered</td>
+      <td>varchar(10)</td>
+    </tr>
+    <tr>
+      <td>date_created</td>
+      <td>varchar(10)</td>
+    </tr>
+    <tr>
+      <td rowspawn="3">measurement_translations</td>
+      <td>measurement</td>
+      <td>varchar(100)</td>
+    </tr>
+    <tr>
+      <td>el</td>
+      <td>varchar(800)</td>
+    </tr>
+    <tr>
+      <td>en</td>
+      <td>varchar(800)</td>
     </tr>
   </tbody>
 </table>
