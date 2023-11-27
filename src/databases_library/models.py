@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-__version__='1.0.3'
+__version__='1.0.4'
 __author__='Ioannis Tsakmakis'
-__date_created__='2023-11-24'
+__date_created__='2023-11-27'
 
 from sqlalchemy import ForeignKey, Numeric, String, JSON
 from sqlalchemy.orm import  Mapped, mapped_column
-from databases_library.engine import Base, db_engine, engine, config
+from databases_library.engine import Base, engine
 from typing import Optional
 
 # Users
@@ -121,4 +121,4 @@ class MeasurementTranslations(Base):
     el: Mapped[Optional[str]] = mapped_column(String(800))
     en: Mapped[Optional[str]] = mapped_column(String(800))
 
-Base.metadata.create_all(db_engine(engine, config))
+Base.metadata.create_all(engine)

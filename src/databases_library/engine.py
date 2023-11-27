@@ -1,6 +1,6 @@
-__version__='1.0.4'
+__version__='1.0.5'
 __author__='Ioannis Tsakmakis'
-__date_created__='2023-11-24'
+__date_created__='2023-11-27'
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase
@@ -14,7 +14,7 @@ config_path = os.path.join(local_directory, 'mysql_config.json')
 with open(config_path,'r') as f:
     config = json.load(f)
 
-engine = create_engine(url=f'{config["DBAPI"]}://{config["username"]}:{config['password']}@{config["host-ip"]}/{config["database"]}',
+ini_engine = create_engine(url=f'{config["DBAPI"]}://{config["username"]}:{config['password']}@{config["host-ip"]}/{config["database"]}',
                          pool_pre_ping=True)
 
 def db_engine(engine,config):
@@ -27,5 +27,7 @@ def db_engine(engine,config):
                          pool_pre_ping=True)
     except OperationalError as e:
         return {'code':'Database connection issue','message':e}
+
+engine = db_engine(engine=ini_engine, config=config)
 class Base(DeclarativeBase):
     pass

@@ -6,13 +6,13 @@ This repository contains the library that manages the Envrio MySql and Influx da
 
 **Module Name: engine**
 <br>
-**Version: 1.0.4**
+**Version: 1.0.5**
 
 Creates the engine that connects an app to the MySql database.
 
 **Module Name: models**
 <br>
-**Version: 1.0.3**
+**Version: 1.0.4**
 
 Creates the envrio_core MySql database with the tables-columns shown in the 
 following table:
@@ -361,7 +361,7 @@ Validates the data type before they are used by CRUD module methods creating cla
 
 **Module Name: crud**
 <br>
-**Version: 1.0.2**
+**Version: 1.0.3**
 
 Defines all the methods that Create, Read, Update and Delete
 tables, rows, etc. from MySql database. It includes the
