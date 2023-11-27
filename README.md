@@ -380,7 +380,7 @@ folloing classes-methods:
     <tr>
       <td rowspan="4">User</td>
       <td>add</td>
-      <td><br><b>Arguments:</b><br><i>name</i>: the cognito user id; <br><i>email</i>: the user email; <br><i>subscription_expires_in</i>: users's expiration subscritpion timestamp<br><b>Functionality</b>Adds a new user</td>
+      <td>Adds a new user<br><b>Arguments:</b><br><i>name: str</i>: the cognito user id; <br><i>email: str</i>: the user email; <br><i>subscription_expires_in: timestamp</i>: users's expiration subscritpion timestamp</td>
     </tr>
     <tr>
       <td>get_by_name</td>
