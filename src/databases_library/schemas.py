@@ -94,7 +94,7 @@ class GatewaysCreate(GatewaysBase):
 class RemoteTerminalUnitsCreate(RemoteTerminalUnitsBase):
     pass
 
-class SensorsMetersCreate(MonitoredParametersBase):
+class MonitoredParemetersCreate(MonitoredParametersBase):
     pass
 
 class FarmsRegistryCreate(FarmsRegistryBase):
