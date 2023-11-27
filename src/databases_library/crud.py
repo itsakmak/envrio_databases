@@ -102,36 +102,36 @@ class RemoteTerminalUnits:
     def get_by_station_id(station_id: int, db: Session=sessionmaker(bind=engine, expire_on_commit=True)()):
         return db.query(models.RemoteTerminalUnits).filter_by(station_id=station_id).first()
     
-class MonitoringDevices:
+class MonitoredParameters:
 
     @staticmethod
-    def add(monitoring_device: schemas.MonitoringDevicesCreate, db: Session=sessionmaker(bind=engine, expire_on_commit=True)()):
-        new_monitoring_device = models.MonitoringDevices(type=monitoring_device.device_type, measurement=monitoring_device.measurement, unit=monitoring_device.unit,
-                                                device_height=monitoring_device.device_height, name =monitoring_device.name,
-                                                code=monitoring_device.code, station_id=monitoring_device.station_id, rtu_id=monitoring_device.rtu_id)
-        db.add(new_monitoring_device)
+    def add(monitored_parameters: schemas.MonitoredParametersCreate, db: Session=sessionmaker(bind=engine, expire_on_commit=True)()):
+        new_monitored_parameters = models.MonitoredParameters(type=monitored_parameters.device_type, measurement=monitored_parameters.measurement, unit=monitored_parameters.unit,
+                                                device_height=monitored_parameters.device_height, name =monitored_parameters.name,
+                                                code=monitored_parameters.code, station_id=monitored_parameters.station_id, rtu_id=monitored_parameters.rtu_id)
+        db.add(new_monitored_parameters)
         db.commit()
 
     @staticmethod
     def get_by_station_id(station_id: int, db: Session=sessionmaker(bind=engine, expire_on_commit=True)()):
         rtus = db.query(models.RemoteTerminalUnits).filter_by(station_id=station_id).first()
         if rtus is None:
-            return db.query(models.MonitoringDevices).filter_by(station_id=station_id).all()
+            return db.query(models.MonitoredParameters).filter_by(station_id=station_id).all()
         else:
-            return db.query(models.MonitoringDevices).filter(or_(models.MonitoringDevices.station_id==station_id,
-                                                            models.MonitoringDevices.rtu_id.in_(rtus.id))).all()
+            return db.query(models.MonitoredParameters).filter(or_(models.MonitoredParameters.station_id==station_id,
+                                                            models.MonitoredParameters.rtu_id.in_(rtus.id))).all()
     
     @staticmethod
     def get_by_rtu_id(rtu_id: int, db: Session=sessionmaker(bind=engine, expire_on_commit=True)()):
-        return db.query(models.MonitoringDevices).filter_by(rtu_id=rtu_id).all()
+        return db.query(models.MonitoredParameters).filter_by(rtu_id=rtu_id).all()
     
     @staticmethod
     def get_by_station_id_and_rtu_id(station_id: int, rtu_id: int,db: Session=sessionmaker(bind=engine, expire_on_commit=True)()):
-        return db.query(models.MonitoringDevices).filter_by(station_id=station_id,rtu_id=rtu_id).all()
+        return db.query(models.MonitoredParameters).filter_by(station_id=station_id,rtu_id=rtu_id).all()
     
     @staticmethod
     def get_by_id(id: int, db: Session = sessionmaker(bind=engine, expire_on_commit=True)()):
-        return db.query(models.MonitoringDevices).filter_by(id = id).first()
+        return db.query(models.MonitoredParameters).filter_by(id = id).first()
 
 class MeasurementsTranslations:
 
