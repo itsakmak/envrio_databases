@@ -380,19 +380,19 @@ folloing classes-methods:
     <tr>
       <td rowspan="4">User</td>
       <td>add</td>
-      <td>Adds a new user<br><b>Arguments:</b><br><i>name: str</i>: the cognito user id; <br><i>email: str</i>: the user email; <br><i>subscription_expires_in: timestamp</i>: users's expiration subscritpion timestamp</td>
+      <td>Adds a new user<br><b>Arguments:</b><br><i>name(str)</i>: the cognito user id; <br><i>email(str)</i>: the user email; <br><i>subscription_expires_in(timestamp)</i>: users's expiration subscritpion timestamp</td>
     </tr>
     <tr>
       <td>get_by_name</td>
-      <td><b>Method Name</b>:<br>By providing the user name it returns an sqlalchemy object with the user id, name, email and subscription_expires_in info</td>
+      <td>Returns an sqlalchemy object with the user id, name, email and subscription_expires_in info<br><b>Arguments</b><br><i>name(str)</i>: the cognito user id</td>
     </tr>
     <tr>
       <td>get_by_id</td>
-      <td>By providing the user id it returns an sqlalchemy object with the user id, name, email and subscription_expires_in info</td>
+      <td>Returns an sqlalchemy object with the user id, name, email and subscription_expires_in info<br><b>Arguments</b><br><i>user_id(int)</i>: the user id</td>
     </tr>
     <tr>
       <td>get_by_email</td>
-      <td>By providing the user email it returns an sqlalchemy object with the user id, name, email and subscription_expires_in info</td>
+      <td>Returns an sqlalchemy object with the user id, name, email and subscription_expires_in info<br><b>Arguments</b><br><i>email(str)</i>: the user email</td>
     </tr>
     <tr>
       <td rowspan="6">Stations</td>
