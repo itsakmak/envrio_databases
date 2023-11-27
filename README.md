@@ -380,11 +380,11 @@ folloing classes-methods:
     <tr>
       <td rowspan="4">User</td>
       <td>add</td>
-      <td><b>Method Name:</b>Adds a new user<br><b>Arguments:</b><i>name</i>: the cognito user id; <i>email</i>: the user email; <i>subscription_expires_in</i>: users's expiration subscritpion timestamp</td>
+      <td><br><b>Arguments:</b><br><i>name</i>: the cognito user id; <br><i>email</i>: the user email; <br><i>subscription_expires_in</i>: users's expiration subscritpion timestamp<br><b>Functionality</b>Adds a new user</td>
     </tr>
     <tr>
       <td>get_by_name</td>
-      <td>By providing the user name it returns an sqlalchemy object with the user id, name, email and subscription_expires_in info</td>
+      <td><b>Method Name</b>:<br>By providing the user name it returns an sqlalchemy object with the user id, name, email and subscription_expires_in info</td>
     </tr>
     <tr>
       <td>get_by_id</td>
