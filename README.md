@@ -12,7 +12,7 @@ Creates the engine that connects an app to the MySql database.
 
 **Module Name: models**
 <br>
-**Version: 1.0.4**
+**Version: 1.0.5**
 
 Creates the envrio_core MySql database with the tables-columns shown in the 
 following table:
@@ -47,7 +47,7 @@ following table:
     <tr>
       <td>subscription_expires_in</td>
       <td>float</td>
-      <td>The timestampt that the user subscription expires</td>
+      <td>User's subscription expiration timestamp</td>
     </tr>
     <tr>
       <td rowspan="11">stations</td>
@@ -184,15 +184,15 @@ following table:
       <td>The id of the station that the remote terminal unit is paired with</td>
     </tr>
     <tr>
-      <td rowspan="9">sensors_meters</td>
+      <td rowspan="9">monitored_parameters</td>
       <td>id</td>
       <td>int</td>
-      <td>Sensor or Meter unique identification number</td>
+      <td>Parameter unique identification number</td>
     </tr>
     <tr>
-      <td>type</td>
+      <td>device_type</td>
       <td>varchar(7)</td>
-      <td>Can be one of 'sensor', 'meter', or 'calc' if it's a value calculated based on a formula</td>
+      <td>Depending on the type of device that monitores the parameter. It's 'sensor', 'meter', or 'calc' if the parameter is monitored by a sensor, a meter or is a formula result, respectively</td>
     </tr>
     <tr>
       <td>measurement</td>
@@ -202,33 +202,32 @@ following table:
     <tr>
       <td>unit</td>
       <td>varchar(20)</td>
-      <td>The unit that the measurements are reported</td>
+      <td>The unit that the parameter is reported</td>
     </tr>
     <tr>
-      <td>gauge_height</td>
+      <td>device_height</td>
       <td>float</td>
-      <td>The height (m) that the sensor-meter is placed in reference to the surface. If the sensor-meter is installed within 
-      the soil or into the sea the gauge_height gets negative values</td>
+      <td>The distance of the device, that monitors the parameter, from a reference surface (land or sea) in meters. If the device is above the reference surface the device height takes positive values, while in the case of installations within soil or below the sea surface negative</td>
     </tr>
     <tr>
       <td>name</td>
       <td>varchar(100)</td>
-      <td>Sensor-meter name as defined in the data provider API</td>
+      <td>Paremeter name as defined by the user</td>
     </tr>
     <tr>
       <td>code</td>
       <td>varchar(100)</td>
-      <td>Sensor-meter id as defined in the data provider API</td>
+      <td>Parameter id in the data provider API</td>
     </tr>
     <tr>
       <td>station_id</td>
       <td>int</td>
-      <td>The id of the station that the sensor-meter is connected to</td>
+      <td>The id of the station that the parameter is measured by</td>
     </tr>
     <tr>
       <td>rtu_id</td>
       <td>int</td>
-      <td>The id of the remote terminal unit that the sensor-meter is connected to</td>
+      <td>The id of the remote terminal unit that the parameter is measured by. Default value is None</td>
     </tr>
     <tr>
       <td rowspan="4">farms_registry</td>
@@ -355,13 +354,13 @@ following table:
 
 **Module Name: schemas**
 <br>
-**Version: 1.0.1**
+**Version: 1.0.2**
 
 Validates the data type before they are used by CRUD module methods creating classes inheriting from pydantic basemodel class.
 
 **Module Name: crud**
 <br>
-**Version: 1.0.3**
+**Version: 1.0.4**
 
 Defines all the methods that Create, Read, Update and Delete
 tables, rows, etc. from MySql database. It includes the
@@ -380,100 +379,100 @@ folloing classes-methods:
     <tr>
       <td rowspan="4">User</td>
       <td>add</td>
-      <td>Adds a new user<br><b>Arguments:</b><br><i>name(str)</i>: the cognito user id; <br><i>email(str)</i>: the user email; <br><i>subscription_expires_in(timestamp)</i>: users's expiration subscritpion timestamp</td>
+      <td>Adds a new user to MySql database<br><b>Arguments:</b><br><i>name(str)</i>: the cognito user id; <br><i>email(str)</i>: the user email; <br><i>subscription_expires_in(timestamp)</i>: user's subscription expiration timestamp</td>
     </tr>
     <tr>
       <td>get_by_name</td>
-      <td>Returns an sqlalchemy object with the user id, name, email and subscription_expires_in info<br><b>Arguments</b><br><i>name(str)</i>: the cognito user id</td>
+      <td>Returns an sqlalchemy object with the columns user id, name, email and subscription_expires_in info<br><b>Arguments</b><br><i>name(str)</i>: the cognito user id</td>
     </tr>
     <tr>
       <td>get_by_id</td>
-      <td>Returns an sqlalchemy object with the user id, name, email and subscription_expires_in info<br><b>Arguments</b><br><i>user_id(int)</i>: the user id</td>
+      <td>Returns an sqlalchemy object with the columns user id, name, email and subscription_expires_in info<br><b>Arguments</b><br><i>user_id(int)</i>: the user id</td>
     </tr>
     <tr>
       <td>get_by_email</td>
-      <td>Returns an sqlalchemy object with the user id, name, email and subscription_expires_in info<br><b>Arguments</b><br><i>email(str)</i>: the user email</td>
+      <td>Returns an sqlalchemy object with the columns user id, name, email and subscription_expires_in info<br><b>Arguments</b><br><i>email(str)</i>: the user email</td>
     </tr>
     <tr>
       <td rowspan="6">Stations</td>
       <td>add</td>
-      <td>Adds a new station</td>
+      <td>Adds a new station to MySql database<br><b>Arguments</b><br><i>brand(str)</i>: station's brand<br><i>model(str)</i>: station's specific model<br><i>code(str)</i>: station's code in provider's API<br><i>date_created(int)</i>: station's installation timestamp<br><i>longitude(decimal)</i>: station's longitude<br><i>latitude(decimal)</i>: station's latitude<br><i>elevation(int)</i>: station's elevation<br><i>access(int)</i>: the user ids that have an active subscription<br><i>name(json)</i>: A dictionary with station's name in different languages<br><i>icon_type(str)</i>: one of 'hydro', 'meteo', 'coastal' depending on station's type</td>
     </tr>
     <tr>
       <td>get_by_code</td>
-      <td>By providing the station code it returns an sqlalchemy object with the station id, brand, model, code, date_created, longitude,
-      latitude, elevation, access, name and icon_type</td>
+      <td>Returns an sqlalchemy object with the columns station id, brand, model, code, date_created, longitude, latitude, elevation, access, name and icon_type<br><b>Arguments</b><br><i>code</i>: the station's id in provider's API</td>
     </tr>
     <tr>
       <td>get_by_brand</td>
-      <td>By providing the station brand it returns an array of sqlalchemy objects equal to the stations of the provided brand. Each sqlalchemy onject provided infor for the station id, brand, model, code, date_created, longitude, latitude, elevation, access, name and icon_type</td>
+      <td>Returns an array of sqlalchemy objects equal to the stations of the provided brand. Each sqlalchemy object has the columns station id, brand, model, code, date_created, longitude, latitude, elevation, access, name and icon_type<br><b>Arguments</b><br><i>brand(str)</i>: a station brand</td>
     </tr>
     <tr>
       <td>get_by_access</td>
-      <td>By providing a user id it returns an array of sqlalchemy objects with the stations that the use has an active subscription. Each sqlalchemy onject provided infor for the station id, brand, model, code, date_created, longitude, latitude, elevation, access, name and icon_type</td>
+      <td>Returns an array of sqlalchemy objects with the stations that a user has an active subscription. Each sqlalchemy onject has the columns station id, brand, model, code, date_created, longitude, latitude, elevation, access, name and icon_type<br><b>Arguments</b><br><i>user_id(int)</i>: the user id</td>
     </tr>
     <tr>
       <td>update_date_created</td>
-      <td>By providing a station id and a timestamp it updates the date_created column value.</td>
+      <td>Updates the date_created column value<br><b>Arguments</b><br><i>station_id(int)</i>: a station id<br><i>new_datetime(ing)</i>: the new date time timestamp</td>
     </tr>
     <tr>
       <td>delete_by_code</td>
-      <td>It deletes a station entry for a provided station id.</td>
+      <td>It deletes a station entry for a provided station id<br><b>Arguments</b><br><i>code(str) the station's id as defined in provider's API</i>: </td>
     </tr>
     <tr>
       <td rowspan="2">Gateways</td>
       <td>add</td>
-      <td>Adds a new gateway</td>
+      <td>Adds a new gateway<br><b>Arguments</b><br><i>brand(str)</i>: gateway's brand<br><i>model(str)</i>: gateway's specific model<br><i>code(str)</i>: gateway's id in provider's API<br><i>name(str)</i>: gateway's user defined name<br><i>station_id(int)</i>: the station id that gateway is connected to</td>
     </tr>
     <tr>
       <td>get by code</td>
-      <td>By providing the gateway code it returns an sqlalchemy object with the gateway id, brand, model, code, name and station_id</td>
+      <td>Returns an sqlalchemy object with the columns gateway id, brand, model, code, name and station_id<br><b>Arguments</b><br><i>code(str)</i>: gateways's id is provider's API</td>
     </tr>
     <tr>
       <td rowspan="3">RemoteTerminalUnits</td>
       <td>add</td>
-      <td>Adds a new remote terminal unit</td>
+      <td>Adds a new remote terminal unit in MySql database<br><b>Arguments</b><br><i>brand(str)<i>: remote terminal unit's brand<br><i>model(str)</i>: remote terminal unit's specific model<br><i>code(str)</i> remote terminal unit's id in provider's API<br><i>longitude(decimal)</i>: remote terminal unit's longitude<br><i>latitude(decimal)</i>:  remote terminal's unit longitude<br><i>evelation(int)</i>: remote terminal unit's elevation<br><i>name(json)</i>: a dictionaly with a name assigned by the user to the remote terminal uni in different languages<br><i>station_id(int)</i>: the station id that the remote terminal unit is paired with</td>
     </tr>
     <tr>
       <td>get_by_code</td>
-      <td>By providing a remote terminal unit code it returns an sqlalchemy object with the terminal unit id, brand, model, code, longitude, latitude, elevation, name and station_id</td>
+      <td>Returns an sqlalchemy object with the columns id, brand, model, code, longitude, latitude, elevation, name and station_id<br><b>Arguments</b><br><i>code(str)</i>: the remote terminal unit's code in providers API</td>
     </tr>
     <tr>
       <td>get_by_station_id</td>
-      <td>By providing a station id it returns an sqlalchemy object with the terminal unit id, brand, model, code, longitude, latitude, elevation, name and station_id</td>
+      <td>Returns an sqlalchemy object with the columns unit id, brand, model, code, longitude, latitude, elevation, name and station_id<br><b>Arguments</b><br><i>station_id(int)</i>: the station id that remote terminal unit is paired with</td>
     </tr>
     <tr>
-      <td rowspan="3">SensorsMeters</td>
+      <td rowspan="5">MonitoredParameters</td>
       <td>add</td>
-      <td>Adds a new sensor or meter</td>
+      <td>Adds a new sensor or meter to MySql database<br><b>Arguments</b><br><i>device_type(str)</i>: can be one of 'sensor', 'meter' or 'calc'<br><i>measurement(str)</i>: monitored parameter's name<br><i>unit(str)</i>: monitored parameter's unit<br><i>device_height(float)</i>: the device distance below (negative) or above (positive) the reference surface (soil or sea) in meters<br><i>name(str)</i>: a name assigned by the user to the parameter<br><i>code(str)</i>: the parameter id in provider's API<br><i>station_id(int)</i>: the station id that the parameter is monitored by<br><i>rtu_id</i>: the remote terminal unit id that the parameter is monitored by. Default value is None</td>
     </tr>
     <tr>
       <td>get_by_station_id</td>
-      <td>By providing a station id it returns an sqlalchemy object with the sensor/meter id, type, measurement, unit, gauge_height, name, code,station_id and rtu_id</td>
+      <td>Returns an sqlalchemy object with the columns id, device_type, measurement, unit, device_height, name, code,station_id and rtu_id<br><b>Arguments</b><br><i>station_id(int)</i>: the station id that the parameter is monitored by</td>
     </tr>
     <tr>
       <td>get_by_rtu_id</td>
-      <td>By providing a remote terminal unit id it returns an sqlalchemy object with the sensor/meter id, type, measurement, unit, gauge_height, name, code,station_id and rtu_id</td>
+      <td>Returns an sqlalchemy object with the columns id, device_type, measurement, unit, device_height, name, code,station_id and rtu_id<br><b>Arguments</b><i>rtu_id(int)</i>: the remote terminal unit id that the parameter is monitored by</td>
     </tr>
     <tr>
       <td>get_by_station_id_and_rtu_id</td>
-      <td>By providing a station id and a remote terminal unit id it returns an sqlalchemy object with the sensor/meter id, type, measurement, unit, gauge_height, name, code,station_id and rtu_id</td>
+      <td>Returns an sqlalchemy object with the columns id, device_type, measurement, unit, device_height, name, code,station_id and rtu_id<br><b>Arguments</b><br><i>station_id(int)</i>: the station id that the parameter is monitored by<br><i>rtu_id(int)</i>: the remote terminal unit id that the parameter is monitored by</td>
     </tr>
     <tr>
       <td>get_by_id</td>
-      <td>By providing a sensor/meter id it returns an sqlalchemy object with the sensor/meter id, type, measurement, unit, gauge_height, name, code,station_id and rtu_id</td>
+      <td>Returns an sqlalchemy object with the columns id, device_type, measurement, unit, device_height, name, code,station_id and rtu_id<br><b>Arguments</b><br><i>id(int)</i>: parameter id</td>
     </tr>
     <tr>
-      <td rowspan="2">MeasurementsTranslations</td>
+      <td rowspan="2">ParametersTranslations</td>
       <td>add</td>
-      <td>Adds a new measurement translation</td>
+      <td>Adds a new parameter translation<br><b>Arguments</b><i>translation(str)</i>: the parameter measurement name<br><i>el(str)</i>the parameter name in the greek language<br><i>en(str)</i>: the parameter name in english language</td>
     </tr>
     <tr>
       <td>get_translation_by_measurement</td>
-      <td>By providing a measurement it returns the corresponding description in all registered languages</td>
+      <td>By providing a measurement it returns the corresponding description in all registered languages<br><b>Arguments</b><i>measurement(str)</i>: the parameter's measurement name</td>
     </tr>
   </tbdody>
 </table>
+<br>
 
 **Module Name: influx**
 <br>
@@ -486,8 +485,4 @@ and update bucket info. Defines the following methods:
 <br>
 Methods: *write_point*, *delete_rows*, *query_data*, *list_buckets*, *update_bucket*
 
-<style>
-  cite {
-    font-style: italic;
-  }
-</style>
+

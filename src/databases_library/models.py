@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-__version__='1.0.4'
+__version__='1.0.5'
 __author__='Ioannis Tsakmakis'
-__date_created__='2023-11-27'
+__date_created__='2023-10-20'
+__last_updated__='2023-11-27'
 
 from sqlalchemy import ForeignKey, Numeric, String, JSON
 from sqlalchemy.orm import  Mapped, mapped_column
@@ -57,14 +58,14 @@ class RemoteTerminalUnits(Base):
     name: Mapped[dict|list] = mapped_column(type_=JSON)
     station_id: Mapped[int] = mapped_column(ForeignKey('stations.id',ondelete='CASCADE'))
     
-class SensorsMeters(Base):
-    __tablename__ = 'sensors_meters'
+class MonitoredParameters(Base):
+    __tablename__ = 'monitored_parameters'
 
     id: Mapped[int] = mapped_column(primary_key=True,autoincrement=True)
-    type: Mapped[str] = mapped_column(String(7))
+    device_type: Mapped[str] = mapped_column(String(7))
     measurement: Mapped[str] = mapped_column(String(100))
     unit: Mapped[str] = mapped_column(String(20))
-    gauge_height: Mapped[float]
+    device_height: Mapped[float]
     name: Mapped[Optional[str]] = mapped_column(String(100))
     code: Mapped[Optional[str]] = mapped_column(String(100))
     station_id: Mapped[int] = mapped_column(ForeignKey('stations.id',ondelete='CASCADE'))

@@ -1,6 +1,7 @@
-__version__='1.0.1'
+__version__='1.0.2'
 __author__='Ioannis Tsakmakis'
-__date_created__='2023-11-24'
+__date_created__='2023-10-20'
+__last_updated__='2023-11-27'
 
 from pydantic import BaseModel
 from typing import Optional
@@ -40,11 +41,11 @@ class RemoteTerminalUnitsBase(BaseModel):
     name: dict
     station_id: int
 
-class SensorsMetersBase(BaseModel):
-    type: str
+class MonitoredParametersBase(BaseModel):
+    device_type: str
     measurement: str
     unit: str
-    gauge_height: float
+    device_height: float
     name: Optional[str] = None
     code: Optional[str] = None
     station_id: int
@@ -93,7 +94,7 @@ class GatewaysCreate(GatewaysBase):
 class RemoteTerminalUnitsCreate(RemoteTerminalUnitsBase):
     pass
 
-class SensorsMetersCreate(SensorsMetersBase):
+class SensorsMetersCreate(MonitoredParametersBase):
     pass
 
 class FarmsRegistryCreate(FarmsRegistryBase):

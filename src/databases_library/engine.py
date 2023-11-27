@@ -1,6 +1,7 @@
 __version__='1.0.5'
 __author__='Ioannis Tsakmakis'
-__date_created__='2023-11-27'
+__date_created__='2023-10-20'
+__last_updated__='2023-11-27'
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase
