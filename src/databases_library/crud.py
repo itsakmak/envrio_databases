@@ -1,5 +1,5 @@
 __version__='1.0.6'
-__author__='Ioannis Tsakmakis'
+__authors__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
 __last_updated__='2023-11-28'
 
@@ -103,7 +103,7 @@ class MonitoredParameters:
     @staticmethod
     def get_by_station_id(station_id: int, db: Session = SessionLocal()):
         rtus = db.execute(select(models.RemoteTerminalUnits).filter_by(station_id=station_id)).all()
-        if rtus is None:
+        if len(rtus) == 0:
             return db.execute(select(models.MonitoredParameters).filter_by(station_id=station_id)).all()
         else:
             return db.execute(select(models.MonitoredParameters).filter(or_(models.MonitoredParameters.station_id==station_id,
