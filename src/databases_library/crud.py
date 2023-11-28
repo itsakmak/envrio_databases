@@ -140,4 +140,3 @@ class MeasurementsTranslations:
     def get_translation_by_measurement(measurement: str, db: Session = SessionLocal()):
         response = db.execute(select(models.MeasurementTranslations).filter_by(measurement=measurement)).first()
         return response[0]
-                  
