@@ -39,15 +39,15 @@ class Stations:
         db.add(new_station)
 
     @staticmethod
-    def get_by_code(code: str, db: Session = SessionLocal.begin()):
+    def get_by_code(code: str, db: Session = SessionLocal):
         return db.query(models.Stations).filter_by(code = code).first()
 
     @staticmethod
-    def get_by_brand(brand: str, db: Session = SessionLocal.begin()):
+    def get_by_brand(brand: str, db: Session = SessionLocal):
         return db.query(models.Stations).filter_by(brand = brand).all()
     
     @staticmethod
-    def get_by_access(user_id: int, db: Session = SessionLocal.begin()):
+    def get_by_access(user_id: int, db: Session = SessionLocal):
         return db.query(models.Stations).filter(text("JSON_CONTAINS(JSON_UNQUOTE(JSON_EXTRACT(access, '$.users')), CAST(:user AS JSON), '$')").params(user=user_id)).all()
     
     @staticmethod
@@ -131,6 +131,4 @@ class MeasurementsTranslations:
     @staticmethod
     def get_translation_by_measurement(measurement: str, db: Session = SessionLocal.begin()):
         return db.query(models.MeasurementTranslations).filter_by(measurement=measurement).first()
-
-print()
                   
