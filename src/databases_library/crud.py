@@ -20,15 +20,18 @@ class User:
 
     @staticmethod
     def get_by_name(name: str, db: Session = SessionLocal()):
-        return db.execute(select(models.Users).filter_by(name=name)).first()
+        response = db.execute(select(models.Users).filter_by(name=name)).first()
+        return response[0]
 
     @staticmethod
     def get_by_id(id: int, db: Session = SessionLocal()):
-        return db.execute(select(models.Users).filter_by(id=id)).first()
+        response = db.execute(select(models.Users).filter_by(id=id)).first()
+        return response[0]
     
     @staticmethod
     def get_by_email(email: str, db: Session = SessionLocal()):
-            return db.execute(select(models.Users).filter_by(email=email)).first()
+        response = db.execute(select(models.Users).filter_by(email=email)).first()
+        return response[0]
 class Stations:
 
     @staticmethod
@@ -40,7 +43,8 @@ class Stations:
 
     @staticmethod
     def get_by_code(code: str, db: Session = SessionLocal()):
-        return db.execute(select(models.Stations).filter_by(code = code)).first
+        response = db.execute(select(models.Stations).filter_by(code = code)).first()
+        return response[0]
 
     @staticmethod
     def get_by_brand(brand: str, db: Session = SessionLocal()):
@@ -53,16 +57,16 @@ class Stations:
     @staticmethod
     def update_date_created(station_id: int, new_datetime: str, db: Session = SessionLocal()):
         station=db.execute(select(models.Stations).filter_by(id=station_id)).first()
-        if station is not None:
-            station.date_created=new_datetime
+        if station[0] is not None:
+            station[0].date_created=new_datetime
         else:
             db.close()
 
     @staticmethod
     def delete_by_code(code: str, db: Session = SessionLocal()):
         result = db.execute(select(models.Stations).filter_by(code = code)).first()
-        if result is not None:
-            db.delete(result)
+        if result[0] is not None:
+            db.delete(result[0])
         else: db.close()
 class Gateways:
 
@@ -74,7 +78,8 @@ class Gateways:
 
     @staticmethod
     def get_by_code(code: str, db: Session = SessionLocal()):
-        return db.execute(select(models.GateWays).filter_by(code=code)).first()
+        response = db.execute(select(models.GateWays).filter_by(code=code)).first()
+        return response[0]
 class RemoteTerminalUnits:
 
     @staticmethod
@@ -85,11 +90,13 @@ class RemoteTerminalUnits:
 
     @staticmethod
     def get_by_code(code: str, db: Session = SessionLocal()):
-        return db.execute(select(models.RemoteTerminalUnits).filter_by(code = code)).first()
+        response = db.execute(select(models.RemoteTerminalUnits).filter_by(code = code)).first()
+        return response[0]
     
     @staticmethod
     def get_by_station_id(station_id: int, db: Session = SessionLocal()):
-        return db.execure(select(models.RemoteTerminalUnits).filter_by(station_id=station_id)).first()
+        response = db.execure(select(models.RemoteTerminalUnits).filter_by(station_id=station_id)).first()
+        return response[0]
     
 class MonitoredParameters:
 
@@ -102,12 +109,13 @@ class MonitoredParameters:
 
     @staticmethod
     def get_by_station_id(station_id: int, db: Session = SessionLocal()):
-        rtus = db.execute(select(models.RemoteTerminalUnits).filter_by(station_id=station_id)).first()
+        rtus = db.execute(select(models.RemoteTerminalUnits).filter_by(station_id=station_id)).all()
         if rtus is None:
             return db.execute(select(models.MonitoredParameters).filter_by(station_id=station_id)).all()
         else:
             return db.execute(select(models.MonitoredParameters).filter(or_(models.MonitoredParameters.station_id==station_id,
                                                             models.MonitoredParameters.rtu_id.in_(rtus.id)))).all()
+        
     @staticmethod
     def get_by_rtu_id(rtu_id: int, db: Session = SessionLocal()):
         return db.execute(select(models.MonitoredParameters).filter_by(rtu_id=rtu_id)).all()
@@ -118,7 +126,8 @@ class MonitoredParameters:
     
     @staticmethod
     def get_by_id(id: int, db: Session = SessionLocal()):
-        return db.execute(select(models.MonitoredParameters).filter_by(id = id)).first()
+        response = db.execute(select(models.MonitoredParameters).filter_by(id = id)).first()
+        return response[0]
 
 class MeasurementsTranslations:
 
@@ -129,5 +138,6 @@ class MeasurementsTranslations:
     
     @staticmethod
     def get_translation_by_measurement(measurement: str, db: Session = SessionLocal()):
-        return db.execute(select(models.MeasurementTranslations).filter_by(measurement=measurement)).first()
+        response = db.execute(select(models.MeasurementTranslations).filter_by(measurement=measurement)).first()
+        return response[0]
                   
