@@ -118,7 +118,7 @@ class MonitoredParameters:
         return db.query(models.MonitoredParameters).filter_by(station_id=station_id,rtu_id=rtu_id).all()
     
     @staticmethod
-    def get_by_id(id: int, db: Session = Session = SessionLocal.begin()):
+    def get_by_id(id: int, db: Session = SessionLocal.begin()):
         return db.query(models.MonitoredParameters).filter_by(id = id).first()
 
 class MeasurementsTranslations:
