@@ -17,7 +17,7 @@ with open(config_path,'r') as f:
 engine = create_engine(url=f'{config["DBAPI"]}://{config["username"]}:{config['password']}@{config["host-ip"]}/{config["database"]}',
                          pool_pre_ping=True)
 
-Session = sessionmaker(engine)
+SessionLocal = sessionmaker(bind=engine)
 
 class Base(DeclarativeBase):
     pass
