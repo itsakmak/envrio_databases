@@ -27,7 +27,7 @@ class User:
         return db.execute(select(models.Users).filter_by(id=id)).first()
     
     @staticmethod
-    def get_by_email(email: str, db: Session = SessionLocal().begin()):
+    def get_by_email(email: str, db: Session = SessionLocal()):
             return db.execute(select(models.Users).filter_by(email=email)).first()
 class Stations:
 
