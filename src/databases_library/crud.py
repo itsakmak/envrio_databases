@@ -54,16 +54,16 @@ class Stations:
     @staticmethod
     def update_date_created(station_id: int, new_datetime: str, db: Session = SessionLocal()):
         station=db.execute(select(models.Stations).filter_by(id=station_id)).first()
-        if station[0] is not None:
-            station[0].date_created=new_datetime
+        if station.Stations is not None:
+            station.Stations.date_created=new_datetime
         else:
             db.close()
 
     @staticmethod
     def delete_by_code(code: str, db: Session = SessionLocal()):
         result = db.execute(select(models.Stations).filter_by(code = code)).first()
-        if result is not None:
-            db.delete(result[0])
+        if result.Stations is not None:
+            db.delete(result.Stations)
         else: db.close()
 class Gateways:
 
