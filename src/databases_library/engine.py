@@ -15,7 +15,7 @@ with open(config_path,'r') as f:
     config = json.load(f)
 
 engine = create_engine(url=f'{config["DBAPI"]}://{config["username"]}:{config['password']}@{config["host-ip"]}/{config["database"]}',
-                         pool_pre_ping=True)
+                         pool_recycle=14400)
 
 SessionLocal = sessionmaker(bind=engine)
 
