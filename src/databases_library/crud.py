@@ -1,15 +1,24 @@
-__version__='1.0.6'
+__version__='1.0.7'
 __authors__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
-__last_updated__='2023-11-28'
+__last_updated__='2023-11-30'
 
 import databases_library.schemas as schemas
 import databases_library.models as models
 from databases_library.engine import SessionLocal
 from sqlalchemy.orm import Session
-from sqlalchemy import text, or_, select
+from sqlalchemy import text, or_, select, event
+import logging
 
-# User Management
+logging_path = '/var/log'
+
+# Configure the logger
+logging.basicConfig(filename=f'{logging_path}/sqlalchemy_connection.log', level=logging.DEBUG)
+logger = logging.getLogger('sqlalchemy')
+
+# Function to log SQLAlchemy session events
+def log_sqlalchemy_session_events(session, instance):
+    logger.info(f"Session: Statement executed: {instance}")
 
 class User:
 
@@ -41,18 +50,22 @@ class Stations:
 
     @staticmethod
     def get_by_code(code: str, db: Session = SessionLocal()):
+        event.listen(db, 'before_flush', log_sqlalchemy_session_events(session=db))
         return db.execute(select(models.Stations).filter_by(code = code)).first()
 
     @staticmethod
     def get_by_brand(brand: str, db: Session = SessionLocal()):
+        event.listen(db, 'before_flush', log_sqlalchemy_session_events(session=db))
         return db.execute(select(models.Stations).filter_by(brand = brand)).all()
     
     @staticmethod
     def get_by_access(user_id: int, db: Session = SessionLocal()):
+        event.listen(db, 'before_flush', log_sqlalchemy_session_events(session=db))
         return db.execute(select(models.Stations).filter(text("JSON_CONTAINS(JSON_UNQUOTE(JSON_EXTRACT(access, '$.users')), CAST(:user AS JSON), '$')").params(user=user_id))).all() 
     
     @staticmethod
     def update_date_created(station_id: int, new_datetime: str, db: Session = SessionLocal()):
+        event.listen(db, 'before_flush', log_sqlalchemy_session_events(session=db))
         station=db.execute(select(models.Stations).filter_by(id=station_id)).first()
         if station.Stations is not None:
             station.Stations.date_created=new_datetime
@@ -61,6 +74,7 @@ class Stations:
 
     @staticmethod
     def delete_by_code(code: str, db: Session = SessionLocal()):
+        event.listen(db, 'before_flush', log_sqlalchemy_session_events(session=db))
         result = db.execute(select(models.Stations).filter_by(code = code)).first()
         if result.Stations is not None:
             db.delete(result.Stations)
@@ -102,6 +116,7 @@ class MonitoredParameters:
 
     @staticmethod
     def get_by_station_id(station_id: int, db: Session = SessionLocal()):
+        event.listen(db, 'before_flush', log_sqlalchemy_session_events(session=db))
         rtus = db.execute(select(models.RemoteTerminalUnits).filter_by(station_id=station_id)).all()
         if len(rtus) == 0:
             return db.execute(select(models.MonitoredParameters).filter_by(station_id=station_id)).all()
@@ -111,14 +126,17 @@ class MonitoredParameters:
         
     @staticmethod
     def get_by_rtu_id(rtu_id: int, db: Session = SessionLocal()):
+        event.listen(db, 'before_flush', log_sqlalchemy_session_events(session=db))
         return db.execute(select(models.MonitoredParameters).filter_by(rtu_id=rtu_id)).all()
     
     @staticmethod
     def get_by_station_id_and_rtu_id(station_id: int, rtu_id: int,db: Session = SessionLocal()):
+        event.listen(db, 'before_flush', log_sqlalchemy_session_events(session=db))
         return db.execute(select(models.MonitoredParameters).filter_by(station_id=station_id,rtu_id=rtu_id)).all()
     
     @staticmethod
     def get_by_id(id: int, db: Session = SessionLocal()):
+        event.listen(db, 'before_flush', log_sqlalchemy_session_events(session=db))
         return db.execute(select(models.MonitoredParameters).filter_by(id = id)).first()
 
 class MeasurementsTranslations:
