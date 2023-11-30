@@ -6,7 +6,7 @@ This repository contains the library that manages the Envrio MySql and Influx da
 
 **Module Name: engine**
 <br>
-**Version: 1.0.6**
+**Version: 1.0.7**
 
 Creates the engine that connects an app to the MySql database.
 
