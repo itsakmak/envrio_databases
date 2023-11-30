@@ -5,12 +5,10 @@ __last_updated__='2023-11-30'
 
 import databases_library.schemas as schemas
 import databases_library.models as models
-from databases_library.engine import SessionLocal
+from databases_library.engine import SessionLocal, logging_path
 from sqlalchemy.orm import Session
 from sqlalchemy import text, or_, select, event
 import logging
-
-logging_path = '/var/log'
 
 # Configure the logger
 logging.basicConfig(filename=f'{logging_path}/sqlalchemy_connection.log', level=logging.DEBUG)
