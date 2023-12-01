@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-__version__='1.0.5'
+__version__='1.0.6'
 __author__='Ioannis Tsakmakis'
 __date_created__='2023-10-20'
-__last_updated__='2023-11-27'
+__last_updated__='2023-12-01'
 
 from sqlalchemy import ForeignKey, Numeric, String, JSON
 from sqlalchemy.orm import  Mapped, mapped_column
@@ -28,7 +28,7 @@ class Stations(Base):
     model: Mapped[str] = mapped_column(String(200))
     code: Mapped[str] = mapped_column(String(100),unique=True)
     date_created: Mapped[float]
-    lattest_update: Mapped[float]
+    latest_update: Mapped[float]
     longitude: Mapped[float] = mapped_column(Numeric(10,8))
     latitude: Mapped[float] = mapped_column(Numeric(10,8))
     elevation: Mapped[int]

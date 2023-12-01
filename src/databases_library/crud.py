@@ -78,6 +78,15 @@ class Stations:
             db.close()
 
     @staticmethod
+    def update_latest_update(station_id: int, new_datetime: str, db: Session = SessionLocal()):
+        event.listen(db, 'before_flush', log_sqlalchemy_session_events)
+        station=db.execute(select(models.Stations).filter_by(id=station_id)).first()
+        if station.Stations is not None:
+            station.Stations.latest_update=new_datetime
+        else:
+            db.close()
+
+    @staticmethod
     def delete_by_code(code: str, db: Session = SessionLocal()):
         event.listen(db, 'before_flush', log_sqlalchemy_session_events)
         result = db.execute(select(models.Stations).filter_by(code = code)).first()
