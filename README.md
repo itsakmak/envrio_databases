@@ -12,7 +12,7 @@ Creates the engine that connects an app to the MySql database.
 
 **Module Name: models**
 <br>
-**Version: 1.0.5**
+**Version: 1.0.6**
 
 Creates the envrio_core MySql database with the tables-columns shown in the 
 following table:
@@ -360,7 +360,7 @@ Validates the data type before they are used by CRUD module methods creating cla
 
 **Module Name: crud**
 <br>
-**Version: 1.0.7**
+**Version: 1.0.8**
 
 Defines all the methods that Create, Read, Update and Delete
 tables, rows, etc. from MySql database. It includes the

@@ -1,7 +1,7 @@
-__version__='1.0.2'
+__version__='1.0.3'
 __author__='Ioannis Tsakmakis'
 __date_created__='2023-10-20'
-__last_updated__='2023-11-27'
+__last_updated__='2023-12-01'
 
 from pydantic import BaseModel
 from typing import Optional
@@ -17,6 +17,7 @@ class StationsBase(BaseModel):
     model: str
     code: str
     date_created: float
+    latest_update: float
     longitude: float
     latitude: float
     elevation: int

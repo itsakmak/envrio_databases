@@ -49,7 +49,7 @@ class Stations:
     def add(station: schemas.StationsCreate, db: Session = SessionLocal()):
         event.listen(db, 'before_flush', log_sqlalchemy_session_events)
         new_station = models.Stations(brand=station.brand, model=station.model, code=station.code, date_created=station.date_created,
-                                      longitude=station.longitude, latitude=station.latitude, elevation=station.elevation,
+                                      latest_update=station.latest_update, longitude=station.longitude, latitude=station.latitude, elevation=station.elevation,
                                       access=station.access, name=station.name, icon_type=station.icon_type)
         db.add(new_station)
 

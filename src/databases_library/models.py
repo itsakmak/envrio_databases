@@ -28,6 +28,7 @@ class Stations(Base):
     model: Mapped[str] = mapped_column(String(200))
     code: Mapped[str] = mapped_column(String(100),unique=True)
     date_created: Mapped[float]
+    lattest_update: Mapped[float]
     longitude: Mapped[float] = mapped_column(Numeric(10,8))
     latitude: Mapped[float] = mapped_column(Numeric(10,8))
     elevation: Mapped[int]
