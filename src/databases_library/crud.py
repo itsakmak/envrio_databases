@@ -18,7 +18,7 @@ logger = logging.getLogger('sqlalchemy')
 # Function to log SQLAlchemy session events
 def log_sqlalchemy_session_events(session, flush_context, instances):
     for obj in session.new.union(session.dirty).union(session.deleted):
-        logger.info(f"Session: Statement executed: {obj}")
+        logger.info(f"\nSession - Statement executed - {datetime.now().isoformat()}: {obj}\n")
 
 class User:
 
