@@ -74,6 +74,7 @@ class Stations:
         station=db.execute(select(models.Stations).filter_by(id=station_id)).first()
         if station.Stations is not None:
             station.Stations.date_created=new_datetime
+            db.commit()
         else:
             db.close()
 
