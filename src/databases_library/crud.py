@@ -1,7 +1,7 @@
-__version__='1.0.8'
+__version__='1.0.9'
 __authors__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
-__last_updated__='2023-12-01'
+__last_updated__='2023-12-04'
 
 import databases_library.schemas as schemas
 import databases_library.models as models
@@ -84,6 +84,7 @@ class Stations:
         station=db.execute(select(models.Stations).filter_by(id=station_id)).first()
         if station.Stations is not None:
             station.Stations.latest_update=new_datetime
+            db.commit()
         else:
             db.close()
 

@@ -360,7 +360,7 @@ Validates the data type before they are used by CRUD module methods creating cla
 
 **Module Name: crud**
 <br>
-**Version: 1.0.8**
+**Version: 1.0.9**
 
 Defines all the methods that Create, Read, Update and Delete
 tables, rows, etc. from MySql database. It includes the
