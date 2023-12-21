@@ -76,6 +76,11 @@ following table:
        <td>The timestamp that station installed on the field and started to transmit data</td>
     </tr>
     <tr>
+       <td>latest_update</td>
+       <td>float</td>
+       <td>The timestamp of the station last data update</td>
+    </tr>
+    <tr>
        <td>longitude</td>
        <td>decimal(10,8)</td>
        <td>The lognitude of the station's installation point</td>
@@ -252,9 +257,9 @@ following table:
     </tr>
     <tr>
       <td rowspan="4">fields_registry</td>
-      <td>A field unique identification number</td>
       <td>id</td>
       <td>int</td>
+      <td>A field unique identification number</td>
     </tr>
     <tr>
       <td>farm_id</td>
@@ -360,7 +365,7 @@ Validates the data type before they are used by CRUD module methods creating cla
 
 **Module Name: crud**
 <br>
-**Version: 1.0.9**
+**Version: 1.0.10**
 
 Defines all the methods that Create, Read, Update and Delete
 tables, rows, etc. from MySql database. It includes the
