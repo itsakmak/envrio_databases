@@ -1,7 +1,0 @@
-{
-    "DBAPI": "mysql+mysqlconnector",
-    "username": "nkokkos",
-    "password": "!nkEnvRIo828521",
-    "host-ip": "83.212.135.202",
-    "database": "envrio_core"
-}
