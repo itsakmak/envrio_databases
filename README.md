@@ -516,7 +516,7 @@ methods for data management and bucket configuration:
     </tr>
     <tr>
       <td>update_bucket</td>
-      <td>Updates a Bucket retention rules<br><b>Arguments</b><br><span class=highlight><i>type(str)</i></span>: a string that represents Bucket type e.g., <div style="background-color: lightblue; padding: 10px;"><i>expire</i></div><br><span class=highlight><i>data_duration(int)</i></span>: the data duration in seconds. Default is 0, corresponding to <span class=highlight2><i>infinite</i></span><br><span class=highlight><i>shard_group_duration(int)</i></span>: the shard group duration in seconds. Default value is set to 630,720,000 secs (roughly 20 years)<br><span class=highlight><i>description(str)</i></span>: a short descrption related with the update purpose<br></td>
+      <td>Updates a Bucket retention rules<br><b>Arguments</b><br><span class=highlight><i>type(str)</i></span>: a string that represents Bucket type e.g., <p style="background-color: lightblue; padding: 10px;"><i>expire</i></p><br><span class=highlight><i>data_duration(int)</i></span>: the data duration in seconds. Default is 0, corresponding to <span class=highlight2><i>infinite</i></span><br><span class=highlight><i>shard_group_duration(int)</i></span>: the shard group duration in seconds. Default value is set to 630,720,000 secs (roughly 20 years)<br><span class=highlight><i>description(str)</i></span>: a short descrption related with the update purpose<br></td>
     </tr>
   </tbdody>
 </table>
