@@ -95,6 +95,7 @@ class Stations:
         if result.Stations is not None:
             db.delete(result.Stations)
         else: db.close()
+
 class Gateways:
 
     @staticmethod
@@ -108,6 +109,7 @@ class Gateways:
     def get_by_code(code: str, db: Session = SessionLocal()):
         event.listen(db, 'before_flush', log_sqlalchemy_session_events)
         return db.execute(select(models.GateWays).filter_by(code=code)).first()
+    
 class RemoteTerminalUnits:
 
     @staticmethod
@@ -125,7 +127,8 @@ class RemoteTerminalUnits:
     @staticmethod
     def get_by_station_id(station_id: int, db: Session = SessionLocal()):
         event.listen(db, 'before_flush', log_sqlalchemy_session_events)
-        return db.execure(select(models.RemoteTerminalUnits).filter_by(station_id=station_id)).first() 
+        return db.execure(select(models.RemoteTerminalUnits).filter_by(station_id=station_id)).first()
+    
 class MonitoredParameters:
 
     @staticmethod
@@ -162,7 +165,7 @@ class MonitoredParameters:
         return db.execute(select(models.MonitoredParameters).filter_by(id = id)).first()
 
 class MeasurementsTranslations:
-
+    
     @staticmethod
     def add(translation: schemas.MeasurementTranslationsCreate, db: Session = SessionLocal()):
         event.listen(db, 'before_flush', log_sqlalchemy_session_events)

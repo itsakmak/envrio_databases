@@ -368,7 +368,7 @@ Validates the data type before they are used by CRUD module methods creating cla
 **Version: 1.0.10**
 
 Defines all the methods that Create, Read, Update and Delete
-tables, rows, etc. from MySql database. It includes the
+tables, table rows, etc. from MySql database. It includes the
 folloing classes-methods:
 <br>
 <br>
@@ -384,96 +384,91 @@ folloing classes-methods:
     <tr>
       <td rowspan="4">User</td>
       <td>add</td>
-      <td>Adds a new user to MySql database<br><b>Arguments:</b><br><i>name(str)</i>: the cognito user id; <br><i>email(str)</i>: the user email; <br><i>subscription_expires_in(timestamp)</i>: user's subscription expiration timestamp</td>
+      <td>Adds a new user to MySql database<br><b>Arguments:</b><br><span class=highlight><i>name(str)</i></span>: the cognito user id; <br><span class=highlight><i>email(str)</i></span>: the user email; <br><span class=highlight><i>subscription_expires_in(timestamp)</i></span>: user's subscription expiration timestamp</td>
     </tr>
     <tr>
       <td>get_by_name</td>
-      <td>Returns an sqlalchemy object with the columns user id, name, email and subscription_expires_in info<br><b>Arguments</b><br><i>name(str)</i>: the cognito user id</td>
+      <td>Returns a named tuple object with the named fields <span class=highlight><i>user id</i></span>, <span class=highlight><i>name</i></span>, <span class=highlight><i>email</i></span> and <span class=highlight><i>subscription_expires_in info</i></span><br><b>Arguments</b><br><span class=highlight><i>name(str)</i><span>: the cognito user id</td>
     </tr>
     <tr>
       <td>get_by_id</td>
-      <td>Returns an sqlalchemy object with the columns user id, name, email and subscription_expires_in info<br><b>Arguments</b><br><i>user_id(int)</i>: the user id</td>
+      <td>Returns a named tuple object with the named fields <span class=highlight><i>user id</i></span>, <span class=highlight><i>name</i></span>, <span class=highlight><i>email</i></span> and <span class=highlight><i>subscription_expires_in info</i></span><br><b>Arguments</b><br><span class=highlight><i>user_id(int)</i></span>: the user id</td>
     </tr>
     <tr>
       <td>get_by_email</td>
-      <td>Returns an sqlalchemy object with the columns user id, name, email and subscription_expires_in info<br><b>Arguments</b><br><i>email(str)</i>: the user email</td>
+      <td>Returns a named tuple object with the named fields <span class=highlight><i>user id</i></span>, <span class=highlight><i>name</i></span>, <span class=highlight><i>email</i></span> and <span class=highlight><i>subscription_expires_in info</i></span><br><b>Arguments</b><br><span class=highlight><i>email(str)</i></span>: the user email</td>
     </tr>
     <tr>
-      <td rowspan="6">Stations</td>
+      <td rowspan="7">Stations</td>
       <td>add</td>
-      <td>Adds a new station to MySql database<br><b>Arguments</b><br><i>brand(str)</i>: station's brand<br><i>model(str)</i>: station's specific model<br><i>code(str)</i>: station's code in provider's API<br><i>date_created(int)</i>: station's installation timestamp<br><i>longitude(decimal)</i>: station's longitude<br><i>latitude(decimal)</i>: station's latitude<br><i>elevation(int)</i>: station's elevation<br><i>access(int)</i>: the user ids that have an active subscription<br><i>name(json)</i>: A dictionary with station's name in different languages<br><i>icon_type(str)</i>: one of 'hydro', 'meteo', 'coastal' depending on station's type</td>
+      <td>Adds a new station to MySql database<br><b>Arguments</b><br><span class=highlight><i>brand(str)</i></span>: station's brand<br><span class=highlight><i>model(str)</i></span>: station's specific model<br><span class=highlight><i>code(str)</i></span>: station's code in provider's API<br><span class=highlight><i>date_created(int)</i></span>: station's installation timestamp<br><span class=highlight><i>longitude(decimal)</i></span>: station's longitude<br><span class=highlight><i>latitude(decimal)</i></span>: station's latitude<br><span class=highlight><i>elevation(int)</i></span>: station's elevation<br><span class=highlight><i>access(int)</i></span>: the user ids that have an active subscription<br><span class=highlight><i>name(json)</i></span>: A dictionary with station's name in different languages<br><span class=highlight><i>icon_type(str)</i></span>: one of 'hydro', 'meteo', 'coastal' depending on station's type</td>
     </tr>
     <tr>
       <td>get_by_code</td>
-      <td>Returns an sqlalchemy object with the columns station id, brand, model, code, date_created, longitude, latitude, elevation, access, name and icon_type<br><b>Arguments</b><br><i>code</i>: the station's id in provider's API</td>
+      <td>Returns a named tuple object with the named fields <span class=highlight><i>station id</i></span>, <span class=highlight><i>brand</i></span>, <span class=highlight><i>model</i></span>, <span class=highlight><i>code</i></span>, <span class=highlight><i>date_created</i></span>, <span class=highlight><i>latest_update</i></span>, <span class=highlight><i>longitude</i></span>, <span class=highlight><i>latitude</i></span>, <span class=highlight><i>elevation</i></span>, <span class=highlight><i>access</i></span>, <span class=highlight><i>name</i></span> <span class=highlight><i>and icon_type</i></span><br><b>Arguments</b><br><span class=highlight><i>code(str)</i></span>: the station's id in provider's API</td>
     </tr>
     <tr>
       <td>get_by_brand</td>
-      <td>Returns an array of sqlalchemy objects equal to the stations of the provided brand. Each sqlalchemy object has the columns station id, brand, model, code, date_created, longitude, latitude, elevation, access, name and icon_type<br><b>Arguments</b><br><i>brand(str)</i>: a station brand</td>
+      <td>Returns a list of named tuples. The list length is equal to the stations of the given brand. Each named tuple has the name fields <span class=highlight><i>station id</i></span>, <span class=highlight><i>brand</i></span>, <span class=highlight><i>model</i></span>, <span class=highlight><i>code</i></span>, <span class=highlight><i>date_created</i></span>, <span class=highlight><i>latest_update</i></span>, <span class=highlight><i>longitude</i></span>, <span class=highlight><i>latitude</i></span>, <span class=highlight><i>elevation</i></span>, <span class=highlight><i>access</i></span>, <span class=highlight><i>name</i></span> <span class=highlight><i>and icon_type</i></span><br><b>Arguments</b><br><span class=highlight><i>brand(str)</i></span>: a station brand</td>
     </tr>
     <tr>
       <td>get_by_access</td>
-      <td>Returns an array of sqlalchemy objects with the stations that a user has an active subscription. Each sqlalchemy onject has the columns station id, brand, model, code, date_created, longitude, latitude, elevation, access, name and icon_type<br><b>Arguments</b><br><i>user_id(int)</i>: the user id</td>
+      <td>Returns a list of named tuples. The list length is equal to the stations that a user has an active subscription for. Each named tuple has the name fields <span class=highlight><i>station id</i></span>, <span class=highlight><i>brand</i></span>, <span class=highlight><i>model</i></span>, <span class=highlight><i>code</i></span>, <span class=highlight><i>date_created</i></span>, <span class=highlight><i>latest_update</i></span>, <span class=highlight><i>longitude</i></span>, <span class=highlight><i>latitude</i></span>, <span class=highlight><i>elevation</i></span>, <span class=highlight><i>access</i></span>, <span class=highlight><i>name</i></span> <span class=highlight><i>and icon_type</i></span><br><b>Arguments</b><br><span class=highlight><i>user_id(int)</i></span>: the user id</td>
     </tr>
     <tr>
       <td>update_date_created</td>
       <td>Updates the date_created column value<br><b>Arguments</b><br><i>station_id(int)</i>: a station id<br><i>new_datetime(ing)</i>: the new date time timestamp</td>
     </tr>
     <tr>
+      <td>update_latest_update</td>
+      <td>The date-time of the last data update<br><b>Arguments</b><br><span class=highlight><i>station_id(int)</i></span>: a station id<br><span class=highlight><i>new_datetime(int)</i></span>: the new date time timestamp</td>
+    </tr>
+    <tr>
       <td>delete_by_code</td>
-      <td>It deletes a station entry for a provided station id<br><b>Arguments</b><br><i>code(str) the station's id as defined in provider's API</i>: </td>
+      <td>It deletes a station entry for a provided station id<br><b>Arguments</b><br><span class=highlight><i>code(str)</i></span>: the station's id as defined in provider's API</i>: </td>
     </tr>
     <tr>
       <td rowspan="2">Gateways</td>
       <td>add</td>
-      <td>Adds a new gateway<br><b>Arguments</b><br><i>brand(str)</i>: gateway's brand<br><i>model(str)</i>: gateway's specific model<br><i>code(str)</i>: gateway's id in provider's API<br><i>name(str)</i>: gateway's user defined name<br><i>station_id(int)</i>: the station id that gateway is connected to</td>
+      <td>Adds a new gateway<br><b>Arguments</b><br><span class=highlight><i>brand(str)</i></span>: gateway's brand<br><span class=highlight><i>model(str)</i></span>: gateway's specific model<br><span class=highlight><i>code(str)</i></span>: gateway's id in provider's API<br><span class=highlight><i>name(str)</i></span>: gateway's user defined name<br><span class=highlight><i>station_id(int)</i></span>: the station id that gateway is connected to</td>
     </tr>
     <tr>
       <td>get by code</td>
-      <td>Returns an sqlalchemy object with the columns gateway id, brand, model, code, name and station_id<br><b>Arguments</b><br><i>code(str)</i>: gateways's id is provider's API</td>
+      <td>Returns a named tuple object with the named fields <span class=highlight><i>gateway id</i></span>, <span class=highlight><i>brand</i></span>, <span class=highlight><i>model</i></span>, <span class=highlight><i>code</i></span>, <span class=highlight><i>name</i></span> and <span class=highlight><i>station_id</i></span><br><b>Arguments</b><br><span class=highlight><i>code(str)</i></span>: gateways's id is provider's API</td>
     </tr>
     <tr>
       <td rowspan="3">RemoteTerminalUnits</td>
       <td>add</td>
-      <td>Adds a new remote terminal unit in MySql database<br><b>Arguments</b><br><i>brand(str)<i>: remote terminal unit's brand<br><i>model(str)</i>: remote terminal unit's specific model<br><i>code(str)</i> remote terminal unit's id in provider's API<br><i>longitude(decimal)</i>: remote terminal unit's longitude<br><i>latitude(decimal)</i>:  remote terminal's unit longitude<br><i>evelation(int)</i>: remote terminal unit's elevation<br><i>name(json)</i>: a dictionaly with a name assigned by the user to the remote terminal uni in different languages<br><i>station_id(int)</i>: the station id that the remote terminal unit is paired with</td>
+      <td>Adds a new remote terminal unit in MySql database<br><b>Arguments</b><br><span class=highlight><i>brand(str)</i></span>: remote terminal unit's brand<br><span class=highlight><i>model(str)</i></span>: remote terminal unit's specific model<br><span class=highlight><i>code(str)</i></span>: remote terminal unit's id in provider's API<br><span class=highlight><i>longitude(decimal)</i></span>: remote terminal unit's longitude<br><span class=highlight><i>latitude(decimal)</i></span>:  remote terminal's unit longitude<br><span class=highlight><i>evelation(int)</i></span>: remote terminal unit's elevation<br><span class=highlight><i>name(json)</i></span>: a dictionaly with a name assigned by the user to the remote terminal uni in different languages<br><span class=highlight><i>station_id(int)</i></span>: the station id that the remote terminal unit is paired with</td>
     </tr>
     <tr>
       <td>get_by_code</td>
-      <td>Returns an sqlalchemy object with the columns id, brand, model, code, longitude, latitude, elevation, name and station_id<br><b>Arguments</b><br><i>code(str)</i>: the remote terminal unit's code in providers API</td>
+      <td>Returns a named tuple object with the named fields <span class=highlight><i>id</i></span>, <span class=highlight><i>brand</i></span>, <span class=highlight><i>model</i></span>, <span class=highlight><i>code</i></span>, <span class=highlight><i>longitude</i></span>, <span class=highlight><i>latitude</i></span>, <span class=highlight><i>elevation</i></span>, <span class=highlight><i>name</i></span> and <span class=highlight><i>station_id</i></span><br><b>Arguments</b><br><span class=highlight><i>code(str)</i></span>: the remote terminal unit's code in providers API</td>
     </tr>
     <tr>
       <td>get_by_station_id</td>
-      <td>Returns an sqlalchemy object with the columns unit id, brand, model, code, longitude, latitude, elevation, name and station_id<br><b>Arguments</b><br><i>station_id(int)</i>: the station id that remote terminal unit is paired with</td>
+      <td>Returns a named tuple object with the named fields <span class=highlight><i>id</i></span>, <span class=highlight><i>brand</i></span>, <span class=highlight><i>model</i></span>, <span class=highlight><i>code</i></span>, <span class=highlight><i>longitude</i></span>, <span class=highlight><i>latitude</i></span>, <span class=highlight><i>elevation</i></span>, <span class=highlight><i>name</i></span> and <span class=highlight><i>station_id</i></span><br><b>Arguments</b><br><span class=highlight><i>station_id(int)</i></span>: the station id that remote terminal unit is paired with</td>
     </tr>
     <tr>
       <td rowspan="5">MonitoredParameters</td>
       <td>add</td>
-      <td>Adds a new sensor or meter to MySql database<br><b>Arguments</b><br><i>device_type(str)</i>: can be one of 'sensor', 'meter' or 'calc'<br><i>measurement(str)</i>: monitored parameter's name<br><i>unit(str)</i>: monitored parameter's unit<br><i>device_height(float)</i>: the device distance below (negative) or above (positive) the reference surface (soil or sea) in meters<br><i>name(str)</i>: a name assigned by the user to the parameter<br><i>code(str)</i>: the parameter id in provider's API<br><i>station_id(int)</i>: the station id that the parameter is monitored by<br><i>rtu_id</i>: the remote terminal unit id that the parameter is monitored by. Default value is None</td>
+      <td>Adds a new sensor or meter to MySql database<br><b>Arguments</b><br><span class=highlight><i>device_type(str)</i></span>: can be one of <span class=highlight2><i>sensor</i></span>, <span class=highlight2><i>meter</i></span> or <span class=highlight2><i>calc</i></span><br><span class=highlight><i>measurement(str)</i></span>: monitored parameter's name<br><span class=highlight><i>unit(str)</i></span>: monitored parameter's unit<br><span class=highlight><i>device_height(float)</i></span>: the device distance below (negative) or above (positive) the reference surface (soil or sea) in meters<br><span class=highlight><i>name(str)</i></span>: a name assigned by the user to the parameter<br><span class=highlight><i>code(str)</i></span>: the parameter id in provider's API<br><span class=highlight><i>station_id(int)</i></span>: the station id that the parameter is monitored by<br><span class=highlight><i>rtu_id</i></span>: the remote terminal unit id that the parameter is monitored by. Default value is None</td>
     </tr>
     <tr>
       <td>get_by_station_id</td>
-      <td>Returns an sqlalchemy object with the columns id, device_type, measurement, unit, device_height, name, code,station_id and rtu_id<br><b>Arguments</b><br><i>station_id(int)</i>: the station id that the parameter is monitored by</td>
+      <td>Returns a list of named tuples with the parameters that are monitored by the given station id. Each named tuple object includes the named fields <span class=highlight><i>id</i></span>, <span class=highlight><i>device_type</i></span>, <span class=highlight><i>measurement</i></span>, <span class=highlight><i>unit</i></span>, <span class=highlight><i>device_height</i></span>, <span class=highlight><i>name</i></span>, <span class=highlight><i>code</i></span>, <span class=highlight><i>station_id</i></span> and <span class=highlight><i>rtu_id</i></span><br><b>Arguments</b><br><span class=highlight><i>station_id(int)</i></span>: the station id that the parameter is monitored by</td>
     </tr>
     <tr>
       <td>get_by_rtu_id</td>
-      <td>Returns an sqlalchemy object with the columns id, device_type, measurement, unit, device_height, name, code,station_id and rtu_id<br><b>Arguments</b><i>rtu_id(int)</i>: the remote terminal unit id that the parameter is monitored by</td>
+      <td>Returns a list of named tuples with the parameters that are monitored by the given rtu id. Each named tuple object includes the named fields <span class=highlight><i>id</i></span>, <span class=highlight><i>device_type</i></span>, <span class=highlight><i>measurement</i></span>, <span class=highlight><i>unit</i></span>, <span class=highlight><i>device_height</i></span>, <span class=highlight><i>name</i></span>, <span class=highlight><i>code</i></span>, <span class=highlight><i>station_id</i></span> and <span class=highlight><i>rtu_id</i></span><br><b>Arguments<br></b><span class=highlight><i>rtu_id(int)</i></span>: the remote terminal unit id that the parameter is monitored by</td>
     </tr>
     <tr>
       <td>get_by_station_id_and_rtu_id</td>
-      <td>Returns an sqlalchemy object with the columns id, device_type, measurement, unit, device_height, name, code,station_id and rtu_id<br><b>Arguments</b><br><i>station_id(int)</i>: the station id that the parameter is monitored by<br><i>rtu_id(int)</i>: the remote terminal unit id that the parameter is monitored by</td>
+      <td>Returns a list of named tuples with the parameters that are monitored by the given station & rtu ids. Each named tuple object includes the named fields <span class=highlight><i>id</i></span>, <span class=highlight><i>device_type</i></span>, <span class=highlight><i>measurement</i></span>, <span class=highlight><i>unit</i></span>, <span class=highlight><i>device_height</i></span>, <span class=highlight><i>name</i></span>, <span class=highlight><i>code</i></span>, <span class=highlight><i>station_id</i></span> and <span class=highlight><i>rtu_id</i></span><br><b>Arguments</b><br><span class=highlight><i>station_id(int)</i></span>: the station id that the parameter is monitored by<br><span class=highlight><i>rtu_id(int)</i></span>: the remote terminal unit id that the parameter is monitored by</td>
     </tr>
     <tr>
       <td>get_by_id</td>
-      <td>Returns an sqlalchemy object with the columns id, device_type, measurement, unit, device_height, name, code,station_id and rtu_id<br><b>Arguments</b><br><i>id(int)</i>: parameter id</td>
-    </tr>
-    <tr>
-      <td rowspan="2">ParametersTranslations</td>
-      <td>add</td>
-      <td>Adds a new parameter translation<br><b>Arguments</b><i>translation(str)</i>: the parameter measurement name<br><i>el(str)</i>the parameter name in the greek language<br><i>en(str)</i>: the parameter name in english language</td>
-    </tr>
-    <tr>
-      <td>get_translation_by_measurement</td>
-      <td>By providing a measurement it returns the corresponding description in all registered languages<br><b>Arguments</b><i>measurement(str)</i>: the parameter's measurement name</td>
+      <td>Returns a named tuple object with the named fields <span class=highlight><i>id</i></span>, <span class=highlight><i>device_type</i></span>, <span class=highlight><i>measurement</i></span>, <span class=highlight><i>unit</i></span>, <span class=highlight><i>device_height</i></span>, <span class=highlight><i>name</i></span>, <span class=highlight><i>code</i></span>, <span class=highlight><i>station_id</i></span> and <span class=highlight><i>rtu_id</i></span><br><b>Arguments</b><br><span class=highlight><i>id(int)</i></span>: parameter id</td>
     </tr>
   </tbdody>
 </table>
@@ -481,13 +476,60 @@ folloing classes-methods:
 
 **Module Name: influx**
 <br>
-**version: 1.0.1**
+**version: 1.0.2**
 
 Connects to the InfluxDB database and defines all the required 
-methods to insert data rows, delete rows, retrive bucket info
-and update bucket info. Defines the following methods:
+methods for data management and bucket configuration:
 <br>
 <br>
-Methods: *write_point*, *delete_rows*, *query_data*, *list_buckets*, *update_bucket*
+<table>
+  <thead>
+    <tr>
+      <th>Class Name</th>
+      <th>Method</th>
+      <th>Short Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan=1>InfluxConnector</td>
+      <td>__init__</td>
+      <td>Initializes an influx instance<br><b>Arguments</b><br><span class=highlight><i>bucket_name(str)</i></span>: the desired influx bucket<br><span class=highlight><i>organization(str)</i></span>: the organization that owns influx<br><span class=highlight><i>conf_file</i></span>: the name of the file that contains influx credentials</td>
+    </tr>
+    <tr>
+      <td rowspan=3>DataManagement</td>
+      <td>write_point</td>
+      <td>Inserts data points to the database<br><b>Arguments</b><br><span class=highlight><i>measurement(str)</i></span>: The name of the parameter that is measured<br><span class=highlight><i>sensor_id(int)</i></span>: the sensor id in MySql MeasuredParameters table<br><span class=highlight><i>unit(str)</i></span>: the unit that the parameter is expressed<br><span class=highlight><i>data(dict)</i></span>: a dictionary with keys <span class=highlight2><i>date_time</i></span> and <span class=highlight2><i>values</i></span> that contains the measured data and their timestamps</td>
+    </tr>
+    <tr>
+      <td>delete_rows</td>
+      <td>Deletes data points from the database for a given time range<br><b>Arguments</b><br><span class=highlight><i>measurement(str)</i></span>: The name of the parameter from which data will be deleted<br><span class=highlight><i>start(str)</i></span>: A date-time in <i>ISO 8601</i> format. The beginning of the time period that data points will be deleted<br><span class=highlight><i>stop(str)</i></span>: A date-time in <i>ISO 8601</i> format. The end of the time period that data points will be deleted<br><span class=highlight><i>tag(str)</i></span>: A measured parameter id as defined in MySql MeasuredParemeters table</td>
+    </tr>
+    <tr>
+      <td>query_data</td>
+      <td>Returns a dataframe with the queried data<br><b>Arguments</b><br><span class=highlight><i>measurement(str)</i></span>: The name of the parameter that data should be retrieved<br><span class=highlight><i>sensor_id(int)</i></span>: a parameter id from MySql MeasuredParemeters table<br><span class=highlight><i>unit(srt)</i></span>: the unit that the parameter is expressed<br><span class=highlight><i>start(str)</i></span>: A date-time in <i>ISO 8601</i> format. The beginning of the time period that data points will be retrieved<br><span class=highlight><i>stop(str)</i></span>: A date-time in <i>ISO 8601</i> format. The end of the time period that data points will be retrieved<br></td>
+    </tr>
+    <tr>
+      <td rowspan=2>BucketConfiguration</td>
+      <td>list_buckets</td>
+      <td>Returns a list with the existing Bucket class objects</td>
+    </tr>
+    <tr>
+      <td>update_bucket</td>
+      <td>Updates a Bucket retention rules<br><b>Arguments</b><br><span class=highlight><i>type(str)</i></span>: a string that represents Bucket type e.g., <span class=highlight2><i>expire</i></span><br><span class=highlight><i>data_duration(int)</i></span>: the data duration in seconds. Default is 0, corresponding to <span class=highlight2><i>infinite</i></span><br><span class=highlight><i>shard_group_duration(int)</i></span>: the shard group duration in seconds. Default value is set to 630,720,000 secs (roughly 20 years)<br><span class=highlight><i>description(str)</i></span>: a short descrption related with the update purpose<br></td>
+    </tr>
+  </tbdody>
+</table>
 
 
+<style>
+  .highlight {
+    background-color: #888; /* Set the background color */
+    padding: 5px; /* Add some padding for better visibility */
+  }
+  .highlight2{
+    background-color: #999; /* Set the background color */
+    padding: 5px; /* Add some padding for better visibility */
+    color: red;    
+  }
+</style>
