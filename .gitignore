@@ -1,0 +1,8 @@
+# .json
+/src/mysql/databases_library/mysql_config.json
+
+# gitignore
+.gitignore
+
+# ini
+/src/mysql/databases_library/envrio_config.ini
