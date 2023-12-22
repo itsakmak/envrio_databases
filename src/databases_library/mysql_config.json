@@ -1,8 +1,0 @@
-{
-    "DBAPI": "mysql+mysqlconnector",
-    "username": "nkokkos",
-    "password": "!nkEnvRIo828521",
-    "host-ip": "83.212.135.202",
-    "database": "envrio_core",
-    "sqlalchemy_logging_path": "C:/Users/xylop/Documents/github_repos/envrio_db_lib/log/"
-}
