@@ -1,11 +1,10 @@
-__version__='1.0.10'
+__version__='1.1.0'
 __authors__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
-__last_updated__='2023-12-21'
+__last_updated__='2024-01-06'
 
-import databases_library.schemas as schemas
-import databases_library.models as models
-from databases_library.engine import SessionLocal, logging_path
+import schemas, models
+from engine import SessionLocal, logging_path
 from sqlalchemy.orm import Session
 from sqlalchemy import text, or_, select, event
 from datetime import datetime
