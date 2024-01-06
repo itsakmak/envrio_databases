@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "databases_library"
-version = "1.0.0"
+version = "1.0.1"
 description = "A library that enables ENVTIO mysql and influx databases management"
 authors = ["Ioannis Tsakmakis <itsakmak@envrio.org>","Nikolaos Kokkos <nkokkos@envrio.org>"]
 
