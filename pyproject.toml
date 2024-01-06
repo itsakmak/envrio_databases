@@ -9,8 +9,8 @@ description = "A library that enables ENVTIO mysql and influx databases manageme
 authors = ["Ioannis Tsakmakis <itsakmak@envrio.org>","Nikolaos Kokkos <nkokkos@envrio.org>"]
 
 [tool.poetry.dependencies]
-python = "^3.8",
-SQLAlchemy = ">=2.0.22",
-setuptools = ">=67",
-pydantic = "==2.5.0",
+python = "^3.8"
+SQLAlchemy = ">=2.0.22"
+setuptools = ">=67"
+pydantic = "==2.5.0"
 mysql-connector-python = ">=8.2.0"
