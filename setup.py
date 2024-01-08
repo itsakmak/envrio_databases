@@ -13,5 +13,13 @@ setup(
         'pydantic>=2.5.2',
         'influxdb-client>=1.39.0',
         'mysql-connector-python>=8.2.0'
+    ],
+    classifiers=[  
+        'Development Status :: 4 - Beta',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: Apache Software License',
+        'Programming Language :: Python :: 3.12',
+        'Framework :: Flask',
+        'Topic :: Software Development :: Libraries :: Python Modules'
     ]
 )
