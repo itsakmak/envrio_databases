@@ -1,11 +1,10 @@
-__version__='1.0.9'
+__version__='1.1.0'
 __authors__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
-__last_updated__='2023-12-04'
+__last_updated__='2024-01-06'
 
-import databases_library.schemas as schemas
-import databases_library.models as models
-from databases_library.engine import SessionLocal, logging_path
+import schemas, models
+from engine import SessionLocal, logging_path
 from sqlalchemy.orm import Session
 from sqlalchemy import text, or_, select, event
 from datetime import datetime
@@ -71,7 +70,7 @@ class Stations:
     @staticmethod
     def update_date_created(station_id: int, new_datetime: str, db: Session = SessionLocal()):
         event.listen(db, 'before_flush', log_sqlalchemy_session_events)
-        station=db.execute(select(models.Stations).filter_by(id=station_id)).first()
+        station=db.execute(select(models.Stations).filter_by(id=station_id)).one_or_none()
         if station.Stations is not None:
             station.Stations.date_created=new_datetime
             db.commit()
@@ -81,7 +80,7 @@ class Stations:
     @staticmethod
     def update_latest_update(station_id: int, new_datetime: str, db: Session = SessionLocal()):
         event.listen(db, 'before_flush', log_sqlalchemy_session_events)
-        station=db.execute(select(models.Stations).filter_by(id=station_id)).first()
+        station=db.execute(select(models.Stations).filter_by(id=station_id)).one_or_none()
         if station.Stations is not None:
             station.Stations.latest_update=new_datetime
             db.commit()
@@ -91,10 +90,11 @@ class Stations:
     @staticmethod
     def delete_by_code(code: str, db: Session = SessionLocal()):
         event.listen(db, 'before_flush', log_sqlalchemy_session_events)
-        result = db.execute(select(models.Stations).filter_by(code = code)).first()
+        result = db.execute(select(models.Stations).filter_by(code = code)).one_or_none()
         if result.Stations is not None:
             db.delete(result.Stations)
         else: db.close()
+
 class Gateways:
 
     @staticmethod
@@ -108,6 +108,7 @@ class Gateways:
     def get_by_code(code: str, db: Session = SessionLocal()):
         event.listen(db, 'before_flush', log_sqlalchemy_session_events)
         return db.execute(select(models.GateWays).filter_by(code=code)).first()
+    
 class RemoteTerminalUnits:
 
     @staticmethod
@@ -125,7 +126,8 @@ class RemoteTerminalUnits:
     @staticmethod
     def get_by_station_id(station_id: int, db: Session = SessionLocal()):
         event.listen(db, 'before_flush', log_sqlalchemy_session_events)
-        return db.execure(select(models.RemoteTerminalUnits).filter_by(station_id=station_id)).first() 
+        return db.execure(select(models.RemoteTerminalUnits).filter_by(station_id=station_id)).first()
+    
 class MonitoredParameters:
 
     @staticmethod
@@ -162,7 +164,7 @@ class MonitoredParameters:
         return db.execute(select(models.MonitoredParameters).filter_by(id = id)).first()
 
 class MeasurementsTranslations:
-
+    
     @staticmethod
     def add(translation: schemas.MeasurementTranslationsCreate, db: Session = SessionLocal()):
         event.listen(db, 'before_flush', log_sqlalchemy_session_events)
