@@ -1,4 +1,4 @@
-__version__='1.0.2'
+__version__='1.1.1'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2023-11-16'
 __last_updated__='2023-12-22'
