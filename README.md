@@ -1,5 +1,7 @@
 # Envrio Databases Library
 
+**Version: 1.0.1**
+
 This repository contains the library that manages the Envrio MySql and Influx databases.
 
 It consists of the following modules
@@ -12,7 +14,7 @@ It consists of the following modules
 
 **Module Name: models**
 <br>
-**Version: 1.0.6**
+**Version: 1.1.0**
 
 **Module Name: schemas**
 <br>
@@ -20,10 +22,10 @@ It consists of the following modules
 
 **Module Name: crud**
 <br>
-**Version: 1.0.10**
+**Version: 1.1.0**
 
 **Module Name: influx**
 <br>
-**version: 1.0.2**
+**version: 1.1.1**
 
-A descriptive documentation of the modules can be found <a href="https://envrio.org/documentation/databases_library/">here<a>
+A descriptive documentation of the modules functionality can be found <a href="https://envrio.org/documentation/databases_library/">here<a>
