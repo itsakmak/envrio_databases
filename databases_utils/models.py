@@ -7,7 +7,7 @@ __last_updated__='2024-01-06'
 
 from sqlalchemy import ForeignKey, Numeric, String, JSON
 from sqlalchemy.orm import  Mapped, mapped_column
-from engine import Base
+from databases_utils.engine import Base
 from typing import Optional
 
 # Users
