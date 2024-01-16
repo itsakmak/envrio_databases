@@ -2,7 +2,7 @@
 
 **Version: 1.0.1**
 
-This repository contains the library that manages the Envrio MySql and Influx databases.
+This repository contains the library that manages the Envrio MySql and InfluxDB databases.
 
 It consists of the following modules
 
