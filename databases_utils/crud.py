@@ -3,8 +3,8 @@ __authors__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
 __last_updated__='2024-01-06'
 
-import schemas, models
-from engine import SessionLocal, logging_path
+from databases_utils import schemas, models
+from databases_utils.engine import SessionLocal, logging_path
 from sqlalchemy.orm import Session
 from sqlalchemy import text, or_, select, event
 from datetime import datetime
