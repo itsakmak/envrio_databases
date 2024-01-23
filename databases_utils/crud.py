@@ -1,10 +1,10 @@
 __version__='1.1.0'
 __authors__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
-__last_updated__='2024-01-06'
+__last_updated__='2024-01-15'
 
-import schemas, models
-from engine import SessionLocal, logging_path
+from databases_utils import schemas, models
+from databases_utils.engine import SessionLocal, logging_path
 from sqlalchemy.orm import Session
 from sqlalchemy import text, or_, select, event
 from datetime import datetime
@@ -25,22 +25,23 @@ class User:
     def add(user: schemas.UsersTableCreate, db: Session = SessionLocal()):
         event.listen(db, 'before_flush', log_sqlalchemy_session_events)
         new_user = models.Users(name=user.name, email=user.email, subscription_expires_in=user.subscription_expires_in)
-        db.add(new_user)          
+        db.add(new_user)
+        db.commit()       
 
     @staticmethod
     def get_by_name(name: str, db: Session = SessionLocal()):
         event.listen(db, 'before_flush', log_sqlalchemy_session_events)
-        return db.execute(select(models.Users).filter_by(name=name)).first()
+        return db.execute(select(models.Users).filter_by(name=name)).one_or_none()
 
     @staticmethod
     def get_by_id(id: int, db: Session = SessionLocal()):
         event.listen(db, 'before_flush', log_sqlalchemy_session_events)
-        return db.execute(select(models.Users).filter_by(id=id)).first()
+        return db.execute(select(models.Users).filter_by(id=id)).one_or_none()
     
     @staticmethod
     def get_by_email(email: str, db: Session = SessionLocal()):
         event.listen(db, 'before_flush', log_sqlalchemy_session_events)
-        return db.execute(select(models.Users).filter_by(email=email)).first()
+        return db.execute(select(models.Users).filter_by(email=email)).one_or_none()
 
 class Stations:
 
@@ -51,11 +52,12 @@ class Stations:
                                       latest_update=station.latest_update, longitude=station.longitude, latitude=station.latitude, elevation=station.elevation,
                                       access=station.access, name=station.name, icon_type=station.icon_type)
         db.add(new_station)
+        db.commit()
 
     @staticmethod
     def get_by_code(code: str, db: Session = SessionLocal()):
         event.listen(db, 'before_flush', log_sqlalchemy_session_events)
-        return db.execute(select(models.Stations).filter_by(code = code)).first()
+        return db.execute(select(models.Stations).filter_by(code = code)).one_or_none()
 
     @staticmethod
     def get_by_brand(brand: str, db: Session = SessionLocal()):
@@ -103,30 +105,101 @@ class Gateways:
         new_gateway = models.GateWays(brand= gateway.brand, model=gateway.model, code=gateway.code,
                                       name = gateway.name, station_id=gateway.station_id)
         db.add(new_gateway)
+        db.commit()
 
     @staticmethod
     def get_by_code(code: str, db: Session = SessionLocal()):
         event.listen(db, 'before_flush', log_sqlalchemy_session_events)
-        return db.execute(select(models.GateWays).filter_by(code=code)).first()
+        return db.execute(select(models.GateWays).filter_by(code=code)).one_or_none()
+
+class ReapeaterUnits:
+
+    @staticmethod
+    def add(rpu: schemas.ReapeaterUnitsBase, db: Session = SessionLocal()):
+        event.listen(db, 'before_flush', log_sqlalchemy_session_events)
+        new_rtu = models.RemoteTerminalUnits(brand=rpu.brand, model=rpu.model, code=rpu.code, date_created=rpu.date_created,
+                                             latest_update=rpu.latest_update, longitude=rpu.longitude,
+                                             latitude=rpu.latitude, elevation=rpu.elevation, name=rpu.name,
+                                             station_id=rpu.station_id)
+        db.add(new_rtu)
+        db.commit()
+
+    @staticmethod
+    def get_by_code(code: str, db: Session = SessionLocal()):
+        event.listen(db, 'before_flush', log_sqlalchemy_session_events)
+        return db.execute(select(models.RepeaterUnits).filter_by(code = code)).one_or_none()
     
+    @staticmethod
+    def get_by_station_id(station_id: int, db: Session = SessionLocal()):
+        event.listen(db, 'before_flush', log_sqlalchemy_session_events)
+        return db.execute(select(models.RepeaterUnits).filter_by(station_id=station_id)).one_or_none()
+    
+    @staticmethod
+    def update_date_created(repeater_id: int, new_datetime: str, db: Session = SessionLocal()):
+        event.listen(db, 'before_flush', log_sqlalchemy_session_events)
+        repeater=db.execute(select(models.RepeaterUnits).filter_by(id=repeater_id)).one_or_none()
+        if repeater.RepeaterUnits is not None:
+            repeater.RepeaterUnits.date_created=new_datetime
+            db.commit()
+        else:
+            db.close()
+
+    @staticmethod
+    def update_latest_update(repeater_id: int, new_datetime: str, db: Session = SessionLocal()):
+        event.listen(db, 'before_flush', log_sqlalchemy_session_events)
+        repeater=db.execute(select(models.RepeaterUnits).filter_by(id=repeater_id)).one_or_none()
+        if repeater.RepeaterUnits is not None:
+            repeater.RepeaterUnits.latest_update=new_datetime
+            db.commit()
+        else:
+            db.close()
+
 class RemoteTerminalUnits:
 
     @staticmethod
     def add(rtu: schemas.RemoteTerminalUnitsCreate, db: Session = SessionLocal()):
         event.listen(db, 'before_flush', log_sqlalchemy_session_events)
-        new_rtu = models.RemoteTerminalUnits(brand=rtu.brand, model=rtu.model, code=rtu.code, longitude=rtu.longitude,
-                                             latitude=rtu.latitude, elevation=rtu.elevation,name=rtu.name, station_id=rtu.station_id)
+        new_rtu = models.RemoteTerminalUnits(brand=rtu.brand, model=rtu.model, code=rtu.code, date_created=rtu.date_created,
+                                             latest_update=rtu.latest_update, longitude=rtu.longitude,
+                                             latitude=rtu.latitude, elevation=rtu.elevation, name=rtu.name,
+                                             station_id=rtu.station_id, repeater_id=rtu.repeater_id)
         db.add(new_rtu)
+        db.commit()
 
     @staticmethod
     def get_by_code(code: str, db: Session = SessionLocal()):
         event.listen(db, 'before_flush', log_sqlalchemy_session_events)
-        return db.execute(select(models.RemoteTerminalUnits).filter_by(code = code)).first()
+        return db.execute(select(models.RemoteTerminalUnits).filter_by(code = code)).one_or_none()
     
     @staticmethod
     def get_by_station_id(station_id: int, db: Session = SessionLocal()):
         event.listen(db, 'before_flush', log_sqlalchemy_session_events)
-        return db.execure(select(models.RemoteTerminalUnits).filter_by(station_id=station_id)).first()
+        return db.execute(select(models.RemoteTerminalUnits).filter_by(station_id=station_id)).one_or_none()
+    
+    @staticmethod
+    def get_by_repeater_id(repeater_id: int, db: Session = SessionLocal()):
+        event.listen(db, 'before_flush', log_sqlalchemy_session_events)
+        return db.execute(select(models.RepeaterUnits).filter_by(repeater_id=repeater_id)).one_or_none()
+    
+    @staticmethod
+    def update_date_created(rtu_id: int, new_datetime: str, db: Session = SessionLocal()):
+        event.listen(db, 'before_flush', log_sqlalchemy_session_events)
+        rtu=db.execute(select(models.RemoteTerminalUnits).filter_by(id=rtu_id)).one_or_none()
+        if rtu.RemoteTerminalUnits is not None:
+            rtu.RemoteTerminalUnits.date_created=new_datetime
+            db.commit()
+        else:
+            db.close()
+
+    @staticmethod
+    def update_latest_update(rtu_id: int, new_datetime: str, db: Session = SessionLocal()):
+        event.listen(db, 'before_flush', log_sqlalchemy_session_events)
+        rtu=db.execute(select(models.RemoteTerminalUnits).filter_by(id=rtu_id)).one_or_none()
+        if rtu.RemoteTerminalUnits is not None:
+            rtu.RemoteTerminalUnits.latest_update=new_datetime
+            db.commit()
+        else:
+            db.close()
     
 class MonitoredParameters:
 
@@ -137,11 +210,23 @@ class MonitoredParameters:
                                                 device_height=monitored_parameters.device_height, name =monitored_parameters.name,
                                                 code=monitored_parameters.code, station_id=monitored_parameters.station_id, rtu_id=monitored_parameters.rtu_id)
         db.add(new_monitored_parameters)
+        db.commit()
 
     @staticmethod
     def get_by_station_id(station_id: int, db: Session = SessionLocal()):
         event.listen(db, 'before_flush', log_sqlalchemy_session_events)
         rtus = db.execute(select(models.RemoteTerminalUnits).filter_by(station_id=station_id)).all()
+        if len(rtus) == 0:
+            return db.execute(select(models.MonitoredParameters).filter_by(station_id=station_id)).all()
+        else:
+            return db.execute(select(models.MonitoredParameters).filter(or_(models.MonitoredParameters.station_id==station_id,
+                                                            models.MonitoredParameters.rtu_id.in_(rtus.id)))).all()
+        
+    @staticmethod
+    def get_by_repeater_id(repeater_id: int, db: Session = SessionLocal()):
+        event.listen(db, 'before_flush', log_sqlalchemy_session_events)
+        station_id = db.execute(select(models.RepeaterUnits.station_id).filter_by(repeater_id=repeater_id)).one_or_none()
+        rtus = db.execute(select(models.RepeaterUnits).filter_by(repeater_id=repeater_id)).all()
         if len(rtus) == 0:
             return db.execute(select(models.MonitoredParameters).filter_by(station_id=station_id)).all()
         else:
@@ -161,7 +246,7 @@ class MonitoredParameters:
     @staticmethod
     def get_by_id(id: int, db: Session = SessionLocal()):
         event.listen(db, 'before_flush', log_sqlalchemy_session_events)
-        return db.execute(select(models.MonitoredParameters).filter_by(id = id)).first()
+        return db.execute(select(models.MonitoredParameters).filter_by(id = id)).one_or_none()
 
 class MeasurementsTranslations:
     
@@ -174,4 +259,4 @@ class MeasurementsTranslations:
     @staticmethod
     def get_translation_by_measurement(measurement: str, db: Session = SessionLocal()):
         event.listen(db, 'before_flush', log_sqlalchemy_session_events)
-        return db.execute(select(models.MeasurementTranslations).filter_by(measurement=measurement)).first()
+        return db.execute(select(models.MeasurementTranslations).filter_by(measurement=measurement)).one_or_none()

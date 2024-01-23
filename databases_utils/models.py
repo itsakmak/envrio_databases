@@ -1,13 +1,13 @@
 from __future__ import annotations
 
-__version__='1.1.0'
+__version__='1.2.0'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
-__last_updated__='2024-01-06'
+__last_updated__='2024-01-15'
 
 from sqlalchemy import ForeignKey, Numeric, String, JSON
 from sqlalchemy.orm import  Mapped, mapped_column
-from engine import Base
+from databases_utils.engine import Base
 from typing import Optional
 
 # Users
@@ -46,6 +46,21 @@ class GateWays(Base):
     name: Mapped[Optional[str]] = mapped_column(String(500))
     station_id: Mapped[int] = mapped_column(ForeignKey('stations.id',ondelete='CASCADE'))
 
+class RepeaterUnits(Base):
+    __tablename__= 'repeater_units'
+
+    id: Mapped[int] = mapped_column(primary_key=True,autoincrement=True)
+    brand: Mapped[str] = mapped_column(String(50))
+    model: Mapped[str] = mapped_column(String(200))
+    code: Mapped[str] = mapped_column(String(100),unique=True)
+    date_created: Mapped[float]
+    latest_update: Mapped[float]
+    longitude: Mapped[float] = mapped_column(Numeric(10,8))
+    latitude: Mapped[float] = mapped_column(Numeric(10,8))
+    elevation: Mapped[int]
+    name: Mapped[dict|list] = mapped_column(type_=JSON)
+    station_id: Mapped[int] = mapped_column(ForeignKey('stations.id',ondelete='CASCADE'))
+
 class RemoteTerminalUnits(Base):
     __tablename__ = 'remote_terminal_units'
 
@@ -53,11 +68,14 @@ class RemoteTerminalUnits(Base):
     brand: Mapped[str] = mapped_column(String(50))
     model: Mapped[str] = mapped_column(String(200))
     code: Mapped[str] = mapped_column(String(100),unique=True)
+    date_created: Mapped[float]
+    latest_update: Mapped[float]
     longitude: Mapped[float] = mapped_column(Numeric(10,8))
     latitude: Mapped[float] = mapped_column(Numeric(10,8))
     elevation: Mapped[int]
     name: Mapped[dict|list] = mapped_column(type_=JSON)
     station_id: Mapped[int] = mapped_column(ForeignKey('stations.id',ondelete='CASCADE'))
+    repeater_id: Mapped[Optional[int]] = mapped_column(ForeignKey('repeater_units.id',ondelete='CASCADE'))
     
 class MonitoredParameters(Base):
     __tablename__ = 'monitored_parameters'
@@ -73,7 +91,6 @@ class MonitoredParameters(Base):
     rtu_id: Mapped[Optional[int]] = mapped_column(ForeignKey('remote_terminal_units.id',ondelete='CASCADE'))
 
 # Farms
-
 class FarmsRegistry(Base):
     __tablename__ = 'farms_registry'
 

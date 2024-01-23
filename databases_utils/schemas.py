@@ -1,7 +1,7 @@
-__version__='1.0.3'
+__version__='1.1.0'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
-__last_updated__='2023-12-01'
+__last_updated__='2024-01-15'
 
 from pydantic import BaseModel
 from typing import Optional
@@ -32,15 +32,30 @@ class GatewaysBase(BaseModel):
     name: str
     station_id: int
 
-class RemoteTerminalUnitsBase(BaseModel):
+class ReapeaterUnitsBase(BaseModel):
     brand: str
     model: str
     code: str
+    date_created: float
+    latest_update: float
     longitude: float
     latitude: float
     elevation: int
     name: dict
     station_id: int
+
+class RemoteTerminalUnitsBase(BaseModel):
+    brand: str
+    model: str
+    code: str
+    date_created: float
+    latest_update: float
+    longitude: float
+    latitude: float
+    elevation: int
+    name: dict
+    station_id: int
+    repeater_id: int
 
 class MonitoredParametersBase(BaseModel):
     device_type: str
@@ -90,6 +105,9 @@ class StationsCreate(StationsBase):
     pass
 
 class GatewaysCreate(GatewaysBase):
+    pass
+
+class ReapeaterUnitsCreate(ReapeaterUnitsBase):
     pass
 
 class RemoteTerminalUnitsCreate(RemoteTerminalUnitsBase):
