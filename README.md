@@ -10,7 +10,7 @@ It consists of the following modules
 
 **Module Name: engine**
 <br>
-**Version: 1.0.9**
+**Version: 1.1.0**
 
 **Module Name: models**
 <br>

@@ -1,20 +1,20 @@
-__version__='1.0.9'
+__version__='1.1.0'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
-__last_updated__='2024-01-16'
+__last_updated__='2024-02-02'
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 import json
 
-with open('local_paths.json','r') as f:
-    local_paths = json.load(f)
+with open('credentials.json','r') as f:
+    credentials = json.load(f)
 
-with open(local_paths['mysql'],'r') as f:
+with open(credentials['mysql'],'r') as f:
     config = json.load(f)
 
 # sqlalchemy logging path
-logging_path = local_paths['sqlalchemy_logging_path']
+logging_path = credentials['sqlalchemy_logging_path']
 
 # Creating sqlalchemy engine
 engine = create_engine(url=f'{config["DBAPI"]}://{config["username"]}:{config['password']}@{config["host-ip"]}/{config["database"]}',
