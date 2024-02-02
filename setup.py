@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='databases_utils',
-    version='1.1.0',
+    version='1.1.1',
     description='A library that enables ENVTIO mysql and influx databases management',
     author='Ioannis Tsakmakis, Nikolaos Kokkos',
     author_email='itsakmak@envrio.org, nkokkos@envrio.org',
