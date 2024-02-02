@@ -5,23 +5,26 @@ __last_updated__='2024-02-02'
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
-import json
+import json, os
 
-with open('credentials.json','r') as f:
+with open(f'{os.path.dirname(os.path.abspath(__file__))}/local_path.json','r') as f:
+    local_path = json.load(f)
+
+with open(f'{local_path['local_path']}/credentials.json') as f:
     credentials = json.load(f)
 
 with open(credentials['mysql'],'r') as f:
     config = json.load(f)
 
-# sqlalchemy logging path
-logging_path = credentials['sqlalchemy_logging_path']
-
 # Creating sqlalchemy engine
 engine = create_engine(url=f'{config["DBAPI"]}://{config["username"]}:{config['password']}@{config["host-ip"]}/{config["database"]}',
-                         pool_size=30, max_overflow=5, pool_recycle=7200)
-
+                       pool_size=30, max_overflow=5, pool_recycle=7200)
+    
 
 SessionLocal = sessionmaker(bind=engine)
+
+logging_path = credentials['sqlalchemy_logging_path']
+
 
 class Base(DeclarativeBase):
     pass
