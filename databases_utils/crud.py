@@ -304,8 +304,8 @@ class MonitoredParameters:
     def update_last_communication(monitored_parameter_id: int, new_datetime: str, db: Session = SessionLocal()):
         event.listen(db, 'before_flush', log_sqlalchemy_session_events)
         monitored_parameter=db.execute(select(models.MonitoredParameters).filter_by(id=monitored_parameter_id)).one_or_none()
-        if monitored_parameter.MonitoredParemeters:
-            monitored_parameter.MonitoredParemeters.last_communication=new_datetime
+        if monitored_parameter.MonitoredParameters:
+            monitored_parameter.MonitoredParameters.last_communication=new_datetime
             db.commit()
         else:
             db.close()
@@ -314,8 +314,8 @@ class MonitoredParameters:
     def update_status(monitored_parameter_id: int, current_status: str, db: Session = SessionLocal()):
         event.listen(db, 'before_flush', log_sqlalchemy_session_events)
         monitored_parameter=db.execute(select(models.MonitoredParameters).filter_by(id=monitored_parameter_id)).one_or_none()
-        if monitored_parameter.MonitoredParemeters:
-            monitored_parameter.MonitoredParemeters.status=current_status
+        if monitored_parameter.MonitoredParameters:
+            monitored_parameter.MonitoredParameters.status=current_status
             db.commit()
         else:
             db.close()
