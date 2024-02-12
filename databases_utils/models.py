@@ -139,12 +139,3 @@ class Advices(Base):
     status: Mapped[str] = mapped_column(String(10))
     date_registered: Mapped[float]
     date_created: Mapped[float]
-
-# Measurements Languages
-
-class MeasurementTranslations(Base):
-    __tablename__ = 'measurement_translations'
-
-    measurement: Mapped[str] = mapped_column(String(100),primary_key=True)
-    el: Mapped[Optional[str]] = mapped_column(String(800))
-    en: Mapped[Optional[str]] = mapped_column(String(800))
