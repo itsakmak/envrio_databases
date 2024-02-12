@@ -8,7 +8,10 @@ __last_updated__='2024-02-12'
 from sqlalchemy import ForeignKey, Numeric, String, JSON
 from sqlalchemy.orm import  Mapped, mapped_column
 from databases_utils.engine import Base
-from typing import Optional
+from typing import Optional, Literal
+
+status = Literal['online','offline']
+device_type = Literal['sensor','meter','calculated']
 
 # Users
 class Users(Base):
@@ -29,7 +32,7 @@ class Stations(Base):
     code: Mapped[str] = mapped_column(String(100),unique=True)
     date_created: Mapped[float]
     last_communication: Mapped[float]
-    status: Mapped[str] = mapped_column(String(10))
+    status: Mapped[status]
     longitude: Mapped[float] = mapped_column(Numeric(10,8))
     latitude: Mapped[float] = mapped_column(Numeric(10,8))
     elevation: Mapped[int]
@@ -84,7 +87,7 @@ class MonitoredParameters(Base):
     __tablename__ = 'monitored_parameters'
 
     id: Mapped[int] = mapped_column(primary_key=True,autoincrement=True)
-    device_type: Mapped[str] = mapped_column(String(7))
+    device_type: Mapped[device_type]
     measurement: Mapped[str] = mapped_column(String(100))
     unit: Mapped[str] = mapped_column(String(20))
     last_communication: Mapped[float]
@@ -145,4 +148,3 @@ class MeasurementTranslations(Base):
     measurement: Mapped[str] = mapped_column(String(100),primary_key=True)
     el: Mapped[Optional[str]] = mapped_column(String(800))
     en: Mapped[Optional[str]] = mapped_column(String(800))
-
