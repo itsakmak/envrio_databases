@@ -42,6 +42,8 @@ Table: *remote_terminal_units*
 + Adding a new column named *status*
 
 Table: *monitored_paremeters*
++ Modifing the *device_type* column data type to ENUM('sensor','meter','calculated')
++ Adding a new column named *date_created*
 + Adding a new column named *latest_communication*
 + Adding a new column named *status*
 
