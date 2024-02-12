@@ -23,6 +23,8 @@ The library is available in GitHub and can be directly installed:<br>
 
 **Version: 1.2.0**
 
+**Release Date: 2024-02-12**
+
 **Module Name: models**
 <br>
 **Version: 1.3.0**
