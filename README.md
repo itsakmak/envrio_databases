@@ -5,7 +5,7 @@ This repository contains the library that manages the Envrio MySql and InfluxDB 
 # Documentation
 
 This section contains a link to the library descriptive documentation
-+ <a href="https://envrio.org/documentationdatabases_library">Library Documentation</a>
++ <a href="https://envrio.org/documentation/databases_library/dl_doc.html">Library Documentation</a>
 
 # Installation
 
