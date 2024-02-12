@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-__version__='1.2.0'
+__version__='1.3.0'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
-__last_updated__='2024-01-15'
+__last_updated__='2024-02-12'
 
 from sqlalchemy import ForeignKey, Numeric, String, JSON
 from sqlalchemy.orm import  Mapped, mapped_column
@@ -28,7 +28,8 @@ class Stations(Base):
     model: Mapped[str] = mapped_column(String(200))
     code: Mapped[str] = mapped_column(String(100),unique=True)
     date_created: Mapped[float]
-    latest_update: Mapped[float]
+    last_communication: Mapped[float]
+    status: Mapped[str] = mapped_column(String(10))
     longitude: Mapped[float] = mapped_column(Numeric(10,8))
     latitude: Mapped[float] = mapped_column(Numeric(10,8))
     elevation: Mapped[int]
@@ -54,7 +55,8 @@ class RepeaterUnits(Base):
     model: Mapped[str] = mapped_column(String(200))
     code: Mapped[str] = mapped_column(String(100),unique=True)
     date_created: Mapped[float]
-    latest_update: Mapped[float]
+    last_communication: Mapped[float]
+    status: Mapped[str] = mapped_column(String(10))
     longitude: Mapped[float] = mapped_column(Numeric(10,8))
     latitude: Mapped[float] = mapped_column(Numeric(10,8))
     elevation: Mapped[int]
@@ -69,7 +71,8 @@ class RemoteTerminalUnits(Base):
     model: Mapped[str] = mapped_column(String(200))
     code: Mapped[str] = mapped_column(String(100),unique=True)
     date_created: Mapped[float]
-    latest_update: Mapped[float]
+    last_communication: Mapped[float]
+    status: Mapped[str] = mapped_column(String(10))
     longitude: Mapped[float] = mapped_column(Numeric(10,8))
     latitude: Mapped[float] = mapped_column(Numeric(10,8))
     elevation: Mapped[int]
@@ -84,10 +87,13 @@ class MonitoredParameters(Base):
     device_type: Mapped[str] = mapped_column(String(7))
     measurement: Mapped[str] = mapped_column(String(100))
     unit: Mapped[str] = mapped_column(String(20))
+    last_communication: Mapped[float]
+    status: Mapped[str] = mapped_column(String(10))
     device_height: Mapped[float]
     name: Mapped[Optional[str]] = mapped_column(String(100))
     code: Mapped[Optional[str]] = mapped_column(String(100))
     station_id: Mapped[int] = mapped_column(ForeignKey('stations.id',ondelete='CASCADE'))
+    repeater_id: Mapped[Optional[int]] = mapped_column(ForeignKey('repeater_units.id',ondelete='CASCADE'))
     rtu_id: Mapped[Optional[int]] = mapped_column(ForeignKey('remote_terminal_units.id',ondelete='CASCADE'))
 
 # Farms

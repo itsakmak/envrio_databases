@@ -1,7 +1,7 @@
-__version__='1.1.0'
+__version__='1.2.0'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
-__last_updated__='2024-01-15'
+__last_updated__='2024-02-12'
 
 from pydantic import BaseModel
 from typing import Optional
@@ -17,7 +17,8 @@ class StationsBase(BaseModel):
     model: str
     code: str
     date_created: float
-    latest_update: float
+    last_communication: float
+    status: str
     longitude: float
     latitude: float
     elevation: int
@@ -37,7 +38,8 @@ class ReapeaterUnitsBase(BaseModel):
     model: str
     code: str
     date_created: float
-    latest_update: float
+    last_communication: float
+    status: str
     longitude: float
     latitude: float
     elevation: int
@@ -49,7 +51,8 @@ class RemoteTerminalUnitsBase(BaseModel):
     model: str
     code: str
     date_created: float
-    latest_update: float
+    last_communication: float
+    status: str
     longitude: float
     latitude: float
     elevation: int
@@ -61,10 +64,13 @@ class MonitoredParametersBase(BaseModel):
     device_type: str
     measurement: str
     unit: str
+    last_communication: float
+    status: str
     device_height: float
     name: Optional[str] = None
     code: Optional[str] = None
     station_id: int
+    repeater_id: Optional[int] = None
     rtu_id: Optional[int] = None
 
 class FarmsRegistryBase(BaseModel):
