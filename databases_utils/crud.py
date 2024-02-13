@@ -1,7 +1,7 @@
-__version__='1.2.0'
+__version__='1.2.1'
 __authors__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
-__last_updated__='2024-02-12'
+__last_updated__='2024-02-13'
 
 from databases_utils import schemas, models
 from databases_utils.engine import SessionLocal, logging_path
@@ -268,7 +268,8 @@ class MonitoredParameters:
     def add(monitored_parameters: schemas.MonitoredParametersCreate, db: Session = SessionLocal()):
         event.listen(db, 'before_flush', log_sqlalchemy_session_events)
         new_monitored_parameters = models.MonitoredParameters(type=monitored_parameters.device_type, measurement=monitored_parameters.measurement,
-                                                              unit=monitored_parameters.unit, latest_communication=monitored_parameters.last_communication,
+                                                              unit=monitored_parameters.unit, date_created=monitored_parameters.date_created,
+                                                              latest_communication=monitored_parameters.last_communication,
                                                               status=monitored_parameters.status, device_height=monitored_parameters.device_height, name =monitored_parameters.name,
                                                               code=monitored_parameters.code, station_id=monitored_parameters.station_id, rtu_id=monitored_parameters.rtu_id)
         db.add(new_monitored_parameters)

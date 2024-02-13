@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-__version__='1.3.0'
+__version__='1.3.1'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
-__last_updated__='2024-02-12'
+__last_updated__='2024-02-13'
 
 from sqlalchemy import ForeignKey, Numeric, String, JSON
 from sqlalchemy.orm import  Mapped, mapped_column
@@ -90,6 +90,7 @@ class MonitoredParameters(Base):
     device_type: Mapped[device_type]
     measurement: Mapped[str] = mapped_column(String(100))
     unit: Mapped[str] = mapped_column(String(20))
+    date_created: Mapped[float]
     last_communication: Mapped[float]
     status: Mapped[str] = mapped_column(String(10))
     device_height: Mapped[float]

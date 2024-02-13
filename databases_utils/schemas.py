@@ -1,7 +1,7 @@
-__version__='1.2.0'
+__version__='1.2.1'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
-__last_updated__='2024-02-12'
+__last_updated__='2024-02-13'
 
 from pydantic import BaseModel
 from typing import Optional
@@ -64,6 +64,7 @@ class MonitoredParametersBase(BaseModel):
     device_type: str
     measurement: str
     unit: str
+    date_created: float
     last_communication: float
     status: str
     device_height: float
