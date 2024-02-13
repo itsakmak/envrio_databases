@@ -13,7 +13,7 @@ with open(f'{os.path.dirname(os.path.abspath(__file__))}/local_path.json','r') a
 with open(f'{local_path['local_path']}/credentials.json') as f:
     credentials = json.load(f)
 
-with open(credentials['mysql'],'r') as f:
+with open(credentials['mysql_dev'],'r') as f:
     config = json.load(f)
 
 # Creating sqlalchemy engine
