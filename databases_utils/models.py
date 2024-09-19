@@ -9,7 +9,7 @@ from sqlalchemy import ForeignKey, Numeric, String, JSON, Enum as SQLAlchemyEnum
 from sqlalchemy.orm import  Mapped, mapped_column
 from databases_utils.engine import Base
 from typing import Optional, Literal
-from enum_variables import AccountType
+from .enum_variables import AccountType
 
 status = Literal['online','offline']
 device_type = Literal['sensor','meter','calculated']

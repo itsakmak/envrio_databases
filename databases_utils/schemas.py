@@ -5,13 +5,7 @@ __last_updated__='2024-03-01'
 
 from pydantic import BaseModel
 from typing import Optional
-from enum import Enum
-
-class AccountType(str, Enum):
-    commercial = 'commercial'
-    academic = 'academic'
-    beta = 'beta'
-    alpha = 'alpha'
+from .enum_variables import AccountType
 
 # Base Models
 class UsersTableBase(BaseModel):

@@ -109,7 +109,11 @@ class Stations:
         event.listen(db, 'before_flash', log_sqlalchemy_session_events)
         access=db.execute(select(models.Stations).filter_by(id=station_id)).one_or_none()
         if access.Stations:
-            db.close()
+            if user_id not in access[0].access['users']:
+                access[0].acess['users'].append(user_id)
+                db.commit()
+            else:
+                db.close()
 
     @staticmethod
     def delete_by_code(code: str, db: Session = SessionLocal()):

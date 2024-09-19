@@ -13,11 +13,11 @@ The library is available in GitHub and can be directly installed:<br>
 
 **pipenv**
 
-*pipenv install git+https://github.com/Envrio-hub/databases-utils.git@1.2.0*
+*pipenv install git+https://github.com/Envrio-hub/databases-utils.git@1.2.1*
 
 **pip**
 
-*pip install git+https://github.com/Envrio-hub/databases-utils.git@1.2.0*
+*pip install git+https://github.com/Envrio-hub/databases-utils.git@1.2.1*
 
 ## Latest Release Notes
 
