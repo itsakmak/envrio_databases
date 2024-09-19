@@ -1,14 +1,15 @@
 from __future__ import annotations
 
-__version__='1.3.1'
+__version__='1.3.2'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
-__last_updated__='2024-02-13'
+__last_updated__='2024-09-19'
 
-from sqlalchemy import ForeignKey, Numeric, String, JSON
+from sqlalchemy import ForeignKey, Numeric, String, JSON, Enum as SQLAlchemyEnum
 from sqlalchemy.orm import  Mapped, mapped_column
 from databases_utils.engine import Base
 from typing import Optional, Literal
+from enum_variables import AccountType
 
 status = Literal['online','offline']
 device_type = Literal['sensor','meter','calculated']
@@ -18,9 +19,10 @@ class Users(Base):
     __tablename__ = 'users_table'
 
     id: Mapped[int] = mapped_column(primary_key=True,autoincrement=True)
-    name: Mapped[str] = mapped_column(String(500))
-    email: Mapped[str] = mapped_column(String(500))
-    subscription_expires_in: Mapped[float]
+    name: Mapped[str] = mapped_column(String(500), nullable=False)
+    email: Mapped[str] = mapped_column(String(500), nullable=False)
+    account_type: Mapped[AccountType] = mapped_column(SQLAlchemyEnum(AccountType), nullable=False)
+    subscription_expires_in: Mapped[float] = mapped_column(nullable=False)
 
 # Devices
 class Stations(Base):
@@ -30,8 +32,8 @@ class Stations(Base):
     brand: Mapped[str] = mapped_column(String(50))
     model: Mapped[str] = mapped_column(String(200))
     code: Mapped[str] = mapped_column(String(100),unique=True)
-    date_created: Mapped[float]
-    last_communication: Mapped[float]
+    date_created: Mapped[float] = mapped_column(Numeric(12,2))
+    last_communication: Mapped[float] = mapped_column(Numeric(12,2))
     status: Mapped[status]
     longitude: Mapped[float] = mapped_column(Numeric(10,8))
     latitude: Mapped[float] = mapped_column(Numeric(10,8))
@@ -57,8 +59,8 @@ class RepeaterUnits(Base):
     brand: Mapped[str] = mapped_column(String(50))
     model: Mapped[str] = mapped_column(String(200))
     code: Mapped[str] = mapped_column(String(100),unique=True)
-    date_created: Mapped[float]
-    last_communication: Mapped[float]
+    date_created: Mapped[float] = mapped_column(Numeric(12,2))
+    last_communication: Mapped[float] = mapped_column(Numeric(12,2))
     status: Mapped[str] = mapped_column(String(10))
     longitude: Mapped[float] = mapped_column(Numeric(10,8))
     latitude: Mapped[float] = mapped_column(Numeric(10,8))
@@ -73,8 +75,8 @@ class RemoteTerminalUnits(Base):
     brand: Mapped[str] = mapped_column(String(50))
     model: Mapped[str] = mapped_column(String(200))
     code: Mapped[str] = mapped_column(String(100),unique=True)
-    date_created: Mapped[float]
-    last_communication: Mapped[float]
+    date_created: Mapped[float] = mapped_column(Numeric(12,2))
+    last_communication: Mapped[float] = mapped_column(Numeric(12,2))
     status: Mapped[str] = mapped_column(String(10))
     longitude: Mapped[float] = mapped_column(Numeric(10,8))
     latitude: Mapped[float] = mapped_column(Numeric(10,8))
@@ -90,8 +92,8 @@ class MonitoredParameters(Base):
     device_type: Mapped[device_type]
     measurement: Mapped[str] = mapped_column(String(100))
     unit: Mapped[str] = mapped_column(String(20))
-    date_created: Mapped[float]
-    last_communication: Mapped[float]
+    date_created: Mapped[float] = mapped_column(Numeric(12,2))
+    last_communication: Mapped[float] = mapped_column(Numeric(12,2))
     status: Mapped[str] = mapped_column(String(10))
     device_height: Mapped[float]
     name: Mapped[Optional[str]] = mapped_column(String(100))
@@ -140,3 +142,5 @@ class Advices(Base):
     status: Mapped[str] = mapped_column(String(10))
     date_registered: Mapped[float]
     date_created: Mapped[float]
+
+print()

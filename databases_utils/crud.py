@@ -1,7 +1,7 @@
-__version__='1.2.1'
+__version__='1.2.2'
 __authors__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
-__last_updated__='2024-02-13'
+__last_updated__='2024-09-19'
 
 from databases_utils import schemas, models
 from databases_utils.engine import SessionLocal, logging_path
@@ -24,7 +24,7 @@ class User:
     @staticmethod
     def add(user: schemas.UsersTableCreate, db: Session = SessionLocal()):
         event.listen(db, 'before_flush', log_sqlalchemy_session_events)
-        new_user = models.Users(name=user.name, email=user.email, subscription_expires_in=user.subscription_expires_in)
+        new_user = models.Users(name=user.name, email=user.email, account_type=user.account_type, subscription_expires_in=user.subscription_expires_in)
         db.add(new_user)
         db.commit()       
 
@@ -102,6 +102,13 @@ class Stations:
             station.Stations.status=current_status
             db.commit()
         else:
+            db.close()
+
+    @staticmethod
+    def update_access(station_id: int, user_id: str, db: Session = SessionLocal()):
+        event.listen(db, 'before_flash', log_sqlalchemy_session_events)
+        access=db.execute(select(models.Stations).filter_by(id=station_id)).one_or_none()
+        if access.Stations:
             db.close()
 
     @staticmethod

@@ -1,15 +1,23 @@
-__version__='1.2.1'
+__version__='1.2.2'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
-__last_updated__='2024-02-13'
+__last_updated__='2024-03-01'
 
 from pydantic import BaseModel
 from typing import Optional
+from enum import Enum
+
+class AccountType(str, Enum):
+    commercial = 'commercial'
+    academic = 'academic'
+    beta = 'beta'
+    alpha = 'alpha'
 
 # Base Models
 class UsersTableBase(BaseModel):
     name: str
     email: str
+    account_type: AccountType
     subscription_expires_in: float
 
 class StationsBase(BaseModel):
