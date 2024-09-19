@@ -110,7 +110,7 @@ class Stations:
         access=db.execute(select(models.Stations).filter_by(id=station_id)).one_or_none()
         if access.Stations:
             if user_id not in access[0].access['users']:
-                access[0].acess['users'].append(user_id)
+                access[0].access['users'].append(user_id)
                 db.commit()
             else:
                 db.close()
