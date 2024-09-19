@@ -105,7 +105,7 @@ class Stations:
             db.close()
 
     @staticmethod
-    def update_access(station_id: int, user_id: str, db: Session = SessionLocal()):
+    def update_access(station_id: int, user_id: int, db: Session = SessionLocal()):
         event.listen(db, 'before_flash', log_sqlalchemy_session_events)
         access=db.execute(select(models.Stations).filter_by(id=station_id)).one_or_none()
         if access.Stations:
