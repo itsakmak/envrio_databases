@@ -105,12 +105,23 @@ class Stations:
             db.close()
 
     @staticmethod
-    def update_access(station_id: int, user_id: int, db: Session = SessionLocal()):
+    def add_user_to_station(station_id: int, user_id: int, db: Session = SessionLocal()):
         event.listen(db, 'before_flash', log_sqlalchemy_session_events)
         access=db.execute(select(models.Stations).filter_by(id=station_id)).one_or_none()
         if access.Stations:
             if user_id not in access[0].access['users']:
                 access[0].access['users'].append(user_id)
+                db.commit()
+            else:
+                db.close()
+
+    @staticmethod
+    def delete_user_from_station(station_id: int, user_id: int, db: Session = SessionLocal()):
+        event.listen(db, 'before_flash', log_sqlalchemy_session_events)
+        access=db.execute(select(models.Stations).filter_by(id=station_id)).one_or_none()
+        if access.Stations:
+            if user_id not in access[0].access['users']:
+                access[0].access['users'].remove(user_id)
                 db.commit()
             else:
                 db.close()

@@ -23,7 +23,7 @@ The library is available in GitHub and can be directly installed:<br>
 
 **Version: 1.2.1**
 
-**Release Date: 2024-09-19**
+**Release Date: 2024-09-20**
 
 **Module Name: models**
 <br>
@@ -44,4 +44,5 @@ Class: *UsersTable*
 **Version: 1.2.2**
 
 Class: *Stations*
-+ Adding a new method named *update_access*
++ Adding a new method named *delete_user_from_station*
++ Adding a new method named *add_user_to_station*
