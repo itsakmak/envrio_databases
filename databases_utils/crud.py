@@ -336,28 +336,3 @@ class MonitoredParameters:
         else:
             return {"message": "Not Found", "errors": ["The provided MonitoredParameter code does not exist"]}, 404
         
-class DavisCredentials:
-
-    @staticmethod
-    @session_handler_add_delete_update
-    def add(davis_credentials: schemas.DavisCredentialsCreate, db: Session = None):
-        davis_key = KeyManagementService.encrypt_data(unencrypted_text=davis_credentials.key, secret_name='DavisCred')
-        davis_secret = KeyManagementService.encrypt_data(unencrypted_text=davis_credentials.secret, secret_name='DavisCred')
-        new_davis_credentials = models.DavisCredentials(user_id=davis_credentials.user_id, key=davis_key, secret=davis_secret)
-        db.add(new_davis_credentials)
-
-    @staticmethod
-    @validate_int('user_id')
-    @session_handler_query
-    def get_credentials_by_user_id(user_id: int, db: Session = None):
-        return db.execute(select(models.DavisCredentials).filter_by(user_id=user_id)).one_or_none()
-
-    @staticmethod
-    @validate_int('user_id')   
-    @session_handler_add_delete_update
-    def delete_by_user_id(user_id: int, db: Session = None):
-        result = db.execute(select(models.DavisCredentials).filter_by(user_id = user_id)).one_or_none()
-        if result is not None:
-            db.delete(result.DavisCredentials)
-        else:
-            return {"message": "Not Found", "errors": ["The provided user id does not exist in the davis_credentials table"]}, 404

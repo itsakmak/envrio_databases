@@ -76,11 +76,6 @@ class MonitoredParametersBase(BaseModel):
     repeater_id: Optional[int] = None
     rtu_id: Optional[int] = None
 
-class DavisCredentialsBase(BaseModel):
-    user_id: int
-    key: str
-    secret: str
-
 class FarmsRegistryBase(BaseModel):
     user_id: int
     longitude: float
@@ -128,9 +123,6 @@ class RemoteTerminalUnitsCreate(RemoteTerminalUnitsBase):
     pass
 
 class MonitoredParametersCreate(MonitoredParametersBase):
-    pass
-
-class DavisCredentialsCreate(DavisCredentialsBase):
     pass
 
 class FarmsRegistryCreate(FarmsRegistryBase):

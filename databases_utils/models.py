@@ -99,14 +99,6 @@ class MonitoredParameters(Base):
     repeater_id: Mapped[Optional[int]] = mapped_column(ForeignKey('repeater_units.id',ondelete='CASCADE'))
     rtu_id: Mapped[Optional[int]] = mapped_column(ForeignKey('remote_terminal_units.id',ondelete='CASCADE'))
 
-# Devices Credentials
-class DavisCredentials(Base):
-    __tablename__ = 'davis_credentials'
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    user_id: Mapped[int] =mapped_column(ForeignKey('users_table.id', ondelete='CASCADE'), nullable=False)
-    key: Mapped[str] = mapped_column(String(255), nullable=False)
-    secret: Mapped[str] = mapped_column(String(255), nullable=False)
-
 # Farms
 class FarmsRegistry(Base):
     __tablename__ = 'farms_registry'
