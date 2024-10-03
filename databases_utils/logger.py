@@ -31,3 +31,11 @@ aws_utils_handler.setLevel(logging.INFO)
 aws_utils_handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
 aws_utils.addHandler(aws_utils_handler)
 aws_utils.propagate = False
+
+# configuring data retriever logger
+data_retriever = logging.getLogger('data_retriever')
+data_retriever_handler = logging.FileHandler(f'{os.getenv('logging_path')}/data_retriever.log')
+data_retriever_handler.setLevel(logging.INFO)
+data_retriever_handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
+data_retriever.addHandler(data_retriever_handler)
+data_retriever.propagate = False
