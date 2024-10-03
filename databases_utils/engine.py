@@ -1,30 +1,29 @@
-__version__='1.1.0'
+__version__='1.2.0'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
-__last_updated__='2024-02-02'
+__last_updated__='2024-10-02'
 
 from sqlalchemy import create_engine
-from sqlalchemy.orm import DeclarativeBase, sessionmaker
-import json, os
+from sqlalchemy.orm import DeclarativeBase, sessionmaker, scoped_session
+from aws_utils import SecretsManager
+from dotenv import load_dotenv
+from logger import alchemy
+import os
 
-with open(f'{os.path.dirname(os.path.abspath(__file__))}/local_path.json','r') as f:
-    local_path = json.load(f)
+# Load variables from the .env file
+load_dotenv()
 
-with open(f'{local_path['local_path']}/credentials.json') as f:
-    credentials = json.load(f)
-
-with open(credentials['mysql_dev'],'r') as f:
-    config = json.load(f)
+# Access database configuration info
+db_conf = SecretsManager().get_secret(secret_name=os.getenv('db_name'))
 
 # Creating sqlalchemy engine
-engine = create_engine(url=f'{config["DBAPI"]}://{config["username"]}:{config['password']}@{config["host-ip"]}/{config["database"]}',
-                       pool_size=30, max_overflow=5, pool_recycle=7200)
+try:
+    engine = create_engine(url=f'{db_conf["DBAPI"]}://{db_conf["username"]}:{db_conf['password']}@{db_conf["host-ip"]}/{os.getenv('db_name')}',
+                        pool_size=30, max_overflow=5, pool_recycle=7200)
+except Exception as e:
+    alchemy.error(f"Error occurred during engine creation: {str(e)}")
     
-
-SessionLocal = sessionmaker(bind=engine)
-
-logging_path = credentials['sqlalchemy_logging_path']
-
+SessionLocal = scoped_session(sessionmaker(bind=engine))
 
 class Base(DeclarativeBase):
     pass
