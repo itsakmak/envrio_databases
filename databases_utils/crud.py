@@ -286,13 +286,6 @@ class MonitoredParameters:
     @session_handler_query
     def get_by_station_id(station_id: int, db: Session = None):
 
-        rtus = db.execute(select(models.RemoteTerminalUnits).filter_by(station_id=station_id)).all()
-        if len(rtus) == 0:
-            return db.execute(select(models.MonitoredParameters).filter_by(station_id=station_id)).all()
-        else:
-            return db.execute(select(models.MonitoredParameters).filter(or_(models.MonitoredParameters.station_id==station_id,
-                                                                models.MonitoredParameters.rtu_id.in_(rtus.id)))).all()
-
     @staticmethod
     @validate_int('repeater_id')
     @session_handler_query
@@ -361,3 +354,4 @@ class DavisCredentials:
             db.delete(result.DavisCredentials)
         else:
             return {"message": "Not Found", "errors": ["The provided user id does not exist in the davis_credentials table"]}, 404
+  

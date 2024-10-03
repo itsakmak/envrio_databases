@@ -14,7 +14,6 @@ from typing import Optional
 # Users
 class Users(Base):
     __tablename__ = 'users_table'
-
     id: Mapped[int] = mapped_column(primary_key=True,autoincrement=True)
     name: Mapped[str] = mapped_column(String(500), nullable=False)
     email: Mapped[str] = mapped_column(String(500), nullable=False)
@@ -99,18 +98,8 @@ class MonitoredParameters(Base):
     repeater_id: Mapped[Optional[int]] = mapped_column(ForeignKey('repeater_units.id',ondelete='CASCADE'))
     rtu_id: Mapped[Optional[int]] = mapped_column(ForeignKey('remote_terminal_units.id',ondelete='CASCADE'))
 
-# Devices Credentials
-class DavisCredentials(Base):
-    __tablename__ = 'davis_credentials'
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    user_id: Mapped[int] =mapped_column(ForeignKey('users_table.id', ondelete='CASCADE'), nullable=False)
-    key: Mapped[str] = mapped_column(String(255), nullable=False)
-    secret: Mapped[str] = mapped_column(String(255), nullable=False)
-
-# Farms
 class FarmsRegistry(Base):
     __tablename__ = 'farms_registry'
-
     id: Mapped[int] = mapped_column(primary_key=True,autoincrement=True)
     user_id: Mapped[int] =mapped_column(ForeignKey('users_table.id',ondelete='CASCADE'), nullable=False)
     longitude: Mapped[float] = mapped_column(type_=Numeric(10,8), nullable=False)
@@ -118,7 +107,6 @@ class FarmsRegistry(Base):
 
 class FieldsRegisty(Base):
     __tablename__ = 'fields_registry'
-    
     id: Mapped[int] = mapped_column(primary_key=True,autoincrement=True)
     farm_id: Mapped[int] = mapped_column(ForeignKey('farms_registry.id',ondelete='CASCADE'), nullable=False)
     boundaries: Mapped[dict|list] = mapped_column(type_=JSON, nullable=False)
@@ -147,3 +135,4 @@ class Advices(Base):
     status: Mapped[AdviceStatus] = mapped_column(SQLAlchemyEnum(AdviceStatus), nullable=False)
     date_registered: Mapped[float] = mapped_column(nullable=False)
     date_created: Mapped[float] = mapped_column(nullable=False)
+

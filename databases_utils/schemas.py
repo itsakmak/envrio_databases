@@ -59,7 +59,6 @@ class RemoteTerminalUnitsBase(BaseModel):
     latitude: float
     elevation: int
     name: dict
-    station_id: int
     repeater_id: int
 
 class MonitoredParametersBase(BaseModel):
@@ -75,11 +74,6 @@ class MonitoredParametersBase(BaseModel):
     station_id: int
     repeater_id: Optional[int] = None
     rtu_id: Optional[int] = None
-
-class DavisCredentialsBase(BaseModel):
-    user_id: int
-    key: str
-    secret: str
 
 class FarmsRegistryBase(BaseModel):
     user_id: int
@@ -128,9 +122,6 @@ class RemoteTerminalUnitsCreate(RemoteTerminalUnitsBase):
     pass
 
 class MonitoredParametersCreate(MonitoredParametersBase):
-    pass
-
-class DavisCredentialsCreate(DavisCredentialsBase):
     pass
 
 class FarmsRegistryCreate(FarmsRegistryBase):
