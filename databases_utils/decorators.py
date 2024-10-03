@@ -5,9 +5,9 @@ __last_updated__='2024-10-02'
 
 import traceback, inspect
 from sqlalchemy.orm import Session
-from engine import SessionLocal
+from .engine import SessionLocal
 from functools import wraps
-from logger import alchemy, influx
+from .logger import alchemy, influx
 
 def session_handler_add_delete_update(func):
     @wraps(func)

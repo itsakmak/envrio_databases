@@ -6,7 +6,7 @@ __last_updated__='2024-10-02'
 import boto3, base64, json
 from botocore.exceptions import ClientError
 from typing import Union
-from logger import aws_utils
+from .logger import aws_utils
 
 '''AWS Secrets Manager'''
 class SecretsManager:

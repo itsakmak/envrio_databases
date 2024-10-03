@@ -7,10 +7,10 @@ from influxdb_client import InfluxDBClient, Bucket, BucketRetentionRules
 from influxdb_client.client.write_api import SYNCHRONOUS
 from datetime import datetime
 from typing import Union
-from aws_utils import SecretsManager
+from .aws_utils import SecretsManager
 from dotenv import load_dotenv
-from decorators import influxdb_error_handler
-from logger import alchemy
+from .decorators import influxdb_error_handler
+from .logger import alchemy
 import os
 
 # Load variables from the .env file

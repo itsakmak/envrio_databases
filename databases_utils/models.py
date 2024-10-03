@@ -6,7 +6,7 @@ __date_created__='2023-10-20'
 __last_updated__='2024-09-28'
 
 from .enum_variables import AccountType, Status, DeviceType, ApplicationType, AdviceStatus
-from databases_utils.engine import Base
+from .engine import Base
 from sqlalchemy import ForeignKey, Numeric, String, JSON, Enum as SQLAlchemyEnum
 from sqlalchemy.orm import  Mapped, mapped_column
 from typing import Optional

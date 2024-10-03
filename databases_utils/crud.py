@@ -4,11 +4,11 @@ __date_created__='2023-10-20'
 __last_updated__='2024-09-26'
 
 # from databases_utils import schemas, models
-import models, schemas
+from databases_utils import models, schemas
 from sqlalchemy.orm import Session
 from sqlalchemy import text, or_, select, update
-from databases_utils.aws_utils import KeyManagementService
-from decorators import session_handler_add_delete_update, session_handler_query, validate_int, validate_str, validate_float
+from .aws_utils import KeyManagementService
+from .decorators import session_handler_add_delete_update, session_handler_query, validate_int, validate_str, validate_float
 
 class User:
 
