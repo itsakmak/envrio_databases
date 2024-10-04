@@ -72,7 +72,7 @@ class KeyManagementService():
         self.kms_client = boto3.client('kms')
         self.sm = SecretsManager()
 
-    def create_new_key(self, secret_name):
+    def create_new_key(self, key_secret_name: str):
         # Create a KMS key
         response = self.kms_client.create_key(
             Description='My encryption key for sensitive data',
@@ -85,12 +85,14 @@ class KeyManagementService():
             "key_id":response['KeyMetadata']['KeyId']
             }
         
-        self.sm.store_secret(secret_name=secret_name, secret_value=key_id['key_id'])
+        self.sm.store_secret(secret_name=key_secret_name, secret_value=key_id['key_id'])
 
-    def encrypt_data(self, unencrypted_text: str, secret_name: str):
+        aws_utils.info(f"The key saved successfully in SecretsManager")
+
+    def encrypt_data(self, unencrypted_text: str, key_secret_name: str) -> str:
         
         # Read the key_id
-        key_id = self.sm.get_secret(secret_name=secret_name)
+        key_id = self.sm.get_secret(secret_name=key_secret_name)
 
         # Encrypt the data using the KMS key
         encrypt_response = self.kms_client.encrypt(

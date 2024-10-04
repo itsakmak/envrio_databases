@@ -335,4 +335,24 @@ class MonitoredParameters:
             db.delete(result.MonitoredParameters)
         else:
             return {"message": "Not Found", "errors": ["The provided MonitoredParameter code does not exist"]}, 404
-        
+
+class KeyNames:
+
+    @staticmethod
+    @session_handler_add_delete_update
+    def add(key_name: schemas.KeyNamesCreate, db: Session = None):
+        enc_key_name = KeyManagementService().encrypt_data(unencrypted_text=key_name.key_name, key_name=key_name.key_name)
+        new_key_name = models.MonitoredParameters(user_id=key_name.user_id, station_id=key_name.station_id, key_name=enc_key_name)
+        db.add(new_key_name)
+
+    @staticmethod
+    @validate_int
+    @session_handler_query
+    def get_by_station_id(station_id: int, db: Session = None):
+        db.execute(select(models.KeyNames).filter_by(station_id=station_id)).one_or_none()
+
+    @staticmethod
+    @validate_int
+    @session_handler_query
+    def get_by_user_id(user_id: int, db: Session = None):
+        db.execute(select(models.KeyNames).filter_by(user_id=user_id)).all()

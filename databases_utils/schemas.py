@@ -76,6 +76,11 @@ class MonitoredParametersBase(BaseModel):
     repeater_id: Optional[int] = None
     rtu_id: Optional[int] = None
 
+class KeyNamesBase(BaseModel):
+    user_id: int
+    station_id: int
+    key_name: str
+
 class FarmsRegistryBase(BaseModel):
     user_id: int
     longitude: float
@@ -123,6 +128,9 @@ class RemoteTerminalUnitsCreate(RemoteTerminalUnitsBase):
     pass
 
 class MonitoredParametersCreate(MonitoredParametersBase):
+    pass
+
+class KeyNamesCreate(KeyNamesBase):
     pass
 
 class FarmsRegistryCreate(FarmsRegistryBase):
