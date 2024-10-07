@@ -99,14 +99,15 @@ class MonitoredParameters(Base):
     repeater_id: Mapped[Optional[int]] = mapped_column(ForeignKey('repeater_units.id',ondelete='CASCADE'))
     rtu_id: Mapped[Optional[int]] = mapped_column(ForeignKey('remote_terminal_units.id',ondelete='CASCADE'))
 
-# Encryptio Keys
+# Encryption Keys
 class KeyNames(Base):
     __tablename__ = 'key_names'
 
     id: Mapped[int] = mapped_column(primary_key=True,autoincrement=True)
     user_id: Mapped[int] = mapped_column(nullable=False)
     station_id: Mapped[int] = mapped_column(nullable=False, unique=True)
-    key_name: Mapped[str] = mapped_column(String(200), nullable=False)
+    key_name: Mapped[str] = mapped_column(String(2000), nullable=False)
+    secret_name: Mapped[str] = mapped_column(String(2000), nullable=False)
 
 # Farms
 class FarmsRegistry(Base):

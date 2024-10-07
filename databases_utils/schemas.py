@@ -80,6 +80,7 @@ class KeyNamesBase(BaseModel):
     user_id: int
     station_id: int
     key_name: str
+    secret_name: str
 
 class FarmsRegistryBase(BaseModel):
     user_id: int
