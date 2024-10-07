@@ -5,7 +5,7 @@ __author__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
 __last_updated__='2024-09-28'
 
-from .enum_variables import AccountType, Status, DeviceType, ApplicationType, AdviceStatus
+from .enum_variables import AccountType, Status, DeviceType, ApplicationType, AdviceStatus, IconType
 from .engine import Base
 from sqlalchemy import ForeignKey, Numeric, String, JSON, Enum as SQLAlchemyEnum
 from sqlalchemy.orm import  Mapped, mapped_column
@@ -37,7 +37,7 @@ class Stations(Base):
     elevation: Mapped[int] = mapped_column(nullable=False)
     access: Mapped[dict|list] = mapped_column(type_=JSON, nullable=False)
     name: Mapped[dict|list] = mapped_column(type_=JSON)
-    icon_type: Mapped[str] = mapped_column(String(10), nullable=False)
+    icon_type: Mapped[IconType] = mapped_column(SQLAlchemyEnum(IconType), nullable=False)
 
 class GateWays(Base):
     __tablename__ = 'gateways'
@@ -104,8 +104,7 @@ class KeyNames(Base):
     __tablename__ = 'key_names'
 
     id: Mapped[int] = mapped_column(primary_key=True,autoincrement=True)
-    user_id: Mapped[int] = mapped_column(nullable=False)
-    station_id: Mapped[int] = mapped_column(nullable=False, unique=True)
+    station_id: Mapped[int] = mapped_column(ForeignKey('stations.id',ondelete='CASCADE'), nullable=False, unique=True)
     key_name: Mapped[str] = mapped_column(String(2000), nullable=False)
     secret_name: Mapped[str] = mapped_column(String(2000), nullable=False)
 

@@ -1,7 +1,7 @@
-__version__='1.0.0'
+__version__='1.0.1'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2024-09-28'
-__last_updated__='2024-09-28'
+__last_updated__='2024-10-07'
 
 from enum import Enum
 
@@ -29,4 +29,10 @@ class AdviceStatus(str, Enum):
     completed = 'completed'
     in_process = 'in process'
     canceled = 'canceled'
+
+class IconType(str, Enum):
+    meteo = 'meteo'
+    coastal = 'coastal'
+    inland = 'inland'
+    soil = 'soil'
 

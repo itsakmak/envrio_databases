@@ -356,3 +356,15 @@ class KeyNames:
     @session_handler_query
     def get_by_user_id(user_id: int, db: Session = None):
         db.execute(select(models.KeyNames).filter_by(user_id=user_id)).all()
+
+    @staticmethod
+    @validate_int
+    @session_handler_add_delete_update
+    def update_key_name_by_station_id(station_id: int, new_key_name: str, db: Session = None):
+        db.execute(update(models.KeyNames).where(models.KeyNames.station_id==station_id).values(key_name=new_key_name))
+
+    @staticmethod
+    @validate_int
+    @session_handler_add_delete_update
+    def update_secret_name_by_station_id(station_id: int, new_secret_name: str, db: Session = None):
+        db.execute(update(models.KeyNames).where(models.KeyNames.station_id==station_id).values(secret_name=new_secret_name))

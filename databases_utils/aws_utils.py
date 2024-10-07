@@ -13,7 +13,7 @@ class SecretsManager:
     def __init__(self, region_name='eu-west-1'):
         self.client = boto3.client('secretsmanager', region_name=region_name)
 
-    def store_secret(self, secret_name: str, secret_value: Union[str,dict]) -> dict:
+    def store_secret(self, secret_name: str, secret_value: Union[str,dict]):
         if isinstance(secret_value, dict):
             secret_value = json.dumps(secret_value)
         try:
@@ -70,49 +70,61 @@ class SecretsManager:
 class KeyManagementService():
     def __init__(self):
         self.kms_client = boto3.client('kms')
-        self.sm = SecretsManager()
 
-    def create_new_key(self, key_secret_name: str):
+    def create_new_key(self):
+
         # Create a KMS key
-        response = self.kms_client.create_key(
-            Description='My encryption key for sensitive data',
-            KeyUsage='ENCRYPT_DECRYPT',  # Key is used for both encryption and decryption
-            Origin='AWS_KMS'  # Specifies that AWS manages the key
-        )
-
-        # Extract the key ID
-        key_id = {
-            "key_id":response['KeyMetadata']['KeyId']
-            }
+        try:
+            response = self.kms_client.create_key(
+                Description='My encryption key for sensitive data',
+                KeyUsage='ENCRYPT_DECRYPT',  # Key is used for both encryption and decryption
+                Origin='AWS_KMS'  # Specifies that AWS manages the key
+            )
+            aws_utils.info('Key created successfully')
+            return response['KeyMetadata']['KeyId']
         
-        self.sm.store_secret(secret_name=key_secret_name, secret_value=key_id['key_id'])
+        except ClientError as e:
+            aws_utils.error(f'Failed to create a key - {e}')
+            return {'message': 'Failed to create a key', 'errors':[e]}
 
-        aws_utils.info(f"The key saved successfully in SecretsManager")
-
-    def encrypt_data(self, unencrypted_text: str, key_secret_name: str) -> str:
-        
-        # Read the key_id
-        key_id = self.sm.get_secret(secret_name=key_secret_name)
+    def encrypt_data(self, unencrypted_text: str, key_id: str) -> str:
 
         # Encrypt the data using the KMS key
-        encrypt_response = self.kms_client.encrypt(
-            KeyId=key_id,  # Use the Key ID from the previous step
-            Plaintext=unencrypted_text.encode('utf-8')
-        )
-
-        # Get the encrypted ciphertext (base64-encoded for easier storage/transmission)
-        return base64.b64encode(encrypt_response['CiphertextBlob']).decode('utf-8')
+        try:
+            encrypt_response = self.kms_client.encrypt(
+                KeyId=key_id,  # Use the Key ID from the previous step
+                Plaintext=unencrypted_text.encode('utf-8')
+            )
+            # Get the encrypted ciphertext (base64-encoded for easier storage/transmission)
+            ciphertext = base64.b64encode(encrypt_response['CiphertextBlob']).decode('utf-8')
+            aws_utils.info('Text encrypted successfully')
+            return ciphertext
+        
+        except UnicodeEncodeError as e:
+            aws_utils.error('Envryption failed - {e}')
+            return {'message':'Encryption failed', 'errors':[{e}]}
     
     def decrypt_data(self, encrypted_text: str):
         
         # Decode the base64-encoded ciphertext back to its original binary format
-        ciphertext_blob = base64.b64decode(encrypted_text)
+        try:
+            ciphertext_blob = base64.b64decode(encrypted_text)
 
-        # Decrypt the ciphertext
-        decrypt_response = self.kms_client.decrypt(
-            CiphertextBlob=ciphertext_blob
-        )
-
-        # Extract the decrypted plaintext
-        return decrypt_response['Plaintext'].decode('utf-8')
-
+            # Decrypt the ciphertext
+            decrypt_response = self.kms_client.decrypt(
+                CiphertextBlob=ciphertext_blob
+            )
+            aws_utils.info('Decrypton completed successfully')
+            # Extract the decrypted plaintext
+            return decrypt_response['Plaintext'].decode('utf-8')
+        except UnboundLocalError as e:
+            aws_utils.error('Decrytpion failed - {e}')
+            return {'message': 'Decrytpion failed','errors':[e]}
+    
+    def list_kms_keys(self):
+        keys = []
+        paginator = self.kms_client.get_paginator('list_keys')
+        for page in paginator.paginate():
+            keys.extend(page['Keys'])
+        
+        return keys
