@@ -1,7 +1,7 @@
-__version__='1.3.0'
+__version__='1.3.1'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
-__last_updated__='2024-09-26'
+__last_updated__='2024-10-07'
 
 from pydantic import BaseModel
 from typing import Optional
@@ -76,10 +76,9 @@ class MonitoredParametersBase(BaseModel):
     repeater_id: Optional[int] = None
     rtu_id: Optional[int] = None
 
-class KeyNamesBase(BaseModel):
-    user_id: int
+class DavisApiCredentialsBase(BaseModel):
     station_id: int
-    key_name: str
+    key_id: str
     secret_name: str
 
 class FarmsRegistryBase(BaseModel):
@@ -131,7 +130,7 @@ class RemoteTerminalUnitsCreate(RemoteTerminalUnitsBase):
 class MonitoredParametersCreate(MonitoredParametersBase):
     pass
 
-class KeyNamesCreate(KeyNamesBase):
+class DavisApiCredentialsCreate(DavisApiCredentialsBase):
     pass
 
 class FarmsRegistryCreate(FarmsRegistryBase):

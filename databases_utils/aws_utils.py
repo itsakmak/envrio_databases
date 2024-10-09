@@ -1,7 +1,7 @@
-__version__='1.0.1'
+__version__='1.0.2'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2024-09-28'
-__last_updated__='2024-10-02'
+__last_updated__='2024-10-07'
 
 import boto3, base64, json
 from botocore.exceptions import ClientError

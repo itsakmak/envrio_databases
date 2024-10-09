@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-__version__='1.4.1'
+__version__='1.4.2'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
-__last_updated__='2024-09-28'
+__last_updated__='2024-10-07'
 
 from .enum_variables import AccountType, Status, DeviceType, ApplicationType, AdviceStatus, IconType
 from .engine import Base
@@ -99,13 +99,13 @@ class MonitoredParameters(Base):
     repeater_id: Mapped[Optional[int]] = mapped_column(ForeignKey('repeater_units.id',ondelete='CASCADE'))
     rtu_id: Mapped[Optional[int]] = mapped_column(ForeignKey('remote_terminal_units.id',ondelete='CASCADE'))
 
-# Encryption Keys
-class KeyNames(Base):
-    __tablename__ = 'key_names'
+# Davis API
+class DavisApiCredentials(Base):
+    __tablename__ = 'davis_api_credentials'
 
     id: Mapped[int] = mapped_column(primary_key=True,autoincrement=True)
     station_id: Mapped[int] = mapped_column(ForeignKey('stations.id',ondelete='CASCADE'), nullable=False, unique=True)
-    key_name: Mapped[str] = mapped_column(String(2000), nullable=False)
+    key_id: Mapped[str] = mapped_column(String(2000), nullable=False)
     secret_name: Mapped[str] = mapped_column(String(2000), nullable=False)
 
 # Farms
