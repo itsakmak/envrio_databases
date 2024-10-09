@@ -1,7 +1,7 @@
-__version__='1.3.0'
+__version__='1.3.2'
 __authors__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
-__last_updated__='2024-09-26'
+__last_updated__='2024-10-09'
 
 # from databases_utils import schemas, models
 from databases_utils import models, schemas
@@ -336,35 +336,42 @@ class MonitoredParameters:
         else:
             return {"message": "Not Found", "errors": ["The provided MonitoredParameter code does not exist"]}, 404
 
-class KeyNames:
+class DavisApiCredential:
 
     @staticmethod
     @session_handler_add_delete_update
-    def add(key_name: schemas.KeyNamesCreate, db: Session = None):
-        enc_key_name = KeyManagementService().encrypt_data(unencrypted_text=key_name.key_name, key_name=key_name.key_name)
-        new_key_name = models.MonitoredParameters(user_id=key_name.user_id, station_id=key_name.station_id, key_name=enc_key_name)
-        db.add(new_key_name)
+    def add(api_cred: schemas.DavisApiCredentialsCreate, db: Session = None):
+        encrypt_key_id = KeyManagementService().encrypt_data(unencrypted_text=api_cred.key_id, key_name=api_cred.key_id)
+        encrypt_secrete_name = KeyManagementService().encrypt_data(unencrypted_text=api_cred.secret_name, key_name=api_cred.key_id)
+        new_api_cred = models.DavisApiCredentials(station_id=api_cred.station_id, key_name=encrypt_key_id, secret_name=encrypt_secrete_name)
+        db.add(new_api_cred)
 
     @staticmethod
     @validate_int
     @session_handler_query
     def get_by_station_id(station_id: int, db: Session = None):
-        db.execute(select(models.KeyNames).filter_by(station_id=station_id)).one_or_none()
+        db.execute(select(models.DavisApiCredentials).filter_by(station_id=station_id)).one_or_none()
 
     @staticmethod
     @validate_int
-    @session_handler_query
-    def get_by_user_id(user_id: int, db: Session = None):
-        db.execute(select(models.KeyNames).filter_by(user_id=user_id)).all()
-
-    @staticmethod
-    @validate_int
+    @validate_str
     @session_handler_add_delete_update
     def update_key_name_by_station_id(station_id: int, new_key_name: str, db: Session = None):
-        db.execute(update(models.KeyNames).where(models.KeyNames.station_id==station_id).values(key_name=new_key_name))
+        db.execute(update(models.DavisApiCredentials).where(models.DavisApiCredentials.station_id==station_id).values(key_name=new_key_name))
+
+    @staticmethod
+    @validate_int
+    @validate_str
+    @session_handler_add_delete_update
+    def update_secret_name_by_station_id(station_id: int, new_secret_name: str, db: Session = None):
+        db.execute(update(models.DavisApiCredentials).where(models.DavisApiCredentials.station_id==station_id).values(secret_name=new_secret_name))
 
     @staticmethod
     @validate_int
     @session_handler_add_delete_update
-    def update_secret_name_by_station_id(station_id: int, new_secret_name: str, db: Session = None):
-        db.execute(update(models.KeyNames).where(models.KeyNames.station_id==station_id).values(secret_name=new_secret_name))
+    def delete_by_station_id(station_id: int, db: Session = None):
+        result = db.execute(select(models.DavisApiCredentials).filter_by(station_id=station_id)).one_or_none()
+        if result is not None:
+            db.delete(result.DavisApiCredentials)
+        else:
+            return {"message": "Not Found", "errors": ["The provided station is does not exist"]}, 404
