@@ -1,19 +1,25 @@
-__version__='1.0.2'
+__version__='1.1.0'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2024-09-28'
-__last_updated__='2024-10-07'
+__last_updated__='2024-10-09'
 
 import boto3, base64, json
 from botocore.exceptions import ClientError
 from typing import Union
 from .logger import aws_utils
 
-'''AWS Secrets Manager'''
 class SecretsManager:
     def __init__(self, region_name='eu-west-1'):
         self.client = boto3.client('secretsmanager', region_name=region_name)
 
     def store_secret(self, secret_name: str, secret_value: Union[str,dict]):
+        '''
+        Saves a key - value pair of a secret name and a secret value to AWS Secrets Manager
+
+        :param secret_name: A name that will used to retrieve the secret value
+        :param secret_value: The dict or string that contains the actual sensitive data to be stored
+        '''
+
         if isinstance(secret_value, dict):
             secret_value = json.dumps(secret_value)
         try:
@@ -29,6 +35,13 @@ class SecretsManager:
             return {"message":f"Error storing secret: {e}"}
         
     def update_secret(self, secret_name: str, secret_value: Union[str,dict]) -> dict:
+        '''
+        Updates a secret value for a given secret name to AWS Secrets Manager
+
+        :param secret_name: The key of the secret value
+        :param secret_value: The dict or string that contains the actual sensitive data to be persisted
+        '''
+
         if isinstance(secret_value, dict):
             secret_value = json.dumps(secret_value)
         try:
@@ -44,6 +57,12 @@ class SecretsManager:
             return {"message":f"Error updating secret: {e}"}
     
     def get_secret(self, secret_name: str) -> Union[str,dict]:
+        '''
+        Returns a secret from AWS Secret Manager
+
+        :param secret_name: Name of the secret to be retrieved.
+        
+        '''
         try:
             # Fetch the secret from Secrets Manager
             get_secret_value_response = self.client.get_secret_value(SecretId=secret_name)
@@ -58,21 +77,50 @@ class SecretsManager:
             else:
                 # Handle binary secrets if necessary
                 secret = get_secret_value_response['SecretBinary']
-
             return secret
-
         except ClientError as e:
             # Handle any exceptions here
             aws_utils.error(f"\nError retrieving secret: {e}\n")
             return None
+        
+    def delete_secret_in_secrets_manager(self, secret_name: str, recovery_window_in_days: int = 7, force_delete: bool = False):
+        """
+        Deletes a secret from AWS Secrets Manager.
+        
+        :param secret_name: Name of the secret to delete.
+        :param recovery_window_in_days: Number of days to recover the secret before permanent deletion.
+                                        Defaults to 30 days.
+        :param force_delete: If set to True, the secret is deleted immediately without a recovery window.
+        """
+        try:
+            if force_delete:
+                # Permanently delete the secret immediately
+                response = self.client.delete_secret(
+                    SecretId=secret_name,
+                    ForceDeleteWithoutRecovery=True
+                )
+                aws_utils.info(f"Secret {secret_name} permanently deleted.")
+            else:
+                # Soft-delete with recovery window
+                response = self.client.delete_secret(
+                    SecretId=secret_name,
+                    RecoveryWindowInDays=recovery_window_in_days
+                )
+                aws_utils.info(f"Secret {secret_name} scheduled for deletion. It can be recovered within {recovery_window_in_days} days.")
+            return response
+        except ClientError as e:
+            aws_utils.error(f"Error deleting secret: {e}")
+            raise
 
-'''Amazon Key Management Service utilities'''
 class KeyManagementService():
     def __init__(self):
         self.kms_client = boto3.client('kms')
 
     def create_new_key(self):
-
+        '''
+        Creates a new key for encryption - decryption in the AWS Key Management Service
+        and returns its id 
+        '''
         # Create a KMS key
         try:
             response = self.kms_client.create_key(
@@ -88,6 +136,12 @@ class KeyManagementService():
             return {'message': 'Failed to create a key', 'errors':[e]}
 
     def encrypt_data(self, unencrypted_text: str, key_id: str) -> str:
+        '''
+        Encrypts a string using a key from the AWS Key Management Service
+
+        :param unencrypted_text: The string that will be encrypted
+        :param key_id: The id of the key that will be used for the encryption
+        '''
 
         # Encrypt the data using the KMS key
         try:
@@ -105,7 +159,12 @@ class KeyManagementService():
             return {'message':'Encryption failed', 'errors':[{e}]}
     
     def decrypt_data(self, encrypted_text: str):
-        
+        '''
+        Decrytps a string that was encrypted using a key from the AWS Key Management Service
+
+        :param encrypted_text: The string that will be decrypted
+        '''
+
         # Decode the base64-encoded ciphertext back to its original binary format
         try:
             ciphertext_blob = base64.b64decode(encrypted_text)
