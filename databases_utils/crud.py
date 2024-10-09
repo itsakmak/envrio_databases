@@ -343,7 +343,7 @@ class DavisApiCredential:
     def add(api_cred: schemas.DavisApiCredentialsCreate, db: Session = None):
         encrypt_key_id = KeyManagementService().encrypt_data(unencrypted_text=api_cred.key_id, key_name=api_cred.key_id)
         encrypt_secrete_name = KeyManagementService().encrypt_data(unencrypted_text=api_cred.secret_name, key_name=api_cred.key_id)
-        new_api_cred = models.DavisApiCredentials(station_id=api_cred.station_id, key_name=encrypt_key_id, secret_name=encrypt_secrete_name)
+        new_api_cred = models.DavisApiCredentials(station_id=api_cred.station_id, key_id=encrypt_key_id, secret_name=encrypt_secrete_name)
         db.add(new_api_cred)
 
     @staticmethod
