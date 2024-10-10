@@ -1,3 +1,8 @@
+__version__='1.0.0'
+__author__=['Ioannis Tsakmakis']
+__last_updated__='2024-10-10'
+__last_updated__='2024-10-10'
+
 import logging
 from dotenv import load_dotenv
 import os
@@ -17,12 +22,12 @@ alchemy.addHandler(alchemy_handler)
 alchemy.propagate = False
 
 # configuring influxdb logger
-influx = logging.getLogger('influxdb')
-influx_handler = logging.FileHandler(f'{os.getenv('logging_path')}/influx.log')
-influx_handler.setLevel(logging.INFO)
-influx_handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
-influx.addHandler(influx_handler)
-influx.propagate = False
+influxdb = logging.getLogger('influxdb')
+influxdb_handler = logging.FileHandler(f'{os.getenv('logging_path')}/influx.log')
+influxdb_handler.setLevel(logging.INFO)
+influxdb_handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
+influxdb.addHandler(influxdb_handler)
+influxdb.propagate = False
 
 # configuring aws utils logger
 aws_utils = logging.getLogger('aws_utils')

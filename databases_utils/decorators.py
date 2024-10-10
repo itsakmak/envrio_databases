@@ -7,7 +7,7 @@ import traceback, inspect
 from sqlalchemy.orm import Session
 from .engine import SessionLocal
 from functools import wraps
-from .logger import alchemy, influx
+from .logger import alchemy, influxdb
 
 def session_handler_add_delete_update(func):
     @wraps(func)
@@ -51,8 +51,8 @@ def influxdb_error_handler(func):
             return func(*args, **kwargs)
         except Exception as e:
             # Log the exception, traceback and return a structured error response
-            influx.error(f"Error in {func.__name__}: {str(e)}")
-            influx.error(traceback.format_exc())
+            influxdb.error(f"Error in {func.__name__}: {str(e)}")
+            influxdb.error(traceback.format_exc())
             return {"message": f"Error in {func.__name__}: {str(e)}", "status": "error"}
     return wrapper
 
