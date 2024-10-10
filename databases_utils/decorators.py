@@ -64,14 +64,14 @@ def validate_int(*param_names):
             sig = inspect.signature(func)
             bound_args = sig.bind_partial(*args, **kwargs).arguments    
 
-            # Check if the parameter is present and validate its type
-            for index, param_name in enumerate(param_names):
-                if bound_args.get('kwargs'):
-                    if param_name in bound_args['kwargs'] and not isinstance(bound_args['kwargs'][param_name], int):
+            # Check both positional (args) and keyword (kwargs) arguments
+            for param_name in param_names:
+                # Check if the param is in keyword arguments
+                if param_name in bound_args:
+                    if not isinstance(bound_args[param_name], int):
+                        alchemy.error(f"{param_name} must be an integer")
                         return {"message": "Bad Request", "errors": [f"{param_name} must be an integer"]}
-                elif bound_args.get('args'):
-                    if not isinstance(bound_args['args'][index], int):
-                        return {"message": "Bad Request", "errors": [f"{param_name} must be an integer"]}
+                
                 
             # Call the original function if validation passes
             return func(*args, **kwargs)
@@ -90,9 +90,11 @@ def validate_str(*param_names):
             for index, param_name in enumerate(param_names):
                 if bound_args.get('kwargs'):
                     if param_name in bound_args['kwargs'] and not isinstance(bound_args['kwargs'][param_name], str):
+                        alchemy.error(f"{param_name} must be a string")
                         return {"message": "Bad Request", "errors": [f"{param_name} must be a string"]}
                 elif bound_args.get('args'):
                     if not isinstance(bound_args['args'][index], str):
+                        alchemy.error(f"{param_name} must be a string")
                         return {"message": "Bad Request", "errors": [f"{param_name} must be a string"]}
                 
             # Call the original function if validation passes

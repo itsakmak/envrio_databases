@@ -14,8 +14,7 @@ setup(
         'influxdb-client>=1.39.0',
         'mysql-connector-python>=8.2.0',
         'python-dotenv>=1.0.1',
-        'boto3>=1.35.34',
-        'python-dotenv>=1.0.1'
+        'boto3>=1.35.34'
     ],
     classifiers=[  
         'Development Status :: 4 - Beta',
