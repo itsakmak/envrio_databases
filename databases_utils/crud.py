@@ -1,7 +1,7 @@
-__version__='1.3.2'
+__version__='1.3.3'
 __authors__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
-__last_updated__='2024-10-09'
+__last_updated__='2024-10-10'
 
 # from databases_utils import schemas, models
 from databases_utils import models, schemas
@@ -350,7 +350,7 @@ class DavisApiCredential:
     @validate_int('station_id')
     @session_handler_query
     def get_by_station_id(station_id: int, db: Session = None):
-        db.execute(select(models.DavisApiCredentials).filter_by(station_id=station_id)).one_or_none()
+        return db.execute(select(models.DavisApiCredentials).filter_by(station_id=station_id)).one_or_none()
 
     @staticmethod
     @validate_int('station_id')
