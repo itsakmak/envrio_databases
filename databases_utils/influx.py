@@ -16,12 +16,10 @@ import os
 # Load variables from the .env file
 load_dotenv()
 
-# Access database configuration info
-influx_conf = SecretsManager().get_secret(secret_name=os.getenv('db_timeseries'))
-
 class InfluxConnector():
 
-    def __init__(self, bucket_name: str, influx_conf: dict):
+    def __init__(self, bucket_name: str):
+        influx_conf = SecretsManager().get_secret(secret_name=os.getenv('db_timeseries'))
         self.client = InfluxDBClient(url=influx_conf['url'], token=influx_conf['token'], org=influx_conf['org'])
         if not self.client.ping():
             alchemy.error("Connection to InfluxDB failed.")
