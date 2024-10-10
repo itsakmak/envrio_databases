@@ -347,27 +347,27 @@ class DavisApiCredential:
         db.add(new_api_cred)
 
     @staticmethod
-    @validate_int
+    @validate_int('station_id')
     @session_handler_query
     def get_by_station_id(station_id: int, db: Session = None):
         db.execute(select(models.DavisApiCredentials).filter_by(station_id=station_id)).one_or_none()
 
     @staticmethod
-    @validate_int
-    @validate_str
+    @validate_int('station_id')
+    @validate_str('new_key_id')
     @session_handler_add_delete_update
     def update_key_id_by_station_id(station_id: int, new_key_id: str, db: Session = None):
         db.execute(update(models.DavisApiCredentials).where(models.DavisApiCredentials.station_id==station_id).values(key_id=new_key_id))
 
     @staticmethod
-    @validate_int
-    @validate_str
+    @validate_int('station_id')
+    @validate_str('new_secret_name')
     @session_handler_add_delete_update
     def update_secret_name_by_station_id(station_id: int, new_secret_name: str, db: Session = None):
         db.execute(update(models.DavisApiCredentials).where(models.DavisApiCredentials.station_id==station_id).values(secret_name=new_secret_name))
 
     @staticmethod
-    @validate_int
+    @validate_int('station_id')
     @session_handler_add_delete_update
     def delete_by_station_id(station_id: int, db: Session = None):
         result = db.execute(select(models.DavisApiCredentials).filter_by(station_id=station_id)).one_or_none()
