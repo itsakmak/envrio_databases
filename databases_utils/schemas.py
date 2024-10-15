@@ -1,7 +1,7 @@
-__version__='1.3.1'
+__version__='1.3.2'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
-__last_updated__='2024-10-07'
+__last_updated__='2024-10-15'
 
 from pydantic import BaseModel
 from typing import Optional
@@ -81,6 +81,16 @@ class DavisApiCredentialsBase(BaseModel):
     key_id: str
     secret_name: str
 
+class MetricaApiCredentialsBase(BaseModel):
+    station_id: int
+    key_id: str
+    secret_name: str
+
+class ADCONApiCredentialsBase(BaseModel):
+    station_id: int
+    key_id: str
+    secret_name: str
+
 class FarmsRegistryBase(BaseModel):
     user_id: int
     longitude: float
@@ -131,6 +141,12 @@ class MonitoredParametersCreate(MonitoredParametersBase):
     pass
 
 class DavisApiCredentialsCreate(DavisApiCredentialsBase):
+    pass
+
+class MetricaApiCredentialsCreate(MetricaApiCredentialsBase):
+    pass
+
+class ADCONApiCredentialsCreate(ADCONApiCredentialsBase):
     pass
 
 class FarmsRegistryCreate(FarmsRegistryBase):

@@ -1,7 +1,7 @@
-__version__='1.3.3'
+__version__='1.3.4'
 __authors__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
-__last_updated__='2024-10-10'
+__last_updated__='2024-10-15'
 
 # from databases_utils import schemas, models
 from databases_utils import models, schemas
@@ -336,7 +336,7 @@ class MonitoredParameters:
         else:
             return {"message": "Not Found", "errors": ["The provided MonitoredParameter code does not exist"]}, 404
 
-class DavisApiCredential:
+class DavisApiCredentials:
 
     @staticmethod
     @session_handler_add_delete_update
@@ -373,5 +373,85 @@ class DavisApiCredential:
         result = db.execute(select(models.DavisApiCredentials).filter_by(station_id=station_id)).one_or_none()
         if result is not None:
             db.delete(result.DavisApiCredentials)
+        else:
+            return {"message": "Not Found", "errors": ["The provided station is does not exist"]}, 404
+        
+class MetricaApiCredentials:
+
+    @staticmethod
+    @session_handler_add_delete_update
+    def add(api_cred: schemas.MetricaApiCredentialsCreate, db: Session = None):
+        encrypt_key_id = KeyManagementService().encrypt_data(unencrypted_text=api_cred.key_id, key_id=api_cred.key_id)
+        encrypt_secrete_name = KeyManagementService().encrypt_data(unencrypted_text=api_cred.secret_name, key_id=api_cred.key_id)
+        new_api_cred = models.MetricaApiCredentials(station_id=api_cred.station_id, key_id=encrypt_key_id, secret_name=encrypt_secrete_name)
+        db.add(new_api_cred)
+
+    @staticmethod
+    @validate_int('station_id')
+    @session_handler_query
+    def get_by_station_id(station_id: int, db: Session = None):
+        return db.execute(select(models.MetricaApiCredentials).filter_by(station_id=station_id)).one_or_none()
+
+    @staticmethod
+    @validate_int('station_id')
+    @validate_str('new_key_id')
+    @session_handler_add_delete_update
+    def update_key_id_by_station_id(station_id: int, new_key_id: str, db: Session = None):
+        db.execute(update(models.MetricaApiCredentials).where(models.MetricaApiCredentials.station_id==station_id).values(key_id=new_key_id))
+
+    @staticmethod
+    @validate_int('station_id')
+    @validate_str('new_secret_name')
+    @session_handler_add_delete_update
+    def update_secret_name_by_station_id(station_id: int, new_secret_name: str, db: Session = None):
+        db.execute(update(models.MetricaApiCredentials).where(models.MetricaApiCredentials.station_id==station_id).values(secret_name=new_secret_name))
+
+    @staticmethod
+    @validate_int('station_id')
+    @session_handler_add_delete_update
+    def delete_by_station_id(station_id: int, db: Session = None):
+        result = db.execute(select(models.MetricaApiCredentials).filter_by(station_id=station_id)).one_or_none()
+        if result is not None:
+            db.delete(result.MetricaApiCredentials)
+        else:
+            return {"message": "Not Found", "errors": ["The provided station is does not exist"]}, 404
+        
+class ADCONApiCredentials:
+
+    @staticmethod
+    @session_handler_add_delete_update
+    def add(api_cred: schemas.ADCONApiCredentialsCreate, db: Session = None):
+        encrypt_key_id = KeyManagementService().encrypt_data(unencrypted_text=api_cred.key_id, key_id=api_cred.key_id)
+        encrypt_secrete_name = KeyManagementService().encrypt_data(unencrypted_text=api_cred.secret_name, key_id=api_cred.key_id)
+        new_api_cred = models.ADCONApiCredentials(station_id=api_cred.station_id, key_id=encrypt_key_id, secret_name=encrypt_secrete_name)
+        db.add(new_api_cred)
+
+    @staticmethod
+    @validate_int('station_id')
+    @session_handler_query
+    def get_by_station_id(station_id: int, db: Session = None):
+        return db.execute(select(models.ADCONApiCredentials).filter_by(station_id=station_id)).one_or_none()
+
+    @staticmethod
+    @validate_int('station_id')
+    @validate_str('new_key_id')
+    @session_handler_add_delete_update
+    def update_key_id_by_station_id(station_id: int, new_key_id: str, db: Session = None):
+        db.execute(update(models.ADCONApiCredentials).where(models.ADCONApiCredentials.station_id==station_id).values(key_id=new_key_id))
+
+    @staticmethod
+    @validate_int('station_id')
+    @validate_str('new_secret_name')
+    @session_handler_add_delete_update
+    def update_secret_name_by_station_id(station_id: int, new_secret_name: str, db: Session = None):
+        db.execute(update(models.ADCONApiCredentials).where(models.ADCONApiCredentials.station_id==station_id).values(secret_name=new_secret_name))
+
+    @staticmethod
+    @validate_int('station_id')
+    @session_handler_add_delete_update
+    def delete_by_station_id(station_id: int, db: Session = None):
+        result = db.execute(select(models.ADCONApiCredentials).filter_by(station_id=station_id)).one_or_none()
+        if result is not None:
+            db.delete(result.ADCONApiCredentials)
         else:
             return {"message": "Not Found", "errors": ["The provided station is does not exist"]}, 404
