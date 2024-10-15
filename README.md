@@ -23,7 +23,7 @@ The library is available in GitHub and can be directly installed:<br>
 
 **Version: 1.3.0**
 
-**Release Date: 2024-10-03**
+**Release Date: 2024-10-15**
 
 **Module Name: engine**
 <br>
@@ -34,33 +34,21 @@ The library is available in GitHub and can be directly installed:<br>
 
 **Module Name: models**
 <br>
-**Version: 1.4.1**
+**Version: 1.4.3**
 
-+ Correcting multiple discrepancies between models and MySql actual data base implementation
-+ Switch to enum.variables datatype for enum variables
++ Adding a new class MetricaApiCredentials
++ Adding a new class ADCONApiCredentials
 
 **Module Name: schemas**
 <br>
-**Version: 1.3.0**
+**Version: 1.3.2**
 
-Class: *UsersTable*
-+ Multiple corrections to data types
++ Adding a new class MetricaApiCredentialsBase
++ Addin a new class ADCONApiCredentialsBase
 
 **Module Name: crud**
 <br>
-**Version: 1.3.0**
+**Version: 1.3.4**
 
-Class: *Stations*
-+ Adding decorators to handle try except loops
-+ Adding decorator to validate given arguments data types
-+ Adding a new method named *add_user_to_station*
-
-**Module Name: influx**
-<br>
-**Version: 1.1.2**
-
-General
-+ Add the influx error hndler decorator to handle try except loops
-
-Class: *InfluxConnector*
-+ Added database connection status check
++ Adding a new class MetricaApiCredentials
++ Adding a new class ADCONApiCredentials
