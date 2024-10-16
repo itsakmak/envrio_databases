@@ -52,3 +52,9 @@ The library is available in GitHub and can be directly installed:<br>
 
 + Adding a new class MetricaApiCredentials
 + Adding a new class ADCONApiCredentials
+
+**Module Name: influx**
+<br>
+**Version: 1.1.3**
+
++ Replacing the alchemy logger handler with the influxdb handler

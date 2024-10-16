@@ -1,7 +1,7 @@
-__version__='1.1.2'
+__version__='1.1.3'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2023-11-16'
-__last_updated__='2024-10-03'
+__last_updated__='2024-10-16'
 
 from influxdb_client import InfluxDBClient, Bucket, BucketRetentionRules
 from influxdb_client.client.write_api import SYNCHRONOUS
@@ -10,7 +10,7 @@ from typing import Union
 from .aws_utils import SecretsManager
 from dotenv import load_dotenv
 from .decorators import influxdb_error_handler
-from .logger import alchemy
+from .logger import influxdb
 import os
 
 # Load variables from the .env file
@@ -22,7 +22,7 @@ class InfluxConnector():
         influx_conf = SecretsManager().get_secret(secret_name=os.getenv('db_timeseries'))
         self.client = InfluxDBClient(url=influx_conf['url'], token=influx_conf['token'], org=influx_conf['org'])
         if not self.client.ping():
-            alchemy.error("Connection to InfluxDB failed.")
+            influxdb.error("Connection to InfluxDB failed.")
             raise ConnectionError("Connection to InfluxDB failed.")
         self.bucket_name = bucket_name
         self.org = influx_conf['org']
@@ -42,7 +42,7 @@ class DataManagement(InfluxConnector):
                 }
             records.append(point)
         write_api.write(bucket=self.bucket_name, org=self.org, record=records)
-        alchemy.info(f"message: Data successfully persisted to the bucket: {self.bucket_name}, measurement: {measurement}")        
+        influxdb.info(f"message: Data successfully persisted to the bucket: {self.bucket_name}, measurement: {measurement}")        
 
     @influxdb_error_handler
     def delete_rows(self, measurement:str, tag:str, start:Union[str,datetime], stop:Union[str,datetime] = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")):
@@ -50,7 +50,7 @@ class DataManagement(InfluxConnector):
         delete_api = self.client.delete_api()
         # Delete Points
         delete_api.delete(start,stop,predicate = f'_measurement = "{measurement}" and sensor_id = "{tag}"',bucket = self.bucket_name,org = self.org)
-        alchemy.info(f"message: Data successfully deleted from the bucket: {self.bucket_name}, measurement: {measurement}, sensor_id: {tag}, from: {start} to: {stop}")
+        influxdb.info(f"message: Data successfully deleted from the bucket: {self.bucket_name}, measurement: {measurement}, sensor_id: {tag}, from: {start} to: {stop}")
 
     @influxdb_error_handler
     def query_data(self,measurement: str,sensor_id: int,unit: str,start: Union[str, datetime],stop: Union[str, datetime] = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")):
@@ -60,7 +60,7 @@ class DataManagement(InfluxConnector):
                                                     |> filter(fn: (r) => r["_measurement"] == "{measurement}" and r["sensor_id"] == "{str(sensor_id)}")
                                                     |> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")
                                                     |> keep(columns: ["_time","sensor_id", "{unit}"])''')
-        alchemy.info(f"message: Data from bucket: {self.bucket_name}, measurement: {measurement}, sensor_id: {sensor_id} between: {start} and {stop} retrived successfully")
+        influxdb.info(f"message: Data from bucket: {self.bucket_name}, measurement: {measurement}, sensor_id: {sensor_id} between: {start} and {stop} retrived successfully")
         return data_frame
 
 class BucketConfiguration(InfluxConnector):
@@ -88,5 +88,5 @@ class BucketConfiguration(InfluxConnector):
                                                                         shard_group_duration_seconds = shard_group_duration,
                                                                         type = type)])
         buckets_api.update_bucket(bucket = bucket_update)
-        alchemy.info(f"message: bucket: {self.bucket_name} updated succefully - {buckets_api.find_bucket_by_name(self.bucket_name)}")
+        influxdb.info(f"message: bucket: {self.bucket_name} updated succefully - {buckets_api.find_bucket_by_name(self.bucket_name)}")
         return print(buckets_api.find_bucket_by_name(self.bucket_name))
