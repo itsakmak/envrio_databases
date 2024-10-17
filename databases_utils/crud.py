@@ -1,7 +1,7 @@
-__version__='1.3.4'
+__version__='1.3.5'
 __authors__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
-__last_updated__='2024-10-15'
+__last_updated__='2024-10-17'
 
 # from databases_utils import schemas, models
 from databases_utils import models, schemas
@@ -325,6 +325,13 @@ class MonitoredParameters:
     @session_handler_add_delete_update
     def update_status(monitored_parameter_id: int, current_status: str, db: Session = None):
         db.execute(update(models.MonitoredParameters).where(models.MonitoredParameters.id==monitored_parameter_id).values(status=current_status))
+
+    @staticmethod
+    @validate_int('station_id')
+    @validate_str('current_status')
+    @session_handler_add_delete_update
+    def update_status_by_station_id(station_id: int, current_status: str, db: Session = None):
+        db.execute(update(models.MonitoredParameters).where(models.MonitoredParameters.station_id==station_id).values(status=current_status))
 
     @staticmethod
     @validate_str('code')

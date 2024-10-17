@@ -43,18 +43,25 @@ The library is available in GitHub and can be directly installed:<br>
 <br>
 **Version: 1.3.2**
 
+*General*
 + Adding a new class MetricaApiCredentialsBase
 + Addin a new class ADCONApiCredentialsBase
 
+
 **Module Name: crud**
 <br>
-**Version: 1.3.4**
+**Version: 1.3.5**
 
+*General*
 + Adding a new class MetricaApiCredentials
 + Adding a new class ADCONApiCredentials
++ 
+*MonitoredParameters*
++ Adding a new method update_status_by_station_id
 
 **Module Name: influx**
 <br>
 **Version: 1.1.3**
 
+*General*
 + Replacing the alchemy logger handler with the influxdb handler
