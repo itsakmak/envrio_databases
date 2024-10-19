@@ -34,10 +34,14 @@ The library is available in GitHub and can be directly installed:<br>
 
 **Module Name: models**
 <br>
-**Version: 1.4.3**
+**Version: 1.4.4**
 
+*General*
 + Adding a new class MetricaApiCredentials
 + Adding a new class ADCONApiCredentials
+
+*MonitoredParameters*
++ Changed name column from str to JSON
 
 **Module Name: schemas**
 <br>

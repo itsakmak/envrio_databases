@@ -1,7 +1,7 @@
-__version__='1.3.2'
+__version__='1.3.3'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
-__last_updated__='2024-10-15'
+__last_updated__='2024-10-19'
 
 from pydantic import BaseModel
 from typing import Optional
@@ -70,7 +70,7 @@ class MonitoredParametersBase(BaseModel):
     last_communication: float
     status: str
     device_height: float
-    name: Optional[str] = None
+    name: Optional[dict] = None
     code: Optional[str] = None
     station_id: int
     repeater_id: Optional[int] = None

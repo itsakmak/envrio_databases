@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-__version__='1.4.3'
+__version__='1.4.4'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
-__last_updated__='2024-10-15'
+__last_updated__='2024-10-16'
 
 from .enum_variables import AccountType, Status, DeviceType, ApplicationType, AdviceStatus, IconType
 from .engine import Base
@@ -93,7 +93,7 @@ class MonitoredParameters(Base):
     last_communication: Mapped[float] = mapped_column(nullable=False)
     status: Mapped[Status] = mapped_column(SQLAlchemyEnum(Status), nullable=False)
     device_height: Mapped[float] = mapped_column(nullable=False)
-    name: Mapped[Optional[str]] = mapped_column(String(100))
+    name: Mapped[Optional[dict|list]] = mapped_column(JSON)
     code: Mapped[Optional[str]] = mapped_column(String(100))
     station_id: Mapped[int] = mapped_column(ForeignKey('stations.id',ondelete='CASCADE'), nullable=False)
     repeater_id: Mapped[Optional[int]] = mapped_column(ForeignKey('repeater_units.id',ondelete='CASCADE'))
