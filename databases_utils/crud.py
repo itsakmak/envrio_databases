@@ -1,7 +1,7 @@
-__version__='1.3.5'
+__version__='1.3.6'
 __authors__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
-__last_updated__='2024-10-17'
+__last_updated__='2024-10-21'
 
 # from databases_utils import schemas, models
 from databases_utils import models, schemas
@@ -318,6 +318,13 @@ class MonitoredParameters:
     @session_handler_add_delete_update
     def update_last_communication(monitored_parameter_id: int, new_datetime: float, db: Session = None):
         db.execute(update(models.MonitoredParameters).where(models.MonitoredParameters.id==monitored_parameter_id).values(last_communication=new_datetime))
+
+    @staticmethod
+    @validate_int('monitored_parameter_id')
+    @validate_float('new_datetime')
+    @session_handler_add_delete_update
+    def update_last_communication_by_station_id(station_id: int, new_datetime: float, db: Session = None):
+        db.execute(update(models.MonitoredParameters).where(models.MonitoredParameters.station_id==station_id).values(last_communication=new_datetime))
 
     @staticmethod
     @validate_int('monitored_parameter_id')

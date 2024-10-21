@@ -54,7 +54,7 @@ The library is available in GitHub and can be directly installed:<br>
 
 **Module Name: crud**
 <br>
-**Version: 1.3.5**
+**Version: 1.3.6**
 
 *General*
 + Adding a new class MetricaApiCredentials
@@ -62,6 +62,7 @@ The library is available in GitHub and can be directly installed:<br>
 + 
 *MonitoredParameters*
 + Adding a new method update_status_by_station_id
++ Adding a new method update_last_communication_by_station_id
 
 **Module Name: influx**
 <br>
