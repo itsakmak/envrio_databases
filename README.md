@@ -23,7 +23,7 @@ The library is available in GitHub and can be directly installed:<br>
 
 **Version: 1.3.0**
 
-**Release Date: 2024-10-15**
+**Release Date: 2024-10-22**
 
 **Module Name: engine**
 <br>
@@ -54,12 +54,15 @@ The library is available in GitHub and can be directly installed:<br>
 
 **Module Name: crud**
 <br>
-**Version: 1.3.6**
+**Version: 1.3.7**
 
 *General*
 + Adding a new class MetricaApiCredentials
 + Adding a new class ADCONApiCredentials
-+ 
+
+*Stations*
++ Adding a new method get_status_by_id
+
 *MonitoredParameters*
 + Adding a new method update_status_by_station_id
 + Adding a new method update_last_communication_by_station_id

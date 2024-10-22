@@ -81,6 +81,12 @@ class Stations:
         return db.execute(select(models.Stations).filter(text("JSON_CONTAINS(JSON_UNQUOTE(JSON_EXTRACT(access, '$.users')), CAST(:user AS JSON), '$')").params(user=user_id))).all() 
 
     @staticmethod
+    @validate_int('id')
+    @session_handler_query
+    def get_status_by_id(id: int, db: Session = None):
+        return db.execute(select(models.Stations.status).filter_by(id=id)).one_or_none()
+    
+    @staticmethod
     @validate_int('station_id')
     @validate_float('new_datetime')
     @session_handler_add_delete_update
