@@ -1,80 +1,148 @@
-__version__='1.3.3'
+__version__='1.4.0'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
-__last_updated__='2024-10-19'
+__last_updated__='2024-11-22'
 
 from pydantic import BaseModel
-from typing import Optional
-from .enum_variables import AccountType
+from .enum_variables import AccountType, IconType
 
 # Base Models
 class UsersTableBase(BaseModel):
-    name: str
+    aws_user_name: str
     email: str
     account_type: AccountType
     subscription_expires_in: float
 
-class StationsBase(BaseModel):
-    brand: str
-    model: str
-    code: str
-    date_created: float
-    last_communication: float
-    status: str
-    longitude: float
-    latitude: float
-    elevation: int
+class IoTDevicesBase(BaseModel):
+    manufacturer_id: int
     access: dict
-    name: dict
-    icon_type: str
+    icon_type: IconType
 
-class GatewaysBase(BaseModel):
-    brand: str
-    model: str
-    code: str
+class ManufacturersBase(BaseModel):
     name: str
-    station_id: int
+    api_url: str
+    api_version: str
+    templates: dict
 
-class ReapeaterUnitsBase(BaseModel):
-    brand: str
-    model: str
+class ADCONServerBase(BaseModel):
+    server_id: int
+    source_id: str
+    template: str
+    name: str
+    main_class: str
+    sub_class: str
+    type: str
+    version: str
+    serial: str
     code: str
-    date_created: float
-    last_communication: float
-    status: str
-    longitude: float
-    latitude: float
-    elevation: int
-    name: dict
-    station_id: int
+    time_zone: str
+    last_update: float
+    slot_interval: int
+    get_data_max_slots: int
+    get_data_max_nodes: int
 
-class RemoteTerminalUnitsBase(BaseModel):
-    brand: str
-    model: str
-    code: str
-    date_created: float
-    last_communication: float
-    status: str
-    longitude: float
-    latitude: float
-    elevation: int
-    name: dict
-    station_id: int
-    repeater_id: int
+class ADCONAreaBase(BaseModel):
+    server_id: int
+    source_id: str
+    name: str
+    template: str
+    main_class : str
+    sub_class : str
 
-class MonitoredParametersBase(BaseModel):
-    device_type: str
+class ADCONRtusBase(BaseModel):
+    rtu_id: int
+    area_id: int
+    source_id: str
+    name: str
+    template: str
+    main_class : str
+    sub_class : str
+    latitude: float
+    longitude: float
+    altitude: float
+    type : str
+    version : str
+    serial : str
+    code : str
+    time_zone : str
+    uptime: str
+    field_id: int
+    unique_attributes: dict
+
+class ADCONMonitoringDevicesBase(BaseModel):
+    rtu_id: int
+    source_id: str
+    name: str
     measurement: str
-    unit: str
-    date_created: float
-    last_communication: float
-    status: str
-    device_height: float
-    name: Optional[dict] = None
-    code: Optional[str] = None
+    template: str
+    main_class : str
+    sub_class : str
+    type : str
+    EUID: str
+    sampling_method: str
+    reference_offset: float
+    active: bool
+
+class DavisWeatherStationsBase(BaseModel):
     station_id: int
-    repeater_id: Optional[int] = None
-    rtu_id: Optional[int] = None
+    device_id: int
+    station_id_uuid: int
+    station_name: str
+    gateway_id: int
+    gateway_id_hex: str
+    product_number: str
+    active: bool
+    recording_interval: int
+    firmware_version: str
+    registered_date: float
+    subscription_end_data: float
+    time_zone: str
+    latitude: float
+    longitude: float
+    elevation: float
+    gateway_type: str
+    farm_id: int
+    field_ids: dict
+
+class DavisMonitoringDevicesBase(BaseModel):
+    monitoring_device_id: int
+    station_id: int
+    station_id_uuid: str
+    measurement: str
+    created_date: float
+    modified_date: float
+    active: bool
+    latitude: float
+    longitude: float
+    elevation: float
+    reference_offset: float
+
+class MetricaStationsBase(BaseModel):
+    station_id: str
+    device_id: int
+    station_code: str
+    title: str
+    creation_date: str
+    last_update: str
+    latitude: float
+    longitude: float
+    elevation: float
+    farm_id: int
+    field_ids: dict
+
+class MetricaMonitoringDevicesBase(BaseModel):
+    monitoring_device_id: str
+    station_id: str
+    station_code: str
+    measurement: str
+    title: str
+    id_sensor_of_station: str
+    sensor_type: str
+    created_date: float
+    latitude: float
+    longitude: float
+    elevation: float
+    reference_offset: float
 
 class DavisApiCredentialsBase(BaseModel):
     station_id: int
@@ -115,29 +183,39 @@ class AdvicesBase(BaseModel):
     date_registered: float
     date_created: float
 
-class MeasurementTranslationsBase(BaseModel):
-    measurement: str
-    el: Optional[str] = None
-    en: Optional[str] = None
-
 # Create Models
 
 class UsersTableCreate(UsersTableBase):
     pass
 
-class StationsCreate(StationsBase):
+class IoTDevicesCreate(IoTDevicesBase):
     pass
 
-class GatewaysCreate(GatewaysBase):
+class ManufacturersCreate(ManufacturersBase):
     pass
 
-class ReapeaterUnitsCreate(ReapeaterUnitsBase):
+class ADCONServerCreate(ADCONServerBase):
     pass
 
-class RemoteTerminalUnitsCreate(RemoteTerminalUnitsBase):
+class ADCONAreaCreate(ADCONAreaBase):
     pass
 
-class MonitoredParametersCreate(MonitoredParametersBase):
+class ADCONRtusCreate(ADCONRtusBase):
+    pass
+
+class ADCONMonitoringDevicesCreate(ADCONMonitoringDevicesBase):
+    pass
+
+class DavisWeatherStationsCreate(DavisWeatherStationsBase):
+    pass
+
+class DavisMonitoringDevicesCreate(DavisMonitoringDevicesBase):
+    pass
+
+class MetricaStationsCreate(MetricaStationsBase):
+    pass
+
+class MetricaMonitoringDevicesCreate(MetricaMonitoringDevicesBase):
     pass
 
 class DavisApiCredentialsCreate(DavisApiCredentialsBase):
@@ -161,5 +239,3 @@ class ApplicationsCreate(ApplicationsBase):
 class AdvicesCreate(AdvicesBase):
     pass
 
-class MeasurementTranslationsCreate(MeasurementTranslationsBase):
-    pass

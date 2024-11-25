@@ -1,12 +1,12 @@
-__version__='1.3.6'
+__version__='1.3.7'
 __authors__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
-__last_updated__='2024-10-21'
+__last_updated__='2024-10-22'
 
 # from databases_utils import schemas, models
 from databases_utils import models, schemas
 from sqlalchemy.orm import Session
-from sqlalchemy import text, or_, select, update
+from sqlalchemy import text, select, update
 from .aws_utils import KeyManagementService
 from .decorators import session_handler_add_delete_update, session_handler_query, validate_int, validate_str, validate_float
 
@@ -15,20 +15,20 @@ class User:
     @staticmethod
     @session_handler_add_delete_update
     def add(user: schemas.UsersTableCreate, db: Session = None):
-        new_user = models.Users(name=user.name, email=user.email, account_type=user.account_type, subscription_expires_in=user.subscription_expires_in)
+        new_user = models.Users(aws_user_name=user.aws_user_name, email=user.email, account_type=user.account_type, subscription_expires_in=user.subscription_expires_in)
         db.add(new_user)
 
     @staticmethod
-    @validate_str('name')
+    @validate_str('aws_user_name')
     @session_handler_query
     def get_by_name(name: str, db: Session = None):
-        return db.execute(select(models.Users).filter_by(name=name)).one_or_none()
+        return db.execute(select(models.Users).filter_by(aws_user_name=name)).one_or_none()
 
     @staticmethod
-    @validate_int('id')
+    @validate_int('user_id')
     @session_handler_query
-    def get_by_id(id: int, db: Session = None):
-        return db.execute(select(models.Users).filter_by(id=id)).one_or_none()
+    def get_by_id(user_id: int, db: Session = None):
+        return db.execute(select(models.Users).filter_by(user_id=user_id)).one_or_none()
 
     @staticmethod
     @validate_str('email')
@@ -37,324 +37,382 @@ class User:
         return db.execute(select(models.Users).filter_by(email=email)).one_or_none()
 
     @staticmethod
-    @validate_str('name')
+    @validate_str('aws_user_name')
     @session_handler_add_delete_update
     def delete_by_name(name: str, db: Session = None):
-            result = db.execute(select(models.Users).filter_by(name=name)).one_or_none()
+            result = db.execute(select(models.Users).filter_by(aws_user_name=name)).one_or_none()
             if result is not None:
                 db.delete(result.Users)
             else:
                 return {"message": "Not Found", "errors": ["The provided name does not exist in the users table"]}, 404
 
-class Stations:
+class IoTDevices:
 
     @staticmethod
     @session_handler_add_delete_update
-    def add(station: schemas.StationsCreate, db: Session = None):
-        new_station = models.Stations(brand=station.brand, model=station.model, code=station.code, date_created=station.date_created,
-                                    last_communication=station.last_communication, status=station.status, longitude=station.longitude,
-                                    latitude=station.latitude, elevation=station.elevation, access=station.access, name=station.name, icon_type=station.icon_type)
-        db.add(new_station)
+    def add(IoT_device: schemas.IoTDevicesCreate, db: Session = None):
+        new_device = models.IoTDevices(manufacturer_id=IoT_device.manufacturer_id, access=IoT_device.access, icon_type=IoT_device.icon_type)
+        db.add(new_device)
 
     @staticmethod
-    @validate_int('id')
+    @validate_int('device_id')
     @session_handler_query
-    def get_by_id(id: int, db: Session = None):
-        return db.execute(select(models.Stations).filter_by(id = id)).one_or_none()
-
-    @staticmethod
-    @validate_str('code')
-    @session_handler_query
-    def get_by_code(code: str, db: Session = None):
-        return db.execute(select(models.Stations).filter_by(code = code)).one_or_none()
+    def get_by_id(device_id: int, db: Session = None):
+        return db.execute(select(models.IoTDevices).filter_by(device_id = device_id)).one_or_none()
 
     @staticmethod
     @session_handler_query
-    @validate_str('brand')
-    def get_by_brand(brand: str, db: Session = None):
-        return db.execute(select(models.Stations).filter_by(brand = brand)).all()
+    @validate_str('manufacturer')
+    def get_by_manufacturer(manufacturer: str, db: Session = None):
+        return db.execute(select(models.IoTDevices).filter_by(manufacturer = manufacturer)).all()
 
     @staticmethod
     @validate_int('user_id')
     @session_handler_query
     def get_by_access(user_id: int, db: Session = None):
-        return db.execute(select(models.Stations).filter(text("JSON_CONTAINS(JSON_UNQUOTE(JSON_EXTRACT(access, '$.users')), CAST(:user AS JSON), '$')").params(user=user_id))).all() 
-
-    @staticmethod
-    @validate_int('id')
-    @session_handler_query
-    def get_status_by_id(id: int, db: Session = None):
-        return db.execute(select(models.Stations.status).filter_by(id=id)).one_or_none()
+        return db.execute(select(models.IoTDevices).filter(text("JSON_CONTAINS(JSON_UNQUOTE(JSON_EXTRACT(access, '$.users')), CAST(:user AS JSON), '$')").params(user=user_id))).all() 
     
-    @staticmethod
-    @validate_int('station_id')
-    @validate_float('new_datetime')
-    @session_handler_add_delete_update
-    def update_date_created(station_id: int, new_datetime: float, db: Session = None):
-        db.execute(update(models.Stations).where(models.Stations.id==station_id).values(date_created=new_datetime))
-
-    @staticmethod
-    @validate_int('station_id')
-    @validate_float('new_datetime')
-    @session_handler_add_delete_update
-    def update_last_communication(station_id: int, new_datetime: float, db: Session = None):
-        db.execute(update(models.Stations).where(models.Stations.id==station_id).values(last_communication=new_datetime))
-
-    @staticmethod
-    @validate_int('station_id')
-    @validate_str('current_status')
-    @session_handler_add_delete_update
-    def update_status(station_id: int, current_status: str, db: Session = None):
-        db.execute(update(models.Stations).where(models.Stations.id==station_id).values(status=current_status))
-
     @staticmethod
     @validate_int('station_id','user_id')
     @session_handler_add_delete_update
-    def add_user_to_station(station_id: int, user_id: int, db: Session = None):
-        access=db.execute(select(models.Stations).filter_by(id=station_id)).one_or_none()
+    def add_user_to_station(device_id: int, user_id: int, db: Session = None):
+        access=db.execute(select(models.IoTDevices).filter_by(device_id=device_id)).one_or_none()
         if user_id not in access[0].access['users']:
             access[0].access['users'].append(user_id)
 
     @staticmethod
     @validate_int('station_id','user_id')
     @session_handler_add_delete_update
-    def delete_user_from_station(station_id: int, user_id: int, db: Session = None):
-        access=db.execute(select(models.Stations).filter_by(id=station_id)).one_or_none()
-        if access.Stations:
+    def delete_user_from_station(device_id: int, user_id: int, db: Session = None):
+        access=db.execute(select(models.IoTDevices).filter_by(device_id=device_id)).one_or_none()
+        if access.IoTdevices:
             if user_id not in access[0].access['users']:
                 access[0].access['users'].remove(user_id)
 
     @staticmethod
-    @validate_str('code')
+    @validate_int('device_id')
     @session_handler_add_delete_update
-    def delete_by_code(code: str, db: Session = None):
-        result = db.execute(select(models.Stations).filter_by(code = code)).one_or_none()
+    def delete_by_device_id(device_id: int, db: Session = None):
+        result = db.execute(select(models.IoTDevices).filter_by(device_id = device_id)).one_or_none()
         if result is not None:
-            db.delete(result.Stations)
+            db.delete(result.IoTdevices)
         else:
-            return {"message": "Not Found", "errors": ["The provided code does not exist in the stations table"]}, 404
+            return {"message": "Not Found", "errors": ["The provided device_id does not exist in the stations table"]}, 404
 
-class Gateways:
-
-    @staticmethod
-    @session_handler_add_delete_update
-    def add(gateway: schemas.GatewaysCreate, db: Session = None):
-        new_gateway = models.GateWays(brand= gateway.brand, model=gateway.model, code=gateway.code,
-                                    name = gateway.name, station_id=gateway.station_id)
-        db.add(new_gateway)
-
-    @staticmethod
-    @validate_str('code')
-    @session_handler_query
-    def get_by_code(code: str, db: Session = None):
-        return db.execute(select(models.GateWays).filter_by(code=code)).one_or_none()
-
-class ReapeaterUnits:
+class Manufacturers:
 
     @staticmethod
     @session_handler_add_delete_update
-    def add(rpu: schemas.ReapeaterUnitsBase, db: Session = None):
-        new_rtu = models.RemoteTerminalUnits(brand=rpu.brand, model=rpu.model, code=rpu.code, date_created=rpu.date_created,
-                                            last_communication=rpu.last_communication, status=rpu.status, longitude=rpu.longitude,
-                                            latitude=rpu.latitude, elevation=rpu.elevation, name=rpu.name,
-                                            station_id=rpu.station_id)
-        db.add(new_rtu)
+    def add(manufacturer: schemas.ManufacturersCreate, db: Session = None):
+        new_manufacturer = models.Manufacturers(name=manufacturer.name, api_url=manufacturer.api_url, api_version=manufacturer.api_version,
+                                                templates=manufacturer.templates)
+        db.add(new_manufacturer)
 
     @staticmethod
-    @validate_int('id')
+    @validate_str('name')
     @session_handler_query
-    def get_by_id(id: str, db: Session = None):
-        return db.execute(select(models.RepeaterUnits).filter_by(id = id)).one_or_none()
+    def get_by_name(name: str, db: Session = None):
+        return db.execute(select(models.Manufacturers).filter_by(name=name)).one_or_none()
+
+class ADCONServer:
 
     @staticmethod
-    @validate_str('code')
-    @session_handler_query
-    def get_by_code(code: str, db: Session = None):
-        return db.execute(select(models.RepeaterUnits).filter_by(code = code)).one_or_none()
+    @session_handler_add_delete_update
+    def add(server: schemas.ADCONServerCreate, db: Session = None):
+        new_server = models.ADCONServer(server_id=server.server_id, source_id=server.source_id, template=server.template, name=server.name, main_class=server.main_class,
+                                        sub_class=server.sub_class, type=server.type, version=server.version, serial=server.serial, code=server.code, time_zone=server.time_zone,
+                                        last_update=server.last_update, slot_interval=server.slot_interval, get_data_max_slots=server.get_data_max_slots, get_data_max_nodes=server.get_data_max_nodes)
+        db.add(new_server)
 
     @staticmethod
-    @validate_int('station_id')
+    @validate_int('server_id')
     @session_handler_query
-    def get_by_station_id(station_id: int, db: Session = None):
-        return db.execute(select(models.RepeaterUnits).filter_by(station_id=station_id)).one_or_none()
+    def get_by_id(server_id: str, db: Session = None):
+        return db.execute(select(models.ADCONServer).filter_by(server_id = server_id)).one_or_none()
+
+    @staticmethod
+    @validate_str('source_id')
+    @session_handler_query
+    def get_by_code(source_id: str, db: Session = None):
+        return db.execute(select(models.ADCONServer).filter_by(source_id= source_id)).one_or_none()
+
+    @staticmethod
+    @validate_str('serial')
+    @session_handler_query
+    def get_by_serial(serial: str, db: Session = None):
+        return db.execute(select(models.ADCONServer).filter_by(serial=serial)).one_or_none()
     
     @staticmethod
-    @validate_int('repeater_id')
+    @validate_int('server_id')
     @validate_float('new_datetime')
     @session_handler_add_delete_update
-    def update_date_created(repeater_id: int, new_datetime: float, db: Session = None):
-        db.execute(update(models.RepeaterUnits).where(models.RepeaterUnits.id==repeater_id).values(date_created=new_datetime))
+    def update_last_update(server_id: int, new_datetime: float, db: Session = None):
+        db.execute(update(models.ADCONServer).where(models.ADCONServer.server_id==server_id).values(last_update=new_datetime))
 
-    @staticmethod
-    @validate_int('repeater_id')
-    @validate_float('new_datetime')
-    @session_handler_add_delete_update
-    def update_last_communication(repeater_id: int, new_datetime: float, db: Session = None):
-        db.execute(update(models.RepeaterUnits).where(models.RepeaterUnits.id==repeater_id).values(last_communication=new_datetime))
-
-    @staticmethod
-    @validate_int('repeater_id')
-    @validate_str('current_status')
-    @session_handler_add_delete_update
-    def update_status(repeater_id: int, current_status: str, db: Session = None):
-        db.execute(update(models.RepeaterUnits).where(models.RepeaterUnits.id==repeater_id).values(status=current_status))
-
-    @staticmethod
-    @validate_str('code')
-    @session_handler_add_delete_update
-    def delete_by_code(code: str, db: Session = None):
-        result = db.execute(select(models.RepeaterUnits).filter_by(code = code)).one_or_none()
-        if result is not None:
-            db.delete(result.RepeaterUnits)
-        else:
-            return {"message": "Not Found", "errors": ["The provided code does not exist in the repeater units table"]}, 404
-
-class RemoteTerminalUnits:
+class ADCONArea:
 
     @staticmethod
     @session_handler_add_delete_update
-    def add(rtu: schemas.RemoteTerminalUnitsCreate, db: Session = None):
-        new_rtu = models.RemoteTerminalUnits(brand=rtu.brand, model=rtu.model, code=rtu.code, date_created=rtu.date_created,
-                                            last_communication=rtu.last_communication, status=rtu.status, longitude=rtu.longitude,
-                                            latitude=rtu.latitude, elevation=rtu.elevation, name=rtu.name,
-                                            station_id=rtu.station_id, repeater_id=rtu.repeater_id)
-        db.add(new_rtu)
+    def add(area: schemas.ADCONAreaCreate, db: Session = None):
+        new_are = models.ADCONArea(server_id=area.server_id, source_id=area.source_id, name=area.name, template=area.template, main_class=area.main_class, sub_class=area.sub_class)
+        db.add(new_are)
 
     @staticmethod
-    @validate_int('id')
+    @validate_int('area_id')
     @session_handler_query
-    def get_by_id(id: str, db: Session = None):
-        return db.execute(select(models.RemoteTerminalUnits).filter_by(id = id)).one_or_none()
+    def get_by_area_id(area_id: int, db: Session = None):
+        return db.execute(select(models.ADCONArea).filter_by(area_id=area_id)).one_or_none()
 
     @staticmethod
-    @validate_str('code')
+    @validate_str('source_id')
     @session_handler_query
-    def get_by_code(code: str, db: Session = None):
-        return db.execute(select(models.RemoteTerminalUnits).filter_by(code = code)).one_or_none()
-
-    @staticmethod
-    @validate_int('station_id')
-    @session_handler_query
-    def get_by_station_id(station_id: int, db: Session = None):
-        return db.execute(select(models.RemoteTerminalUnits).filter_by(station_id=station_id)).one_or_none()
+    def get_by_source_id(source_id: str, db: Session = None):
+        return db.execute(select(models.ADCONArea).filter_by(source_id=source_id)).one_or_none()
     
     @staticmethod
-    @validate_int('repeater_id')
-    @session_handler_query
-    def get_by_repeater_id(repeater_id: int, db: Session = None):
-        return db.execute(select(models.RepeaterUnits).filter_by(repeater_id=repeater_id)).one_or_none()
-
-    @staticmethod
-    @validate_int('rtu_id')
-    @validate_float('new_datetime')
+    @validate_str('source_id')
     @session_handler_add_delete_update
-    def update_date_created(rtu_id: int, new_datetime: float, db: Session = None):
-        db.execute(update(models.RemoteTerminalUnits).where(models.RemoteTerminalUnits.id==rtu_id).values(date_created=new_datetime))
-
-    @staticmethod
-    @validate_int('rtu_id')
-    @validate_float('new_datetime')
-    @session_handler_add_delete_update
-    def update_last_communication(rtu_id: int, new_datetime: float, db: Session = None):
-        db.execute(update(models.RemoteTerminalUnits).where(models.RemoteTerminalUnits.id==rtu_id).values(last_communication=new_datetime))
-
-    @staticmethod
-    @validate_int('rtu_id')
-    @validate_str('current_status')
-    @session_handler_add_delete_update
-    def update_status(rtu_id: int, current_status: str, db: Session = None):
-        db.execute(update(models.RemoteTerminalUnits).where(models.RemoteTerminalUnits.id==rtu_id).values(status=current_status))
-
-    @staticmethod
-    @validate_str('code')
-    @session_handler_add_delete_update
-    def delete_by_code(code: str, db: Session = None):
-        result = db.execute(select(models.RemoteTerminalUnits).filter_by(code = code)).one_or_none()
+    def delete_by_source_id(source_id: str, db: Session = None):
+        result = db.execute(select(models.ADCONArea).filter_by(source_id=source_id)).one_or_none()
         if result is not None:
-            db.delete(result.RemoteTerminalUnits)
+            db.delete(result.ADCONArea)
         else:
-            return {"message": "Not Found", "errors": ["The provided code does not exist in the remote terminal units table"]}, 404
+            return {"message": "Not Found", "errors": ["The provided area source id does not exist"]}, 404
+        
+    @staticmethod
+    @validate_int('area_id')
+    @session_handler_add_delete_update
+    def delete_by_area_id(area_id: int, db: Session = None):
+        result = db.execute(select(models.ADCONArea).filter_by(area_id=area_id)).one_or_none()
+        if result is not None:
+            db.delete(result.ADCONArea)
+        else:
+            return {"message": "Not Found", "errors": ["The provided area id does not exist"]}, 404
              
-class MonitoredParameters:
+class ADCONRtus:
 
     @staticmethod
     @session_handler_add_delete_update
-    def add(monitored_parameters: schemas.MonitoredParametersCreate, db: Session = None):
-        new_monitored_parameters = models.MonitoredParameters(type=monitored_parameters.device_type, measurement=monitored_parameters.measurement,
-                                                            unit=monitored_parameters.unit, date_created=monitored_parameters.date_created,
-                                                            latest_communication=monitored_parameters.last_communication,
-                                                            status=monitored_parameters.status, device_height=monitored_parameters.device_height, name =monitored_parameters.name,
-                                                            code=monitored_parameters.code, station_id=monitored_parameters.station_id, rtu_id=monitored_parameters.rtu_id)
-        db.add(new_monitored_parameters)
+    def add(rtu: schemas.ADCONRtusCreate, db: Session = None):
+        new_rtu = models.ADCONRtus(rtu_id=rtu.rtu_id, area_id=rtu.area_id, source_id=rtu.source_id, name=rtu.name, template=rtu.template, main_class=rtu.main_class,
+                                   sub_class=rtu.sub_class, latitude=rtu.latitude, longitude=rtu.longitude, altitude=rtu.altitude, type=rtu.type, version=rtu.version,
+                                   serial=rtu.serial, code=rtu.code, time_zone=rtu.time_zone, uptime=rtu.uptime, field_id=rtu.field_id, unique_attributes=rtu.unique_attributes)
+        db.add(new_rtu)
 
     @staticmethod
-    @validate_int('station_id')
+    @validate_int('area_id')
     @session_handler_query
-    def get_by_station_id(station_id: int, db: Session = None):
+    def get_by_area_id(area_id: int, db: Session = None):
+        return db.execute(select(models.ADCONRtus).filter_by(area_id=area_id)).all()
 
-        rtus = db.execute(select(models.RemoteTerminalUnits).filter_by(station_id=station_id)).all()
-        if len(rtus) == 0:
-            return db.execute(select(models.MonitoredParameters).filter_by(station_id=station_id)).all()
-        else:
-            return db.execute(select(models.MonitoredParameters).filter(or_(models.MonitoredParameters.station_id==station_id,
-                                                                models.MonitoredParameters.rtu_id.in_(rtus.id)))).all()
-
-    @staticmethod
-    @validate_int('repeater_id')
-    @session_handler_query
-    def get_by_repeater_id(repeater_id: int, db: Session = None):
-        rtus = db.execute(select(models.RemoteTerminalUnits).filter_by(repeater_id=repeater_id)).one_or_none()
-        return db.execute(select(models.MonitoredParameters).filter(models.MonitoredParameters.rtu_id.in_(rtus.id))).all()
-
-    @staticmethod
-    @validate_int('id')
-    @session_handler_query
-    def get_by_id(id: int, db: Session = None):
-        return db.execute(select(models.MonitoredParameters).filter_by(id=id)).one_or_none()
-    
     @staticmethod
     @validate_int('rtu_id')
     @session_handler_query
     def get_by_rtu_id(rtu_id: int, db: Session = None):
-        return db.execute(select(models.MonitoredParameters).filter_by(rtu_id=rtu_id)).all()
+        return db.execute(select(models.ADCONRtus).filter_by(rtu_id=rtu_id)).one_or_none()
 
     @staticmethod
-    @validate_int('monitored_parameter_id')
-    @validate_float('new_datetime')
+    @validate_str('source_id')
+    @session_handler_query
+    def get_by_source_id(source_id: str, db: Session = None):
+        return db.execute(select(models.ADCONRtus).filter_by(source_id=source_id)).one_or_none()
+    
+    @staticmethod
+    @validate_str('source_id', 'new_status')
+    @validate_float('last_slot')
     @session_handler_add_delete_update
-    def update_last_communication(monitored_parameter_id: int, new_datetime: float, db: Session = None):
-        db.execute(update(models.MonitoredParameters).where(models.MonitoredParameters.id==monitored_parameter_id).values(last_communication=new_datetime))
+    def update_comminication_status_by_source_id(source_id: str, new_status: bool, last_slot: float, db: Session = None):
+        db.execute(update(models.ADCONRtus).where(models.ADCONRtus.source_id==source_id).values(active=new_status, last_slot=last_slot))
+
+class ADCONMonitoringDevices:
 
     @staticmethod
-    @validate_int('monitored_parameter_id')
-    @validate_float('new_datetime')
     @session_handler_add_delete_update
-    def update_last_communication_by_station_id(station_id: int, new_datetime: float, db: Session = None):
-        db.execute(update(models.MonitoredParameters).where(models.MonitoredParameters.station_id==station_id).values(last_communication=new_datetime))
+    def add(monitoring_device: schemas.ADCONMonitoringDevicesCreate, db: Session = None):
+        new_monitoring_device = models.ADCONMonitoringDevices(monitoring_device.rtu_id, monitoring_device.source_id, monitoring_device.name, monitoring_device.measurement,
+                                                              monitoring_device.template, monitoring_device.main_class, monitoring_device.sub_class, monitoring_device.type,
+                                                              monitoring_device.EUID, monitoring_device.sampling_method, monitoring_device.reference_offset, monitoring_device=True)
+        db.add(new_monitoring_device)
 
     @staticmethod
-    @validate_int('monitored_parameter_id')
-    @validate_str('current_status')
+    @validate_int('area_id')
+    @session_handler_query
+    def get_by_area_id(area_id: int, db: Session = None):
+        rtu_ids_subquery = select(models.ADCONRtus.rtu_id).where(models.ADCONRtus.area_id==area_id).subquery()
+        main_query = select(models.ADCONMonitoringDevices).where(models.ADCONMonitoringDevices.rtu_id.in_(rtu_ids_subquery))
+        return db.execute(main_query).scalars().all()
+
+    @staticmethod
+    @validate_int('rtu_id')
+    @session_handler_query
+    def get_by_rtu_id(rtu_id: int, db: Session = None):
+        return db.execute(select(models.ADCONMonitoringDevices).filter_by(rtu_id=rtu_id)).all()
+
+    @staticmethod
+    @validate_str('source_id')
+    @session_handler_query
+    def get_by_source_id(source_id: str, db: Session = None):
+        return db.execute(select(models.ADCONMonitoringDevices).filter_by(source_id=source_id)).one_or_none()
+
+    @staticmethod
+    @validate_str('measurement')
+    @session_handler_query
+    def get_by_measurement(measurement: str, db: Session = None):
+        return db.execute(select(models.ADCONMonitoringDevices).filter_by(measurement=measurement)).all()
+    
+    @staticmethod
+    @validate_str('source_id', 'new_status')
     @session_handler_add_delete_update
-    def update_status(monitored_parameter_id: int, current_status: str, db: Session = None):
-        db.execute(update(models.MonitoredParameters).where(models.MonitoredParameters.id==monitored_parameter_id).values(status=current_status))
+    def update_comminication_status_by_source_id(source_id: str, new_status: bool, db: Session = None):
+        db.execute(update(models.ADCONMonitoringDevices).where(models.ADCONMonitoringDevices.source_id==source_id).values(active=new_status))
+
+    @staticmethod
+    @validate_str('source_id')
+    @session_handler_add_delete_update
+    def delete_by_source_id(source_id: int, db: Session = None):
+        result = db.execute(select(models.ADCONMonitoringDevices).filter_by(source_id=source_id)).one_or_none()
+        if result is not None:
+            db.delete(result.ADCONADCONMonitoringDevices)
+        else:
+            return {"message": "Not Found", "errors": ["The provided monitoring device source id does not exist"]}, 404
+        
+    @staticmethod
+    @validate_int('monitoring_device_id')
+    @session_handler_add_delete_update
+    def delete_by_source_id(monitoring_device_id: int, db: Session = None):
+        result = db.execute(select(models.ADCONMonitoringDevices).filter_by(monitoring_device_id=monitoring_device_id)).one_or_none()
+        if result is not None:
+            db.delete(result.ADCONADCONMonitoringDevices)
+        else:
+            return {"message": "Not Found", "errors": ["The provided monitoring device id does not exist"]}, 404
+        
+class DavisWeatherStations:
+
+    @staticmethod
+    @session_handler_add_delete_update
+    def add(weather_station: schemas.DavisWeatherStationsCreate, db: Session = None):
+        new_weather_station = models.DavisWeatherStations(weather_station.station_id, weather_station.station_id_uuid, weather_station.station_name, weather_station.gateway_id,
+                                                            weather_station.gateway_id_hex, weather_station.product_number, weather_station.active, weather_station.recording_interval,
+                                                            weather_station.firmware_version, weather_station.registered_date, weather_station.subscription_end_data,
+                                                            weather_station.time_zone, weather_station.latitude, weather_station.longitude, weather_station.elevation, weather_station.gateway_type,
+                                                            weather_station.farm_id, weather_station.field_ids, weather_station.device_id)
+        db.add(new_weather_station)
 
     @staticmethod
     @validate_int('station_id')
-    @validate_str('current_status')
-    @session_handler_add_delete_update
-    def update_status_by_station_id(station_id: int, current_status: str, db: Session = None):
-        db.execute(update(models.MonitoredParameters).where(models.MonitoredParameters.station_id==station_id).values(status=current_status))
+    @session_handler_query
+    def get_by_station_id(station_id: int, db: Session = None):
+        return db.execute(select(models.DavisWeatherStations).filter_by(station_id=station_id)).one_or_none()
+    
+    @staticmethod
+    @validate_int('station_id_uuid')
+    @session_handler_query
+    def get_by_station_uuid(station_id_uuid: int, db: Session = None):
+        return db.execute(select(models.DavisWeatherStations).filter_by(station_id_uuid=station_id_uuid)).one_or_none()
+    
+    @staticmethod
+    @validate_int('device_id')
+    @session_handler_query
+    def get_by_device_id(device_id: int, db: Session = None):
+        return db.execute(select(models.DavisWeatherStations).filter_by(device_id=device_id)).one_or_none()
 
     @staticmethod
-    @validate_str('code')
+    @validate_int('station_id')
+    @validate_str('new_status')
     @session_handler_add_delete_update
-    def delete_by_code(code: str, db: Session = None):
-        result = db.execute(select(models.MonitoredParameters).filter_by(code = code)).one_or_none()
-        if result is not None:
-            db.delete(result.MonitoredParameters)
-        else:
-            return {"message": "Not Found", "errors": ["The provided MonitoredParameter code does not exist"]}, 404
+    def update_comminication_status_by_station_id(station_id: int, new_status: bool, db: Session = None):
+        db.execute(update(models.DavisWeatherStations).where(models.DavisWeatherStations.station_id==station_id).values(active=new_status))
+
+class DavisMonitoringDevices:
+
+    @staticmethod
+    @session_handler_add_delete_update
+    def add(monitoring_device: schemas.DavisMonitoringDevicesCreate, db: Session = None):
+        new_monitoring_device = models.DavisMonitoringDevices(monitoring_device.monitoring_device_id, monitoring_device.station_id, monitoring_device.station_id_uuid,
+                                                              monitoring_device.measurement, monitoring_device.created_date, monitoring_device.modified_date, monitoring_device.active,
+                                                              monitoring_device.latitude, monitoring_device.longitude, monitoring_device.elevation, monitoring_device.reference_offset)
+        db.add(new_monitoring_device)
+
+    @staticmethod
+    @session_handler_query
+    @validate_int('monitoring_device_id')
+    def get_by_monitoring_device_id(monitoring_device_id: int, db: Session = None):
+        db.execute(select(models.DavisMonitoringDevices).filter_by(monitoring_device_id=monitoring_device_id)).one_or_none()
+
+    @staticmethod
+    @session_handler_query
+    @validate_int('station_id')
+    def get_by_station_id(station_id: int, db: Session = None):
+        db.execute(select(models.DavisMonitoringDevices).filter_by(station_id=station_id)).all()
+
+    @staticmethod
+    @session_handler_add_delete_update
+    @validate_int('monitoring_device_id')
+    def update_status_by_monitoring_device_id(monitoring_device_id: int, new_status: bool, db: Session = None):
+        db.execute(update(models.DavisMonitoringDevices).where(models.DavisMonitoringDevices.monitoring_device_id==monitoring_device_id).values(active=new_status))
+
+    @staticmethod
+    @session_handler_add_delete_update
+    @validate_int('monitoring_device_id')
+    def update_modified_date_by_monitoring_device_id(monitoring_device_id: int, new_modified_date:float, db: Session = None):
+        db.execute(update(models.DavisMonitoringDevices).where(models.DavisMonitoringDevices.monitoring_device_id==monitoring_device_id).values(modified_date=new_modified_date))
+
+class MetricaStations:
+
+    @staticmethod
+    @session_handler_add_delete_update
+    def add(station: schemas.MetricaStationsCreate, db: Session = None):
+        new_station = models.MetricaStations(station.station_id, station.device_id, station.station_code, station.title, station. creation_date,
+                                             station.last_update, station.latitude, station.longitude, station.elevation, station.farm_id,
+                                             station.field_ids)
+        db.add(new_station) 
+
+    @staticmethod
+    @validate_str('station_id')
+    @session_handler_query
+    def get_by_station_id(station_id: str, db: Session = None):
+        return db.execute(select(models.MetricaStations).filter_by(station_id=station_id)).one_or_none()
+    
+    @staticmethod
+    @validate_str('station_code')
+    @session_handler_query
+    def get_by_station_code(station_code: str, db: Session = None):
+        return db.execute(select(models.MetricaStations).filter_by(station_code=station_code)).one_or_none()
+    
+    @staticmethod
+    @validate_int('device_id')
+    @session_handler_query
+    def get_by_device_id(device_id: int, db: Session = None):
+        return db.execute(select(models.MetricaStations).filter_by(device_id=device_id)).one_or_none()
+
+    @staticmethod
+    @validate_str('station_id','new_status')
+    @session_handler_add_delete_update
+    def update_comminication_status_by_station_id(station_id: str, new_update: str, db: Session = None):
+        db.execute(update(models.MetricaStations).where(models.MetricaStations.station_id==station_id).values(last_update=new_update))
+
+class MetricaMonitoringDevices:
+
+    @staticmethod
+    @session_handler_add_delete_update
+    def add(monitoring_device: schemas.MetricaMonitoringDevicesCreate, db: Session = None):
+        new_monitoring_device = models.MetricaMonitoringDevices(monitoring_device.monitoring_device_id, monitoring_device.station_id, monitoring_device.station_code,
+                                                                monitoring_device.measurement, monitoring_device.title, monitoring_device.id_sensor_of_station,
+                                                                monitoring_device.sensor_type, monitoring_device.created_date, monitoring_device.longitude, monitoring_device.latitude,
+                                                                monitoring_device.elevation, monitoring_device.reference_offset)
+        db.add(new_monitoring_device)
+
+    @staticmethod
+    @session_handler_query
+    @validate_int('monitoring_device_id')
+    def get_by_monitoring_device_id(monitoring_device_id: int, db: Session = None):
+        db.execute(select(models.MetricaMonitoringDevices).filter_by(monitoring_device_id=monitoring_device_id)).one_or_none()
+
+    @staticmethod
+    @session_handler_query
+    @validate_str('station_id')
+    def get_by_station_id(station_id: str, db: Session = None):
+        db.execute(select(models.MetricaMonitoringDevices).filter_by(station_id=station_id)).all()
 
 class DavisApiCredentials:
 

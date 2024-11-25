@@ -21,9 +21,9 @@ The library is available in GitHub and can be directly installed:<br>
 
 ## Latest Release Notes
 
-**Version: 1.3.0**
+**Version: 1.4.0**
 
-**Release Date: 2024-10-22**
+**Release Date: 2024-11-25**
 
 **Module Name: engine**
 <br>
@@ -34,7 +34,7 @@ The library is available in GitHub and can be directly installed:<br>
 
 **Module Name: models**
 <br>
-**Version: 1.4.4**
+**Version: 1.6.0**
 
 *General*
 + Adding a new class MetricaApiCredentials
