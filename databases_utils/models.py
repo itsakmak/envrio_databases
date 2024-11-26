@@ -5,10 +5,10 @@ __author__=['Ioannis Tsakmakis']
 __date_created__='2023-10-20'
 __last_updated__='2024-11-22'
 
-from enum_variables import AccountType, ApplicationType, AdviceStatus, IconType
-# from .enum_variables import AccountType, ApplicationType, AdviceStatus, IconType
-from engine import Base
-# from .engine import Base
+# from enum_variables import AccountType, ApplicationType, AdviceStatus, IconType
+from .enum_variables import AccountType, ApplicationType, AdviceStatus, IconType
+# from engine import Base
+from .engine import Base
 from sqlalchemy import ForeignKey, Numeric, String, JSON, Boolean, Enum as SQLAlchemyEnum
 from sqlalchemy.orm import  Mapped, mapped_column
 
@@ -177,7 +177,7 @@ class MetricaMonitoringDevices(Base):
     station_code: Mapped[str] = mapped_column(String(50), ForeignKey('metrica_stations.station_code'), nullable=False)
     measurement: Mapped[str] = mapped_column(String(20), nullable=False)
     title: Mapped[str] = mapped_column(String(50), unique=True, nullable=False)
-    id_sensor_of_station: Mapped[str] = mapped_column(String(20), nuallable=False)
+    id_sensor_of_station: Mapped[str] = mapped_column(String(20), nullable=False)
     sensor_type: Mapped[str] = mapped_column(String(50), nullable=False)
     created_date: Mapped[float] = mapped_column(nullable=False)
     latitude: Mapped[float] = mapped_column(nullable=False)

@@ -1,7 +1,7 @@
-__version__='1.1.3'
+__version__='1.2.0'
 __author__=['Ioannis Tsakmakis']
 __date_created__='2023-11-16'
-__last_updated__='2024-10-16'
+__last_updated__='2024-11-25'
 
 from influxdb_client import InfluxDBClient, Bucket, BucketRetentionRules
 from influxdb_client.client.write_api import SYNCHRONOUS
@@ -53,13 +53,38 @@ class DataManagement(InfluxConnector):
         influxdb.info(f"message: Data successfully deleted from the bucket: {self.bucket_name}, measurement: {measurement}, sensor_id: {tag}, from: {start} to: {stop}")
 
     @influxdb_error_handler
-    def query_data(self,measurement: str,sensor_id: int,unit: str,start: Union[str, datetime],stop: Union[str, datetime] = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")):
+    def query_data_raw(self,measurement: str,sensor_id: int,unit: str,start: Union[str, datetime],stop: Union[str, datetime] = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")):
         query_api = self.client.query_api()
         data_frame = query_api.query_data_frame(f'''from(bucket:"{self.bucket_name}") 
                                                     |> range(start: {start.strftime("%Y-%m-%dT%H:%M:%SZ")}, stop: {stop.strftime("%Y-%m-%dT%H:%M:%SZ")}) 
                                                     |> filter(fn: (r) => r["_measurement"] == "{measurement}" and r["sensor_id"] == "{str(sensor_id)}")
                                                     |> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")
                                                     |> keep(columns: ["_time","sensor_id", "{unit}"])''')
+        influxdb.info(f"message: Data from bucket: {self.bucket_name}, measurement: {measurement}, sensor_id: {sensor_id} between: {start} and {stop} retrived successfully")
+        return data_frame
+    
+    @influxdb_error_handler
+    def query_data_hourly(self,measurement: str,sensor_id: int,unit: str,start: Union[str, datetime],stop: Union[str, datetime] = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")):
+        query_api = self.client.query_api()
+        data_frame = query_api.query_data_frame(f'''from(bucket:"{self.bucket_name}") 
+                                                    |> range(start: {start.strftime("%Y-%m-%dT%H:%M:%SZ")}, stop: {stop.strftime("%Y-%m-%dT%H:%M:%SZ")}) 
+                                                    |> filter(fn: (r) => r["_measurement"] == "{measurement}" and r["sensor_id"] == "{str(sensor_id)}")
+                                                    |> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")
+                                                    |> keep(columns: ["_time","sensor_id", "{unit}"])
+                                                    |> aggregateWindow(every: 1h, fn: mean)''')
+        influxdb.info(f"message: Data from bucket: {self.bucket_name}, measurement: {measurement}, sensor_id: {sensor_id} between: {start} and {stop} retrived successfully")
+        return data_frame
+    
+    def query_data_statistics(self,measurement: str,sensor_id: int,unit: str,start: Union[str, datetime],stop: Union[str, datetime] = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")):
+        query_api = self.client.query_api()
+        data_frame = query_api.query_data_frame(f'''from(bucket:"{self.bucket_name}") 
+                                                    |> range(start: {start.strftime("%Y-%m-%dT%H:%M:%SZ")}, stop: {stop.strftime("%Y-%m-%dT%H:%M:%SZ")}) 
+                                                    |> filter(fn: (r) => r["_measurement"] == "{measurement}" and r["sensor_id"] == "{str(sensor_id)}")
+                                                    |> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")
+                                                    |> keep(columns: ["_time","sensor_id", "{unit}"])
+                                                    |> mean()
+                                                    |> max()
+                                                    |> min()''')
         influxdb.info(f"message: Data from bucket: {self.bucket_name}, measurement: {measurement}, sensor_id: {sensor_id} between: {start} and {stop} retrived successfully")
         return data_frame
 
