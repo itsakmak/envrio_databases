@@ -13,17 +13,19 @@ The library is available in GitHub and can be directly installed:<br>
 
 **pipenv**
 
-*pipenv install git+https://github.com/Envrio-hub/databases-utils.git@1.3.0*
+*pipenv install git+https://github.com/Envrio-hub/databases-utils.git@1.4.0*
 
 **pip**
 
-*pip install git+https://github.com/Envrio-hub/databases-utils.git@1.3.0*
+*pip install git+https://github.com/Envrio-hub/databases-utils.git@1.4.0*
 
 ## Latest Release Notes
 
 **Version: 1.4.0**
 
-**Release Date: 2024-11-25**
+**Release Date: 2024-11-26**
+
++ Switch to new database envrio_core_v2
 
 **Module Name: engine**
 <br>
