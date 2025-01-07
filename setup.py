@@ -12,7 +12,7 @@ setup(
         'sqlalchemy>=2.0.23',
         'pydantic>=2.5.2',
         'influxdb-client>=1.39.0',
-        'mysql-connector-python>=8.2.0',
+        'mysql-connector-python>=9.1.0',
         'python-dotenv>=1.0.1',
         'boto3>=1.35.68'
     ],
